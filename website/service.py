@@ -1,6 +1,7 @@
 import json
 import os
 from contextlib import contextmanager
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
 from threading import RLock
@@ -109,6 +110,12 @@ def public_arrivals(raw):
              "distanceText": item["busToStationDistanceTips"]} for item in raw["routeOnStationRTimeInfoList"]]
 
 
+def station_public_lines(city_name, station):
+    with client_resource(ZsgjClient()) as client:
+        raw = client.public_station_lines(city_name, station["name"], station["lat"], station["lng"])["data"]
+        return [public_line_item(item) for item in raw]
+
+
 def nearby(city, lat, lng):
     def query():
         with client_for(city) as client:
@@ -118,15 +125,23 @@ def nearby(city, lat, lng):
             else:
                 raw = client.public_nearby(city["name"], lat, lng)["data"]
                 stations = [public_station(item) for item in raw]
-                for station in stations[:3]:
-                    lines = client.public_station_lines(city["name"], station["name"], station["lat"], station["lng"])["data"]
-                    station["lines"] = [public_line_item(line) for line in lines]
+                with ThreadPoolExecutor(max_workers=3) as executor:
+                    results = [executor.submit(station_public_lines, city["name"], station) for station in stations[:3]]
+                    for station, result in zip(stations[:3], results):
+                        station["lines"] = result.result()
             return {"stations": sorted(stations, key=lambda item: (item["distance"] is None, item["distance"])),
                     "source": "厦门公交" if city["code"] == "0592" else "掌上公交 H5"}
     return cached(("near", city["key"], lat, lng), query)
 
 
 def search(city, keyword, kind):
+    if kind == "all":
+        def combined():
+            with ThreadPoolExecutor(max_workers=2) as executor:
+                lines = executor.submit(search, city, keyword, "line")
+                stations = executor.submit(search, city, keyword, "station")
+                return {"lines": lines.result()["data"], "stations": stations.result()["data"]}
+        return cached(("search", city["key"], keyword, kind), combined)
     def query():
         with client_resource(ZsgjClient()) as client:
             if city["code"] != "0592":
@@ -174,10 +189,14 @@ def station_buses(city, name, number, lat, lng):
                 return [public_station_bus(item) for item in raw]
             raw = client.query("stationLineBus", {"stationNo": number, "stationName": name,
                                 "stationLon": lng, "stationLat": lat, "lineNum": "20"})["data"]
+            with client_resource(ZsgjClient()) as public:
+                times = public.public_station_lines(city["name"], name, lat, lng)["data"]
+            time_by_line = {(item["lineName"], str(item["upperOrDown"])): item["neardis"] for item in times}
             return [{"name": item["lineName"], "direction": str(item["upDown"]),
                      "to": item["endStationName"], "plate": item.get("carNo"),
                      "remainingStations": item.get("remainNum"), "distance": item.get("remainDist"),
-                     "nextDeparture": item.get("nextTime")} for item in raw]
+                     "nextDeparture": item.get("nextTime"),
+                     "timeText": time_by_line.get((item["lineName"], str(item["upDown"])), "")} for item in raw]
     return cached(("station-buses", city["key"], name, number, lat, lng), query)
 
 
@@ -195,7 +214,7 @@ def line_detail(city, name, direction):
                 return {"name": raw["name"], "id": raw["id"], "direction": direction,
                         "from": raw["s" + prefix + "Station"], "to": raw["e" + prefix + "Station"],
                         "first": raw["s" + prefix + "Time"], "last": raw["e" + prefix + "Time"],
-                        "price": raw.get("basicPrice"), "stations": sorted(stations, key=lambda item: item["order"]),
+                        "fareDescription": raw["comments"], "stations": sorted(stations, key=lambda item: item["order"]),
                         "source": "厦门公交", "coordinateSystem": "GCJ02"}
             raw = client.public_line(city["name"], name, direction)
             stations = [{"name": item["stationName"], "order": item["stationOrder"],
@@ -222,6 +241,8 @@ def vehicles(city, name, direction, line_id, station_id, station_name, station_o
                                    "stationSeq": station_order, "stationId": station_id,
                                    "stationName": station_name})["data"]
                 return {"vehicles": [{"plate": item["plateNo"], "order": item.get("stationOrder"),
+                        "inOrOut": item.get("inOrOut"),
+                        "positionState": "at-stop" if str(item.get("inOrOut")) == "0" else "between" if str(item.get("inOrOut")) == "1" else "unknown",
                         "nextStation": item.get("nextStationName"), "dataTime": item.get("dataTime"),
                         "lat": item.get("lat"), "lng": item.get("lng")} for item in raw],
                         "notice": "车辆位置来自上游，站点序号依据厦门公交返回值。"}
@@ -229,6 +250,7 @@ def vehicles(city, name, direction, line_id, station_id, station_name, station_o
                 raise QueryError("车辆查询需要选择乘车站", 422)
             raw = client.public_realtime(city["name"], name, direction, station_order)
             return {"vehicles": [{"plate": item["busNumber"], "order": item["index"] + 1,
+                                  "positionState": "at-stop" if str(item["statusType"]) == "0" else "between" if str(item["statusType"]) == "2" else "unknown",
                                   "currentStation": item["stationName"], "lat": item["bus_lat"], "lng": item["bus_lng"],
                                   "statusType": item["statusType"],
                                   "dataTime": datetime.fromtimestamp(item["_recTime"] / 1000, timezone.utc).isoformat()}
@@ -241,14 +263,9 @@ def vehicles(city, name, direction, line_id, station_id, station_name, station_o
 
 def arrival(city, name, direction, station_name, station_order):
     def query():
-        with client_for(city) as client:
-            if city["code"] != "0592":
-                raw = client.public_realtime(city["name"], name, direction, station_order)
-                return public_arrivals(raw)
-            raw = client.query("transferDetailBus", {"stationNames": station_name, "lineNames": name,
-                               "upDowns": direction, "stationIndexs": station_order})["data"]
-            return [{"remainingStations": item.get("remainNum"), "distance": item.get("remainDist"),
-                     "nextDeparture": item.get("nextTime"), "to": item.get("endStationName")} for item in raw]
+        with client_resource(ZsgjClient()) as client:
+            raw = client.public_realtime(city["name"], name, direction, station_order)
+            return public_arrivals(raw)
     return cached(("arrival", city["key"], name, direction, station_name, station_order), query)
 
 

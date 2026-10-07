@@ -92,7 +92,7 @@ def nearby(city: CityKey, lat: Latitude, lng: Longitude):
 
 
 @app.get("/api/search")
-def search(city: CityKey, keyword: Name, kind: Literal["line", "station"] = "line"):
+def search(city: CityKey, keyword: Name, kind: Literal["line", "station", "all"] = "line"):
     return service.search(service.city_for(city), keyword, kind)
 
 

@@ -1,15 +1,21 @@
 <script setup lang="ts">
-import { computed, defineAsyncComponent, nextTick, onMounted, onUnmounted, ref } from 'vue'
+import { computed, defineAsyncComponent, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { ArrowLeft, ArrowRight, BusFront, ChevronDown, ChevronRight, Clock3, Heart, LocateFixed, MapPin, RefreshCw, Search, Settings2, X } from '@lucide/vue'
 import transform from 'coordtransform'
 import QueryDialog from './QueryDialog.vue'
+import InfoTip from './InfoTip.vue'
 import RouteDiagram from './RouteDiagram.vue'
-import { api, type Arrival, type City, type LineSummary, type Position, type Result, type Route, type SavedLine, type SavedStation, type Station, type StationBus, type Timetable, type Vehicle } from './api'
+import { api, type Arrival, type City, type LineSummary, type Position, type Result, type Route, type SavedLine, type SavedStation, type SearchResults, type Station, type StationBus, type Timetable, type Vehicle } from './api'
+import { vehiclePosition } from './vehiclePosition'
 
 const StopMap = defineAsyncComponent(() => import('./StopMap.vue'))
 const cities = ref<City[]>([])
 const city = ref<City>()
+const locatedCity = ref<City>()
+const locationError = ref('')
+const pendingPosition = ref<Position>()
 const cityFilter = ref('')
+const selectedProvince = ref('')
 const cityDialog = ref(false)
 const positionDialog = ref(false)
 const mapVisible = ref(false)
@@ -38,8 +44,7 @@ const nearbyErrors = ref<Record<string, string>>({})
 const expandedStations = ref<string[]>([])
 const routePanel = ref<'diagram' | 'vehicles'>('diagram')
 const keyword = ref('')
-const searchKind = ref<'line' | 'station'>('line')
-const searchResults = ref<LineSummary[] | { name: string }[]>([])
+const searchResults = ref<SearchResults>({ lines: [], stations: [] })
 const searched = ref(false)
 const selectedStation = ref<Station>()
 const stationBuses = ref<StationBus[]>([])
@@ -65,17 +70,20 @@ let locationSequence = 0
 let positionSequence = 0
 let nearbySequence = 0
 let timer: ReturnType<typeof setTimeout>
+let restoring = true
 type PageState = {
   view: typeof view.value; route: Route | undefined; station: Station | undefined
-  order: number | undefined; keyword: string; kind: 'line' | 'station'
+  order: number | undefined; keyword: string
   results: typeof searchResults.value; searched: boolean; stopsError: string; scroll: number
 }
 const previousPages = ref<PageState[]>([])
 const searchInput = ref<HTMLInputElement>()
-const searchCity = ref('')
 
 const isXiamen = computed(() => city.value?.code === '0592')
-const cityOptions = computed(() => cities.value.filter(item => `${item.name} ${item.province} ${item.pinyin}`.toLowerCase().includes(cityFilter.value.toLowerCase())))
+const provinceOptions = computed(() => [...new Set(cities.value.map(item => item.province || '其他地区'))])
+const cityOptions = computed(() => cities.value.filter(item => cityFilter.value.trim()
+  ? `${item.name} ${item.province} ${item.pinyin}`.toLowerCase().includes(cityFilter.value.trim().toLowerCase())
+  : (item.province || '其他地区') === selectedProvince.value))
 const selectedRouteStation = computed(() => route.value?.stations.find(item => item.order === selectedOrder.value))
 const routeSaved = computed(() => savedLines.value.some(item => item.city.key === city.value?.key && item.name === route.value?.name && item.direction === route.value?.direction))
 const stationSaved = computed(() => savedStations.value.some(item => item.city.key === city.value?.key && stationKey(item.station) === (selectedStation.value ? stationKey(selectedStation.value) : '')))
@@ -117,11 +125,32 @@ function arrivalText(item: Arrival) {
   return item.remainingStations === 0 ? '剩余 0 站，请留意进站车辆' : `还有 ${item.remainingStations} 站`
 }
 
+function savePage() {
+  if (restoring || !city.value || (view.value === 'route' && !route.value) || (view.value === 'station' && !selectedStation.value)) return
+  const params = new URLSearchParams({ view: view.value, city: city.value.key })
+  if (view.value === 'route' && route.value) {
+    params.set('line', route.value.name)
+    params.set('direction', route.value.direction)
+    if (selectedOrder.value !== undefined) params.set('stop', String(selectedOrder.value))
+    if (selectedRouteStation.value) params.set('stopName', selectedRouteStation.value.name)
+    params.set('panel', routePanel.value)
+  }
+  if (view.value === 'station' && selectedStation.value) {
+    params.set('station', selectedStation.value.name)
+    if (selectedStation.value.number) params.set('number', selectedStation.value.number)
+    params.set('lat', String(selectedStation.value.lat))
+    params.set('lng', String(selectedStation.value.lng))
+  }
+  if (view.value === 'search' && searched.value) params.set('q', keyword.value)
+  window.history.replaceState(null, '', `?${params}`)
+}
+watch([view, city, route, selectedStation, selectedOrder, routePanel, keyword, searched], savePage)
+
 function navigate(next: typeof view.value, remember = true) {
   if (next === 'home') previousPages.value = []
   else if (remember && next !== view.value) {
     previousPages.value.push({ view: view.value, route: route.value, station: selectedStation.value, order: selectedOrder.value,
-      keyword: keyword.value, kind: searchKind.value, results: searchResults.value, searched: searched.value, stopsError: stopsError.value, scroll: window.scrollY })
+      keyword: keyword.value, results: searchResults.value, searched: searched.value, stopsError: stopsError.value, scroll: window.scrollY })
   }
   clearTimeout(timer)
   epoch++
@@ -150,7 +179,6 @@ async function goBack() {
   selectedStation.value = previous.station
   selectedOrder.value = previous.order
   keyword.value = previous.keyword
-  searchKind.value = previous.kind
   searchResults.value = previous.results
   searched.value = previous.searched
   stopsError.value = previous.stopsError
@@ -170,6 +198,12 @@ async function action(work: () => Promise<void>) {
   finally { if (current === epoch) busy.value = false }
 }
 
+function openCityDialog() {
+  cityFilter.value = ''
+  selectedProvince.value = ''
+  cityDialog.value = true
+}
+
 function chooseCity(item: City) {
   locationSequence++
   city.value = item
@@ -187,6 +221,7 @@ function chooseCity(item: City) {
   selectedStation.value = undefined
   route.value = undefined
   locating.value = false
+  locationError.value = ''
   locationStatus.value = '请选择查询位置，或使用当前位置识别城市'
   navigate('home')
 }
@@ -220,21 +255,25 @@ async function refreshNearbyBuses() {
   if (current === nearbySequence && view.value === 'home' && !document.hidden) timer = setTimeout(() => void refreshNearbyBuses(), 20000)
 }
 
-async function locate() {
+async function locate(highAccuracy = false) {
   const current = ++locationSequence
   const currentEpoch = epoch
   locating.value = true
-  error.value = ''
+  locationError.value = ''
+  pendingPosition.value = undefined
   locationStatus.value = '正在获取当前位置…'
+  let cityResolved = false
   try {
     if (!window.isSecureContext) throw new Error('定位需要 HTTPS 或 localhost，请使用安全地址访问。')
     if (!navigator.geolocation) throw new Error('当前浏览器没有提供定位功能。')
-    const result = await new Promise<GeolocationPosition>((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject, { enableHighAccuracy: true, timeout: 18000, maximumAge: 0 }))
-    if (current !== locationSequence || currentEpoch !== epoch) { if (current === locationSequence) locationStatus.value = '可以重新定位，查找附近站点'; return }
+    const result = await new Promise<GeolocationPosition>((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject, { enableHighAccuracy: highAccuracy, timeout: highAccuracy ? 15000 : 8000, maximumAge: highAccuracy ? 0 : 30000 }))
+    if (current !== locationSequence) return
+    const [gpsLng, gpsLat] = transform.wgs84togcj02(result.coords.longitude, result.coords.latitude)
+    pendingPosition.value = { lat: gpsLat, lng: gpsLng, source: 'gps', accuracy: result.coords.accuracy }
     locationStatus.value = '正在识别城市…'
     // 此接口只接收浏览器本次授权取得的实际位置。
     const query = new URLSearchParams({ latitude: String(result.coords.latitude), longitude: String(result.coords.longitude), localityLanguage: 'zh' })
-    const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?${query}`, { signal: AbortSignal.timeout(15000) })
+    const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?${query}`, { signal: AbortSignal.timeout(6000) })
     if (!response.ok) throw new Error(`城市识别服务返回 HTTP ${response.status}，请手动选择城市和位置。`)
     const address = await response.json()
     const names: string[] = [address.city, address.locality, ...(address.localityInfo?.administrative || []).map((item: { name: string }) => item.name)].filter(Boolean)
@@ -242,7 +281,10 @@ async function locate() {
     const matches = cities.value.filter(item => names.some(name => normalize(name) === normalize(item.name)))
     const detected = matches.find(item => normalize(item.name) === normalize(address.city || '')) || matches[0]
     if (!detected) throw new Error('定位城市未匹配公交城市配置，请手动选择城市和查询位置。')
-    if (current !== locationSequence || currentEpoch !== epoch) { if (current === locationSequence) locationStatus.value = '可以重新定位，查找附近站点'; return }
+    if (current !== locationSequence) return
+    locatedCity.value = detected
+    cityResolved = true
+    if (currentEpoch !== epoch || view.value !== 'home') { locationStatus.value = '已取得定位城市'; return }
     const [lng, lat] = transform.wgs84togcj02(result.coords.longitude, result.coords.latitude)
     city.value = detected
     localStorage.setItem('bus.city', detected.key)
@@ -254,9 +296,19 @@ async function locate() {
   } catch (failure) {
     if (current !== locationSequence) return
     const locationFailure = failure as GeolocationPositionError
-    if (currentEpoch === epoch) error.value = typeof locationFailure.code === 'number' ? ({ 1: '位置权限未获授权，可手动选择城市和查询位置。', 2: '设备暂时无法确定位置，可手动选择查询位置。', 3: '定位请求超时，可以重新定位或手动选择查询位置。' }[locationFailure.code] || message(failure)) : message(failure)
-    locationStatus.value = '自动定位未完成'
+    locationError.value = pendingPosition.value && !cityResolved ? '已取得位置，城市识别未完成。请确认查询城市，或重新定位。' : typeof locationFailure.code === 'number' ? ({ 1: '位置权限未获授权，可手动选择城市和查询位置。', 2: '设备暂时无法确定位置，可手动选择查询位置。', 3: '定位请求超时，可以重新定位或手动选择查询位置。' }[locationFailure.code] || message(failure)) : message(failure)
+    locationStatus.value = pendingPosition.value ? '已取得位置，请确认查询城市' : '自动定位未完成'
   } finally { if (current === locationSequence) locating.value = false }
+}
+
+async function useLocatedPosition() {
+  if (!pendingPosition.value) return
+  locationSequence++
+  locating.value = false
+  position.value = pendingPosition.value
+  locationError.value = ''
+  locationStatus.value = `当前位置 · 定位精度约 ${Math.round(position.value.accuracy!)} 米`
+  await action(loadNearby)
 }
 
 async function useManualPosition(lat = Number(manualLat.value), lng = Number(manualLng.value), name = '手动选择的位置') {
@@ -272,6 +324,7 @@ async function useManualPosition(lat = Number(manualLat.value), lng = Number(man
   nearby.value = []
   await loadNearby()
   if (position.value !== currentPosition || current !== positionSequence) return
+  locationError.value = ''
   error.value = ''
   positionDialog.value = false
   mapVisible.value = false
@@ -322,20 +375,11 @@ async function useStationPosition(name: string) {
   })
 }
 
-function startSearch(kind: 'line' | 'station' = searchKind.value) {
+function startSearch() {
   navigate('search')
-  searchKind.value = kind
-  searchResults.value = []
+  searchResults.value = { lines: [], stations: [] }
   searched.value = false
   nextTick(() => searchInput.value?.focus())
-}
-
-async function setSearchKind(kind: 'line' | 'station') {
-  if (searchKind.value === kind) return
-  searchKind.value = kind
-  searchResults.value = []
-  searched.value = false
-  if (keyword.value.trim()) await doSearch()
 }
 
 async function doSearch(value = keyword.value) {
@@ -343,12 +387,10 @@ async function doSearch(value = keyword.value) {
   if (!keyword.value) return
   const current = ++searchSequence
   const currentCity = city.value!.key
-  searchCity.value = city.value!.name
-  const kind = searchKind.value
   searched.value = false
-  searchResults.value = []
+  searchResults.value = { lines: [], stations: [] }
   await action(async () => {
-    const result = await api<Result<LineSummary[] | { name: string }[]>>('search', { city: currentCity, keyword: keyword.value, kind })
+    const result = await api<Result<SearchResults>>('search', { city: currentCity, keyword: keyword.value, kind: 'all' })
     if (current !== searchSequence || currentCity !== city.value!.key) return
     searchResults.value = result.data
     searched.value = true
@@ -530,12 +572,29 @@ async function loadTimetable() {
 }
 
 onMounted(async () => {
+  const params = new URLSearchParams(window.location.search)
   await action(async () => {
     cities.value = await api<City[]>('cities')
-    city.value = cities.value.find(item => item.key === localStorage.getItem('bus.city')) || cities.value.find(item => item.code === '0592')!
+    city.value = cities.value.find(item => item.key === (params.get('city') || localStorage.getItem('bus.city'))) || cities.value.find(item => item.code === '0592')!
   })
-  if (city.value) await locate()
   document.addEventListener('visibilitychange', visibilityChanged)
+  if (!city.value) return
+  if (params.get('view') === 'route' && params.get('line') && ['1', '2'].includes(params.get('direction') || '')) {
+    await openLine({ name: params.get('line')!, direction: params.get('direction')!, from: '', to: '' }, params.get('stopName') || undefined, params.has('stop') ? Number(params.get('stop')) : undefined)
+    routePanel.value = params.get('panel') === 'vehicles' ? 'vehicles' : 'diagram'
+  } else if (params.get('view') === 'search' && params.get('q')) {
+    startSearch()
+    await doSearch(params.get('q')!)
+  } else if (params.get('view') === 'station' && params.get('station')) {
+    await action(async () => {
+      const result = await api<Result<Station>>('station', { city: city.value!.key, name: params.get('station')!, number: params.get('number') || '', lat: params.has('lat') ? Number(params.get('lat')) : undefined, lng: params.has('lng') ? Number(params.get('lng')) : undefined })
+      await openStation(result.data)
+    })
+  } else if (params.get('view') === 'saved') navigate('saved')
+  await nextTick()
+  restoring = false
+  savePage()
+  if (view.value === 'home') void locate()
 })
 onUnmounted(() => { clearTimeout(timer); document.removeEventListener('visibilitychange', visibilityChanged); locationSequence++; epoch++; liveSequence++; nearbySequence++ })
 </script>
@@ -543,9 +602,9 @@ onUnmounted(() => { clearTimeout(timer); document.removeEventListener('visibilit
 <template>
   <div class="app-shell">
     <header class="topbar" :class="{ 'query-topbar': view !== 'home' }">
-      <button class="brand" @click="navigate('home')" aria-label="返回附近站点"><span class="brand-icon"><BusFront :size="23" /></span><span>候车<span class="brand-caption">公交查询</span></span></button>
+      <button v-if="view === 'home'" class="brand" @click="navigate('home')" aria-label="返回附近站点"><span class="brand-icon"><BusFront :size="23" /></span><span>候车<span class="brand-caption">公交查询</span></span></button>
       <div v-if="view !== 'home'" class="page-bar"><button class="text-button" @click="goBack"><ArrowLeft :size="18" />{{ backLabel }}</button></div>
-      <button class="city-button" @click="cityDialog = true" aria-label="切换城市"><MapPin :size="16" />{{ city?.name || '选择城市' }}<span>切换</span><ChevronDown :size="15" /></button>
+      <button v-if="view === 'home'" class="city-button" @click="openCityDialog" aria-label="切换城市"><MapPin :size="16" />{{ city?.name || '选择城市' }}<span>切换</span><ChevronDown :size="15" /></button>
     </header>
     <main>
       <div v-if="error" class="error banner" role="alert">{{ error }}<button @click="error = ''" aria-label="关闭提示"><X :size="17" /></button></div>
@@ -553,65 +612,66 @@ onUnmounted(() => { clearTimeout(timer); document.removeEventListener('visibilit
 
       <template v-if="view === 'home'">
         <button class="search-box" @click="startSearch()"><Search :size="21" /><span>搜索线路、公交站名</span><kbd>查询</kbd></button>
-        <p v-if="!position" class="search-guidance">无需定位也可以搜索线路 · {{ city?.name }}</p>
         <section class="location-panel" :class="{ located: position }">
           <div><span class="location-pin"><LocateFixed :size="20" /></span><div><strong>{{ position ? (position.source === 'gps' ? '按当前位置查询' : '按所选位置查询') : locationStatus }}</strong></div></div>
-          <div class="location-actions"><button class="text-button" :disabled="locating" @click="locate"><LocateFixed :size="15" />{{ locating ? '正在定位' : '重新定位' }}</button><button class="text-button" @click="openPositionDialog"><Settings2 :size="15" />选择位置</button></div>
+          <div class="location-actions"><button class="text-button" :disabled="locating" @click="locate()"><LocateFixed :size="15" />{{ locating ? '正在定位' : '重新定位' }}</button><button class="text-button" @click="openPositionDialog"><Settings2 :size="15" />选择位置</button></div>
         </section>
+        <p v-if="position?.source === 'gps'" class="hint">定位精度约 {{ Math.round(position.accuracy!) }} 米 <button class="text-button" :disabled="locating" @click="locate(true)">提高定位精度</button></p>
+        <p v-if="locationError" class="error" role="alert">{{ locationError }} <button v-if="!locating && !locationError.includes('权限') && !position" class="text-button" @click="locate(true)">尝试高精度定位</button></p>
+        <button v-if="pendingPosition && !position && !locating" class="text-button" @click="useLocatedPosition">确认在 {{ city?.name }}，使用已取得的位置查询</button>
         <div class="section-heading"><h2>附近站点<span v-if="nearby.length">{{ nearby.length }}</span></h2><button v-if="position" class="text-button" :disabled="busy" @click="action(loadNearby)"><RefreshCw :size="15" />刷新</button></div>
         <div v-if="nearest" class="nearby-grid">
           <article v-for="(station, index) in nearby" :key="stationKey(station)" class="station-card" :class="{ nearest: index === 0 }">
             <div class="station-heading"><div><h3>{{ station.name }}</h3><p>{{ distanceText(station.distance) }}<span v-if="station.platformNumbers?.length"> · {{ station.platformNumbers.length }} 个同名站台</span><span v-if="index === 0" class="nearest-label">{{ position?.source === 'gps' ? '离你最近' : '所选位置最近站点' }}</span></p></div><button class="round-button" @click="openStation(station)" :aria-label="`查询站点 ${station.name}`"><ChevronRight :size="19" /></button></div>
-            <div v-if="station.lines.length" class="line-chips"><button v-for="line in visibleStationLines(station, index)" :key="`${line.name}-${line.direction}-${line.stationOrder}`" @click="openLine(line, station.name, line.stationOrder)"><span class="route-number">{{ line.name }}</span><span class="nearby-line-direction">开往 {{ line.to }}</span><span class="nearby-arrival" v-if="busesForLine(line, nearbyBuses[stationKey(station)] || []).length">{{ arrivalText(busesForLine(line, nearbyBuses[stationKey(station)] || [])[0]!) }}</span></button></div>
-            <p v-else class="hint">打开站点查看经过线路和到站车辆。</p>
+            <div v-if="station.lines.length" class="line-chips"><button v-for="line in visibleStationLines(station, index)" :key="`${line.name}-${line.direction}-${line.stationOrder}`" @click="openLine(line, station.name, line.stationOrder)"><span class="route-number">{{ line.name }}</span><span class="nearby-line-direction">开往 {{ line.to }}</span><span class="nearby-arrival" v-if="busesForLine(line, nearbyBuses[stationKey(station)] || []).length">{{ busesForLine(line, nearbyBuses[stationKey(station)] || [])[0]!.timeText || arrivalText(busesForLine(line, nearbyBuses[stationKey(station)] || [])[0]!) }}</span></button></div>
             <p v-if="nearbyErrors[stationKey(station)]" class="preview-error" role="status">到站查询失败：{{ nearbyErrors[stationKey(station)] }}</p>
             <div class="station-card-actions"><button v-if="station.lines.length > (index === 0 ? 3 : 2)" class="text-button" :aria-expanded="expandedStations.includes(stationKey(station))" @click="toggleStationExpanded(station)">{{ expandedStations.includes(stationKey(station)) ? '收起线路' : `全部 ${station.lines.length} 条线路` }}<ChevronDown :size="14" /></button><button class="card-link" @click="openStation(station)">站台与到站车辆<ArrowRight :size="15" /></button></div>
           </article>
         </div>
-        <div v-else class="empty-panel"><MapPin :size="32" /><h3>{{ locating || busy ? '正在寻找附近站点' : position ? '查询位置附近暂无站点数据' : '选择位置，寻找附近站点' }}</h3><p>{{ locating || busy ? '查询完成后，最近站点会显示在这里。' : position ? '可以重新选择位置，或搜索需要乘坐的线路。' : '可以用附近的公交站名选择位置，也可以直接搜索线路。' }}</p><div class="empty-actions" v-if="!locating && !busy"><button class="primary" @click="openPositionDialog">选择查询位置</button><button class="text-button" @click="startSearch('line')">直接搜索线路<ArrowRight :size="16" /></button></div></div>
-        <p v-if="nearbyTime" class="source-note">{{ isXiamen ? '厦门公交' : '掌上公交 H5' }} · 查询于 {{ timeText(nearbyTime) }} · 距离由上游提供</p>
-        <details class="data-details"><summary>定位与数据说明</summary><p class="hint">定位用于识别城市和查询附近站点。授权后，本次位置会提交给 BigDataCloud 和公交数据服务；用户定位坐标不会保存到浏览器收藏。前三个站点的到站资料每 20 秒更新。</p></details>
+        <div v-else class="empty-panel"><MapPin :size="32" /><h3>{{ locating || busy ? '正在寻找附近站点' : position ? '附近暂无站点' : '选择查询位置' }}</h3><div class="empty-actions" v-if="!locating && !busy"><button class="primary" @click="openPositionDialog">选择查询位置</button><button class="text-button" @click="startSearch()">直接搜索线路<ArrowRight :size="16" /></button></div></div>
+        <div class="update-note"><span v-if="nearbyTime">更新 {{ timeText(nearbyTime) }}</span><InfoTip label="定位与数据说明"><p>定位用于识别城市和查询附近站点。授权后，本次位置会提交给 BigDataCloud 和公交数据服务；用户定位坐标不会保存到浏览器收藏。</p><p>公交资料来自厦门公交与掌上公交 H5。前三个站点的到站资料每 20 秒更新，距离使用查询服务返回值。</p></InfoTip></div>
       </template>
 
       <template v-if="view === 'search'">
-        <form class="search-form" @submit.prevent="doSearch()"><Search :size="20" /><input ref="searchInput" v-model="keyword" aria-label="线路或站点名称" :placeholder="searchKind === 'line' ? '输入线路号码，例如 1路' : '输入完整或部分公交站名'" /><button class="primary" :disabled="busy || !keyword.trim()">搜索</button></form>
-        <div class="segmented" role="group" aria-label="搜索类型"><button :aria-pressed="searchKind === 'line'" :class="{ active: searchKind === 'line' }" @click="setSearchKind('line')">线路</button><button :aria-pressed="searchKind === 'station'" :class="{ active: searchKind === 'station' }" @click="setSearchKind('station')">站点</button></div>
-        <p v-if="!searched && !busy" class="search-guidance">正在查询 {{ city?.name }} 的{{ searchKind === 'line' ? '公交线路。输入线路号码，选择开往方向后查看车辆。' : '公交站点。输入附近的公交站名。' }}</p>
+        <form class="search-form" @submit.prevent="doSearch()"><Search :size="20" /><input ref="searchInput" v-model="keyword" aria-label="线路或站点名称" :placeholder="`搜索${city?.name || ''}线路或站点`" /><button class="primary" :disabled="busy || !keyword.trim()">搜索</button></form>
         <div v-if="!searched && !busy && history.length" class="history"><h2>最近搜索</h2><button v-for="item in history" :key="item" @click="doSearch(item)"><Clock3 :size="14" />{{ item }}</button><button class="text-button" @click="clearHistory">清空记录</button></div>
-        <p v-if="searched" class="hint" role="status">{{ searchResults.length }} 条结果 · {{ searchCity }}{{ searchKind === 'line' ? ' · 请确认开往方向' : '' }}</p>
-        <div class="result-list"><button v-for="(item, index) in searchResults" :key="`${item.name}-${index}`" class="result-row" @click="searchKind === 'line' ? openLine(item as LineSummary) : openStation(item)"><span class="route-number" v-if="searchKind === 'line'">{{ item.name }}</span><MapPin v-else :size="22" /><div><strong v-if="searchKind === 'station'">{{ item.name }}</strong><strong v-else>开往 {{ (item as LineSummary).to }}</strong><p v-if="searchKind === 'line'">{{ (item as LineSummary).from }} → {{ (item as LineSummary).to }}</p></div><ChevronRight :size="19" /></button></div>
-        <div v-if="searched && !searchResults.length" class="empty-panel"><Search :size="30" /><h3>没有找到匹配结果</h3><p>请检查城市和名称，使用完整线路名或站点名查询。</p></div>
+        <div v-if="searched" class="search-columns">
+          <section class="search-lines" aria-labelledby="search-lines-title"><h2 id="search-lines-title">线路 <span>{{ searchResults.lines.length }}</span></h2><div class="result-list"><button v-for="(item, index) in searchResults.lines" :key="`${item.name}-${index}`" class="result-row" @click="openLine(item)"><span class="route-number">{{ item.name }}</span><div><strong>开往 {{ item.to }}</strong><p>{{ item.from }} → {{ item.to }}</p></div><ChevronRight :size="19" /></button></div><p v-if="!searchResults.lines.length" class="hint">没有匹配的线路</p></section>
+          <section class="search-stations" aria-labelledby="search-stations-title"><h2 id="search-stations-title">站点 <span>{{ searchResults.stations.length }}</span></h2><div class="result-list"><button v-for="(item, index) in searchResults.stations" :key="`${item.name}-${index}`" class="result-row" @click="openStation(item)"><MapPin :size="22" /><div><strong>{{ item.name }}</strong></div><ChevronRight :size="19" /></button></div><p v-if="!searchResults.stations.length" class="hint">没有匹配的站点</p></section>
+        </div>
+        <div v-if="searched && !searchResults.lines.length && !searchResults.stations.length" class="empty-panel"><Search :size="30" /><h3>没有找到匹配结果</h3><p>请检查城市和名称，使用完整线路名或站点名查询。</p></div>
       </template>
 
       <template v-if="view === 'station' && selectedStation">
-        <div class="detail-heading"><div><h1>{{ selectedStation.name }}</h1><p>{{ distanceText(selectedStation.distance) }} · <span v-if="selectedStation.number">当前站台 {{ selectedStation.number }}</span><span v-else>站点编号未提供</span></p></div><button class="save-button" :class="{ selected: stationSaved }" :aria-pressed="stationSaved" @click="toggleStationSaved" :aria-label="stationSaved ? '取消收藏站点' : '收藏站点'"><Heart :size="21" :fill="stationSaved ? 'currentColor' : 'none'" /><span>{{ stationSaved ? '已收藏' : '收藏' }}</span></button></div>
+        <div class="detail-heading"><div><h1>{{ selectedStation.name }}</h1><p v-if="selectedStation.distance !== null || selectedStation.number"><span v-if="selectedStation.distance !== null">{{ distanceText(selectedStation.distance) }}<span v-if="selectedStation.number"> · </span></span><span v-if="selectedStation.number">站台 {{ selectedStation.number }}</span></p></div><button class="save-button" :class="{ selected: stationSaved }" :aria-pressed="stationSaved" @click="toggleStationSaved" :aria-label="stationSaved ? '取消收藏站点' : '收藏站点'"><Heart :size="21" :fill="stationSaved ? 'currentColor' : 'none'" /><span>{{ stationSaved ? '已收藏' : '收藏' }}</span></button></div>
         <div v-if="otherPlatforms.length" class="platform-panel"><p>{{ selectedStation.platformNumbers?.length }} 个同名站台</p><button class="text-button" :disabled="busy" @click="otherPlatforms.length === 1 ? selectPlatform(otherPlatforms[0]!) : platformDialog = true"><RefreshCw :size="16" />{{ otherPlatforms.length === 1 ? '反向站台' : '切换站台' }}</button></div>
         <div v-if="nationalPlatforms.length" class="platform-panel"><p>{{ selectedStation.platforms?.length }} 个同名站台</p><button class="text-button" :disabled="busy" @click="platformDialog = true"><RefreshCw :size="16" />切换站台</button></div>
         <div class="section-heading"><h2>经过线路<span>{{ selectedStation.lines.length }}</span></h2><button class="text-button" :disabled="refreshing" @click="refreshLive"><RefreshCw :size="15" />{{ refreshing ? '正在刷新' : '刷新' }}</button></div>
         <label v-if="selectedStation.lines.length" class="field line-filter"><span class="sr-only">筛选线路或开往方向</span><input v-model="lineFilter" placeholder="筛选线路或开往方向" /></label>
         <div v-if="liveError" class="error" role="alert">{{ liveError }}</div>
         <div class="result-list"><button v-for="line in stationLines" :key="`${line.name}-${line.direction}-${line.stationOrder}`" class="result-row station-line" @click="openLine(line, selectedStation.name, line.stationOrder)"><span class="route-number">{{ line.name }}</span><div><strong>开往 {{ line.to }}</strong><p class="line-arrivals"><template v-if="busesForLine(line, stationBuses).length"><span v-for="(bus, index) in busesForLine(line, stationBuses).slice(0, 2)" :key="index">{{ arrivalText(bus) }}<span v-if="bus.timeText"> · {{ bus.timeText }}</span><span v-if="bus.distance !== null"> · {{ distanceText(bus.distance) }}</span></span></template><span v-else>{{ refreshing ? '正在查询到站车辆…' : '当前没有到站车辆资料' }}</span></p></div><ChevronRight :size="18" /></button></div>
-        <p v-if="liveTime" class="source-note">查询于 {{ timeText(liveTime) }} · {{ liveError ? '自动更新已暂停，请点击刷新' : '每 20 秒刷新' }}</p>
+        <div v-if="liveTime" class="update-note"><span>更新 {{ timeText(liveTime) }}</span><InfoTip label="站台到站说明"><p>到站资料每 20 秒更新。{{ liveError ? '查询失败后自动更新暂停，点击刷新重新查询。' : '' }}预计分钟由公交查询服务提供，受路况和调度影响。</p></InfoTip></div>
         <p v-if="lineFilter && !stationLines.length" class="hint">当前站台没有匹配的线路，请检查名称或切换站台。</p>
-        <div v-if="!selectedStation.lines.length" class="empty-panel"><BusFront :size="30" /><h3>经过线路资料未提供</h3><p>使用线路搜索查询站点列表和车辆资料。</p><button class="primary" @click="startSearch('line')">搜索线路</button></div>
+        <div v-if="!selectedStation.lines.length" class="empty-panel"><BusFront :size="30" /><h3>暂无经过线路</h3><button class="primary" @click="startSearch()">搜索线路</button></div>
       </template>
 
       <template v-if="view === 'route' && route">
-        <section class="route-heading"><div class="route-top"><h1>{{ route.name }}</h1><div class="route-destination"><span>开往</span><h2>{{ route.to || route.stations.at(-1)?.name }}</h2></div><button class="switch-direction" :disabled="busy" @click="switchDirection" aria-label="切换方向"><RefreshCw :size="16" /><span>切换方向</span></button><button class="save-button" :class="{ selected: routeSaved }" :aria-pressed="routeSaved" @click="toggleLineSaved" :aria-label="routeSaved ? '取消收藏线路' : '收藏线路'"><Heart :size="19" :fill="routeSaved ? 'currentColor' : 'none'" /><span>{{ routeSaved ? '已收藏' : '收藏' }}</span></button></div><div class="route-meta"><span v-if="route.first">首班 {{ route.first }}</span><span v-if="route.last">末班 {{ route.last }}</span><span v-if="route.stations.length">{{ route.stations.length }} 站</span><button v-if="isXiamen || route.showTimetable" @click="loadTimetable"><Clock3 :size="14" />发车时刻表</button></div><p v-if="route.fareDescription" class="hint">{{ route.fareDescription }}</p></section>
+        <section class="route-heading">
+          <div class="route-top"><h1>{{ route.name }}</h1><div class="route-destination"><span>开往</span><h2>{{ route.to || route.stations.at(-1)?.name }}</h2></div><button class="switch-direction" :disabled="busy" @click="switchDirection" aria-label="切换方向"><RefreshCw :size="16" /><span>切换方向</span></button><button class="save-button" :class="{ selected: routeSaved }" :aria-pressed="routeSaved" @click="toggleLineSaved" :aria-label="routeSaved ? '取消收藏线路' : '收藏线路'"><Heart :size="19" :fill="routeSaved ? 'currentColor' : 'none'" /><span>{{ routeSaved ? '已收藏' : '收藏' }}</span></button></div>
+          <div class="route-meta"><div class="route-basics"><div class="operating-times"><span v-if="route.first">首班 {{ route.first }}</span><span v-if="route.last">末班 {{ route.last }}</span><span v-if="route.stations.length">{{ route.stations.length }} 站</span></div><p v-if="route.fareDescription" class="route-fare">{{ route.fareDescription }}</p></div><button v-if="isXiamen || route.showTimetable" @click="loadTimetable"><Clock3 :size="14" />发车时刻表</button></div>
+        </section>
         <div class="route-layout">
           <section class="route-live">
             <div class="boarding-heading"><div><span class="hint">乘车站</span><h2>{{ selectedRouteStation?.name }}</h2></div><button class="choose-stop" @click="stopFilter = ''; stopDialog = true" aria-label="选择乘车站"><MapPin :size="17" /><span>选择站点</span><ChevronDown :size="16" /></button></div>
-            <p v-if="nextDeparture" class="departure-note">起点预计发车 <strong>{{ nextDeparture }}</strong></p>
-            <div class="arrival-strip"><div class="arrival-highlight" v-for="(item, index) in arrivals" :key="index"><div><strong>{{ arrivalText(item) }}</strong><p v-if="item.timeText">{{ item.timeText }}</p><p v-if="item.distanceText">{{ item.distanceText }}</p><p v-else-if="item.distance !== null">{{ distanceText(item.distance) }}</p><p v-if="item.statusText && item.nextDeparture">计划发车 {{ item.nextDeparture }}</p></div></div><p v-if="!arrivals.length" class="hint">{{ refreshing ? '正在查询到站资料…' : liveError ? '到站查询未完成，请刷新' : '当前没有到站车辆资料' }}</p></div>
+            <p v-if="nextDeparture && !arrivals.some(item => item.nextDeparture === nextDeparture)" class="departure-note">起点预计发车 <strong>{{ nextDeparture }}</strong></p>
+            <div class="arrival-strip"><div class="arrival-highlight" v-for="(item, index) in arrivals" :key="index"><strong>{{ item.timeText || arrivalText(item) }}</strong><p class="arrival-secondary"><span v-if="item.timeText && item.remainingStations !== null">{{ arrivalText(item) }}</span><span v-if="item.distanceText">{{ item.distanceText }}</span><span v-else-if="item.distance !== null">{{ distanceText(item.distance) }}</span><span v-if="item.nextDeparture">计划发车 {{ item.nextDeparture }}</span></p></div><p v-if="!arrivals.length" class="hint">{{ refreshing ? '正在查询到站资料…' : liveError ? '到站查询未完成，请刷新' : '当前没有到站车辆资料' }}</p></div>
             <div v-if="liveError" class="error" role="alert">{{ liveError }}</div>
             <div class="route-panel-bar"><div class="segmented" role="group" aria-label="线路显示内容"><button :class="{ active: routePanel === 'diagram' }" :aria-pressed="routePanel === 'diagram'" @click="routePanel = 'diagram'">站点图</button><button :class="{ active: routePanel === 'vehicles' }" :aria-pressed="routePanel === 'vehicles'" @click="routePanel = 'vehicles'">车辆列表 {{ vehicles.length }}</button></div><button class="text-button" :disabled="refreshing" @click="refreshLive" aria-label="刷新车辆"><RefreshCw :size="17" /><span>{{ refreshing ? '更新中' : '刷新' }}</span></button></div>
-            <template v-if="routePanel === 'diagram'"><RouteDiagram v-if="route.stations.length" :stations="route.stations" :vehicles="vehicles" :selected="selectedOrder" :selectable="true" @select="selectOrder" /><p v-else class="hint">{{ stopsError || (busy ? '正在查询沿途站点…' : '当前方向没有站点资料') }}</p><p class="diagram-caption">左右滑动 · 点击站名选站 · 车辆按上报站序显示</p></template>
-            <template v-else><article v-for="(vehicle, index) in vehicles" :key="`${vehicle.plate}-${index}`" class="vehicle-row"><span class="vehicle-icon"><BusFront :size="19" /></span><div><strong>{{ vehicle.plate }}</strong><p v-if="vehicle.nextStation">下一站 {{ vehicle.nextStation }}</p><p v-if="vehicle.currentStation">所在站段 {{ vehicle.currentStation }}</p><p v-if="vehicle.distanceText">上游距离 {{ vehicle.distanceText }}</p><p v-if="vehicle.dataTime" class="source-note">位置时间 {{ timeText(vehicle.dataTime) }}</p></div></article><p v-if="!vehicles.length && !refreshing && !liveError" class="hint">当前没有返回车辆资料。</p></template>
-            <p class="source-note" v-if="liveTime">查询于 {{ timeText(liveTime) }} · {{ liveError ? '自动更新已暂停，请点击刷新' : '每 20 秒刷新' }}</p>
-            <p v-if="!isXiamen" class="hint national-notice">{{ vehicleNotice }}</p>
-            <details class="data-details"><summary>数据说明</summary><p class="hint">{{ vehicleNotice }}</p><p class="hint" v-if="isXiamen">到站查询显示剩余站数和距离；预计分钟字段的单位仍待确认。</p></details>
+            <template v-if="routePanel === 'diagram'"><RouteDiagram v-if="route.stations.length" :stations="route.stations" :vehicles="vehicles" :selected="selectedOrder" :selectable="true" @select="selectOrder" /><p v-else class="hint">{{ stopsError || (busy ? '正在查询沿途站点…' : '当前方向没有站点资料') }}</p></template>
+            <template v-else><article v-for="(vehicle, index) in vehicles" :key="`${vehicle.plate}-${index}`" class="vehicle-row"><span class="vehicle-icon"><BusFront :size="19" /></span><div><strong>{{ vehicle.plate }}</strong><p>{{ vehiclePosition(vehicle, route.stations) }}</p><p v-if="vehicle.distanceText">上游距离 {{ vehicle.distanceText }}</p><p v-if="vehicle.dataTime" class="source-note">位置时间 {{ timeText(vehicle.dataTime) }}</p></div></article><p v-if="!vehicles.length && !refreshing && !liveError" class="hint">当前没有返回车辆资料。</p></template>
+            <div class="update-note"><span v-if="liveTime">更新 {{ timeText(liveTime) }}</span><InfoTip label="车辆与到站说明"><p>绿色车辆已到站，蓝色车辆位于两站之间。点击站名选择乘车站。图中的途中位置仅表示区间。</p><p>{{ vehicleNotice }}</p><p>预计到站分钟由掌上公交提供，受路况和调度影响。资料每 20 秒更新，车辆状态表示最后一次上报。{{ liveError ? '查询失败后自动更新暂停，点击刷新重新查询。' : '' }}</p></InfoTip></div>
           </section>
-          <section class="route-stops"><p v-if="stopsError" class="error" role="alert">{{ stopsError }}</p><details class="all-stops"><summary>全部 {{ route.stations.length }} 个沿途站点<span>展开列表</span></summary><p v-if="!route.stations.length && !busy && !stopsError" class="hint">上游没有返回这个方向的站点列表。</p><ol class="stop-list"><li v-for="station in route.stations" :key="station.order" :class="{ current: station.order === selectedOrder }"><button class="stop-item" @click="selectOrder(station.order)"><span class="stop-order">{{ station.order }}</span><span>{{ station.name }}<small v-if="station.order === selectedOrder">正在查询此站</small></span><span class="stop-vehicles" v-if="vehicles.some(vehicle => vehicle.order === station.order)"><BusFront :size="15" />{{ vehicles.filter(vehicle => vehicle.order === station.order).length }}</span></button></li></ol></details></section>
+          <section class="route-stops"><p v-if="stopsError" class="error" role="alert">{{ stopsError }}</p><details class="all-stops"><summary>全部 {{ route.stations.length }} 个沿途站点</summary><p v-if="!route.stations.length && !busy && !stopsError" class="hint">上游没有返回这个方向的站点列表。</p><ol class="stop-list"><li v-for="station in route.stations" :key="station.order" :class="{ current: station.order === selectedOrder }"><button class="stop-item" @click="selectOrder(station.order)"><span class="stop-order">{{ station.order }}</span><span>{{ station.name }}<small v-if="station.order === selectedOrder">当前查询</small></span><span class="stop-vehicles" v-if="vehicles.some(vehicle => vehicle.order === station.order && vehicle.positionState === 'at-stop')"><BusFront :size="15" />{{ vehicles.filter(vehicle => vehicle.order === station.order && vehicle.positionState === 'at-stop').length }}</span></button></li></ol></details></section>
         </div>
       </template>
 
@@ -621,27 +681,31 @@ onUnmounted(() => { clearTimeout(timer); document.removeEventListener('visibilit
         <div class="result-list"><button v-for="item in savedLines" :key="`${item.city.key}-${item.name}-${item.direction}`" class="result-row" @click="openSavedLine(item)"><span class="route-number">{{ item.name }}</span><div><strong>往 {{ item.to }}</strong><p>{{ item.city.name }} · {{ item.from }}</p></div><ChevronRight :size="18" /></button></div>
         <div class="section-heading"><h2>收藏站点<span>{{ savedStations.length }}</span></h2></div>
         <div class="result-list"><button v-for="item in savedStations" :key="`${item.city.key}-${stationKey(item.station)}`" class="result-row" @click="openSavedStation(item)"><MapPin :size="22" /><div><strong>{{ item.station.name }}</strong><p>{{ item.city.name }}<span v-if="item.station.number"> · {{ item.station.number }}</span></p></div><ChevronRight :size="18" /></button></div>
-        <div v-if="!savedLines.length && !savedStations.length" class="empty-panel"><Heart :size="30" /><h3>收藏常用线路和站点</h3><p>在线路或站点页面点击“收藏”，下次从这里直接查询。线路收藏会保留开往方向。</p><button class="primary" @click="startSearch('line')">搜索线路</button></div>
+        <div v-if="!savedLines.length && !savedStations.length" class="empty-panel"><Heart :size="30" /><h3>暂无收藏</h3><button class="primary" @click="startSearch()">搜索线路</button><InfoTip label="收藏说明"><p>在线路或站点页面点击收藏。线路收藏会保留开往方向。</p></InfoTip></div>
       </template>
     </main>
-    <footer class="app-footer">公交资料来自厦门公交与掌上公交 H5 · 服务覆盖以查询结果为准</footer>
     <nav class="bottom-nav" aria-label="主导航"><button :class="{ active: view === 'home' }" @click="navigate('home')"><MapPin :size="21" /><span>附近</span></button><button :class="{ active: ['search', 'route', 'station'].includes(view) }" @click="startSearch()"><BusFront :size="22" /><span>查询</span></button><button :class="{ active: view === 'saved' }" @click="navigate('saved')"><Heart :size="21" /><span>收藏</span></button></nav>
   </div>
 
   <QueryDialog :open="cityDialog" labelledby="city-title" @close="cityDialog = false">
     <div class="section-heading"><h2 id="city-title">选择城市</h2><button class="round-button" @click="cityDialog = false" aria-label="关闭城市选择"><X :size="21" /></button></div>
+    <button v-if="locatedCity" class="located-city" @click="chooseCity(locatedCity)"><LocateFixed :size="20" /><span>定位城市 <strong>{{ locatedCity.name }}</strong></span><span>选择</span></button>
     <label class="field">城市名称或拼音<input v-model="cityFilter" placeholder="例如：厦门 / xiamen" autofocus /></label>
-    <p class="hint">{{ cityOptions.length }} 个城市配置 · 可查询资料以接口返回为准</p>
-    <div class="city-list"><button v-for="item in cityOptions" :key="item.key" @click="chooseCity(item)"><strong>{{ item.name }}</strong><span>{{ item.code ? `${item.province} · ${item.code}` : '掌上公交公开城市记录' }}</span><ChevronRight :size="16" /></button></div>
+    <div v-if="!cityFilter.trim()" class="city-browser">
+      <div v-if="selectedProvince" class="province-path"><button class="text-button" @click="selectedProvince = ''" aria-label="返回省份"><ArrowLeft :size="16" />省份</button><strong>{{ selectedProvince }}</strong></div>
+      <div v-else class="province-list" aria-label="省份"><button v-for="province in provinceOptions" :key="province" @click="selectedProvince = province">{{ province }}<ChevronRight :size="16" /></button></div>
+    </div>
+    <div v-if="cityFilter.trim() || selectedProvince" class="city-list"><button v-for="item in cityOptions" :key="item.key" @click="chooseCity(item)"><strong>{{ item.name }}</strong><span v-if="cityFilter.trim()">{{ item.province }}</span><ChevronRight :size="16" /></button><p v-if="!cityOptions.length" class="hint">没有匹配的城市</p></div>
+    <InfoTip label="城市资料说明"><p>省份资料来自掌上公交城市配置。未提供省份的公开记录保留在其他地区。输入名称或拼音可直接查找城市，公交服务覆盖以查询结果为准。</p></InfoTip>
   </QueryDialog>
   <QueryDialog :open="positionDialog" labelledby="position-title" @close="closePositionDialog">
     <div class="section-heading"><h2 id="position-title">选择查询位置</h2><button class="round-button" @click="closePositionDialog" aria-label="关闭位置选择"><X :size="21" /></button></div>
-    <p class="hint">查询城市：{{ city?.name }}。距离将以你选择的位置计算。</p>
+    <div class="position-context"><span>{{ city?.name }}</span><InfoTip label="查询位置说明"><p>距离按所选站点或坐标计算。经纬度使用高德、腾讯地图的 GCJ02 坐标。</p></InfoTip></div>
       <form @submit.prevent="searchPosition"><label class="field">附近的公交站名<input v-model="positionKeyword" placeholder="输入你附近的公交站名" autofocus required /></label><button class="primary full-width" :disabled="positionBusy || !positionKeyword.trim()">查找公交站</button></form>
-      <p v-if="positionSearched" class="hint">{{ positionResults.length ? '选择站点，查询它附近的公交。' : '没有找到站点，请检查站名，或使用地图经纬度。' }}</p>
+      <p v-if="positionSearched && !positionResults.length" class="hint">没有找到站点</p>
       <div class="position-results"><button v-for="item in positionResults" :key="item.name" :disabled="positionBusy" @click="useStationPosition(item.name)"><MapPin :size="18" /><span>{{ item.name }}</span><ChevronRight :size="18" /></button></div>
     <details class="data-details" :open="coordinateVisible" @toggle="coordinateVisible = ($event.target as HTMLDetailsElement).open"><summary>使用地图经纬度</summary>
-      <p class="hint">使用高德、腾讯地图的 GCJ02 经纬度。</p><form @submit.prevent="positionAction(() => useManualPosition())"><div class="coordinate-fields"><label class="field">纬度<input v-model="manualLat" inputmode="decimal" placeholder="例如 24.54" required /></label><label class="field">经度<input v-model="manualLng" inputmode="decimal" placeholder="例如 118.15" required /></label></div><button class="primary full-width" :disabled="positionBusy">查询这个位置附近的站点</button></form>
+      <form @submit.prevent="positionAction(() => useManualPosition())"><div class="coordinate-fields"><label class="field">纬度<input v-model="manualLat" inputmode="decimal" placeholder="例如 24.54" required /></label><label class="field">经度<input v-model="manualLng" inputmode="decimal" placeholder="例如 118.15" required /></label></div><button class="primary full-width" :disabled="positionBusy">查询这个位置附近的站点</button></form>
     </details>
     <button v-if="position && !mapVisible" class="text-button map-button" @click="mapVisible = true">打开地图选择位置</button>
     <StopMap v-if="mapVisible && position" :lat="position.lat" :lng="position.lng" :stations="nearby" @pick="(lat, lng) => positionAction(() => useManualPosition(lat, lng))" />
@@ -649,19 +713,19 @@ onUnmounted(() => { clearTimeout(timer); document.removeEventListener('visibilit
   </QueryDialog>
   <QueryDialog :open="stopDialog" labelledby="stop-title" @close="stopDialog = false">
     <div class="section-heading"><h2 id="stop-title">选择乘车站</h2><button class="round-button" @click="stopDialog = false" aria-label="关闭乘车站选择"><X :size="21" /></button></div>
-    <p class="hint">{{ route?.name }} · 开往 {{ route?.to }}。选择后立即查询该站车辆。</p>
+    <p class="hint">{{ route?.name }} · 开往 {{ route?.to }}</p>
     <label class="field">筛选沿途站点<input v-model="stopFilter" placeholder="输入乘车站名称" autofocus /></label>
     <div class="stop-options"><button v-for="station in matchingStops" :key="station.order" :aria-pressed="station.order === selectedOrder" @click="selectOrder(station.order)"><span class="stop-order">{{ station.order }}</span><span>{{ station.name }}</span><small v-if="station.order === selectedOrder">当前查询</small></button></div>
     <p v-if="!matchingStops.length" class="hint">这个方向没有匹配站点，请检查站名或切换方向。</p>
   </QueryDialog>
   <QueryDialog :open="platformDialog" labelledby="platform-title" @close="platformDialog = false">
     <div class="section-heading"><h2 id="platform-title">选择同名站台</h2><button class="round-button" @click="platformDialog = false" aria-label="关闭站台选择"><X :size="21" /></button></div>
-    <p class="hint">{{ selectedStation?.name }}。打开站台后确认经过线路和开往方向。</p>
+    <p class="hint">{{ selectedStation?.name }}</p>
     <div class="position-results"><button v-for="number in otherPlatforms" :key="number" @click="selectPlatform(number)"><MapPin :size="18" />站台 {{ number }}<ChevronRight :size="18" /></button></div>
     <div class="position-results"><button v-for="(station, index) in nationalPlatforms" :key="stationKey(station)" @click="selectNationalPlatform(station)"><MapPin :size="18" /><span>同名站台 {{ index + 1 }} · {{ station.lat.toFixed(5) }}, {{ station.lng.toFixed(5) }}</span><ChevronRight :size="18" /></button></div>
   </QueryDialog>
   <QueryDialog :open="timetableVisible && !!timetable" labelledby="timetable-title" @close="timetableVisible = false">
     <div class="section-heading"><h2 id="timetable-title">{{ route?.name }} 发车时刻表</h2><button class="round-button" @click="timetableVisible = false" aria-label="关闭时刻表"><X :size="21" /></button></div>
-    <p class="hint">开往 {{ route?.to }}</p><p v-if="timetable?.nextDeparture" class="departure-note">下一班起点预计发车 <strong>{{ timetable.nextDeparture }}</strong></p><details v-for="group in timetableGroups" :key="group.start" class="timetable-period" :class="{ 'current-period': group.current }" open><summary>{{ group.name }}<span>{{ group.times.length }} 班</span></summary><div class="time-grid"><span v-for="(item, index) in group.times" :key="index" :class="{ 'past-time': item.status === 1, 'current-time': item.status === 2 }" :title="item.notes">{{ item.time }}<small v-if="item.noteText">{{ item.noteText }}</small></span></div><p v-for="(item, index) in group.times.filter(time => time.notes)" :key="index" class="hint">{{ item.time }}：{{ item.notes }}</p></details><details v-if="timetable?.tips" class="data-details"><summary>时刻表说明</summary><p class="hint">{{ timetable.tips }}</p></details><p v-if="!timetable?.times.length" class="hint">当前方向没有发车时刻资料。</p>
+    <p class="hint">开往 {{ route?.to }}</p><p v-if="timetable?.nextDeparture" class="departure-note">下一班起点预计发车 <strong>{{ timetable.nextDeparture }}</strong></p><details v-for="group in timetableGroups" :key="group.start" class="timetable-period" :class="{ 'current-period': group.current }" open><summary>{{ group.name }}<span>{{ group.times.length }} 班</span></summary><div class="time-grid"><span v-for="(item, index) in group.times" :key="index" :class="{ 'past-time': item.status === 1, 'current-time': item.status === 2 }" :title="item.notes">{{ item.time }}<small v-if="item.noteText">{{ item.noteText }}</small></span></div><p v-for="(item, index) in group.times.filter(time => time.notes)" :key="index" class="hint">{{ item.time }}：{{ item.notes }}</p></details><InfoTip v-if="timetable?.tips" label="时刻表说明"><p>{{ timetable.tips }}</p></InfoTip><p v-if="!timetable?.times.length" class="hint">当前方向没有发车时刻资料。</p>
   </QueryDialog>
 </template>

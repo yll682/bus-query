@@ -8,10 +8,11 @@ export interface Station {
 export interface RouteStation { name: string; order: number; id?: string; lat?: number; lng?: number }
 export interface Route {
   name: string; id: string | null; direction: string; stations: RouteStation[]
-  from?: string; to?: string; first?: string; last?: string; price?: number; source: string
+  from?: string; to?: string; first?: string; last?: string; source: string
   fareDescription?: string; showTimetable?: boolean
 }
-export interface Vehicle { plate: string; order?: number; nextStation?: string; currentStation?: string; dataTime?: string; distanceText?: string }
+export interface Vehicle { plate: string; order?: number; positionState: 'at-stop' | 'between' | 'unknown'; nextStation?: string; currentStation?: string; dataTime?: string; distanceText?: string }
+export interface SearchResults { lines: LineSummary[]; stations: { name: string }[] }
 export interface Arrival { remainingStations: number | null; distance: number | null; nextDeparture: string | null; to: string; statusText?: string; timeText?: string; distanceText?: string }
 export interface StationBus extends Arrival { name: string; direction: string; plate?: string }
 export interface Result<T> { data: T; fetchedAt: string }

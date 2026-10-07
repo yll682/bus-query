@@ -2,6 +2,7 @@ import os
 
 import requests
 import pytest
+from bus_api_client import XmbusClient, ZsgjClient
 
 
 BASE = os.environ.get("BUS_TEST_URL", "http://127.0.0.1:8765")
@@ -63,8 +64,11 @@ def test_xiamen_live(cities):
         stop = route["stations"][2]
         result = get("/api/vehicles", city=city, name=route["name"], direction=direction, line_id=route["id"], station_id=stop["id"], station_name=stop["name"], station_order=stop["order"], lat=stop["lat"], lng=stop["lng"])["data"]
         assert isinstance(result["vehicles"], list)
+        for vehicle in result["vehicles"]:
+            assert vehicle["positionState"] == {"0": "at-stop", "1": "between"}.get(str(vehicle["inOrOut"]), "unknown")
         arrival = get("/api/arrival", city=city, name=route["name"], direction=direction, station_name=stop["name"], station_order=stop["order"])["data"]
         assert isinstance(arrival, list)
+        assert all("timeText" in item for item in arrival)
         table = get("/api/timetable", city=city, name=route["name"], direction=direction, line_id=route["id"])["data"]
         assert table["times"] and all(isinstance(item, str) for item in table["times"])
 
@@ -122,3 +126,27 @@ def test_shenzhen_route_and_selected_stop(cities):
     assert isinstance(result["vehicles"], list)
     response = requests.get(BASE + "/api/vehicles", params={"city": city, "name": "M200路", "direction": "1", "lat": stop["lat"], "lng": stop["lng"]}, timeout=10)
     assert response.status_code == 422
+
+
+@pytest.mark.parametrize("city_name,keyword", [("厦门市", "高崎"), ("广州市", "公园前")])
+def test_combined_search(cities, city_name, keyword):
+    city = next(item["key"] for item in cities if item["name"] == city_name)
+    result = get("/api/search", city=city, keyword=keyword, kind="all")["data"]
+    assert result["stations"]
+    assert result["lines"] == get("/api/search", city=city, keyword=keyword, kind="line")["data"]
+    assert result["stations"] == get("/api/search", city=city, keyword=keyword, kind="station")["data"]
+
+
+@pytest.mark.parametrize("city_name,line_name,direction", [("厦门市", "91路", "1"), ("厦门市", "91路", "2"), ("广州市", "1路", "1")])
+def test_fare_description_from_source(cities, city_name, line_name, direction):
+    city = next(item for item in cities if item["name"] == city_name)
+    route = get("/api/line", city=city["key"], name=line_name, direction=direction)["data"]
+    client = XmbusClient("bus-web-local") if city["code"] == "0592" else ZsgjClient()
+    try:
+        if city["code"] == "0592":
+            fare = client.query("lineDetail", {"busLineName": line_name})["data"]["comments"]
+        else:
+            fare = client.public_line(city_name, line_name, direction)["commonts"]
+    finally:
+        client.session.close()
+    assert fare and route["fareDescription"] == fare

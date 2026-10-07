@@ -1,5 +1,6 @@
 import os
 import re
+import time
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
@@ -41,7 +42,7 @@ def search_line(page, name):
         page.get_by_role("button", name="搜索", exact=True).click()
     assert response.value.status == 200, response.value.text()
     expect(page.locator(".result-row").first).to_be_visible(timeout=60000)
-    return response.value.json()["data"]
+    return response.value.json()["data"]["lines"]
 
 
 @pytest.mark.parametrize("width,height", [(1280, 900), (390, 844), (320, 720)])
@@ -60,7 +61,8 @@ def test_xiamen_browser(browser, width, height):
     expect(page.locator(".detail-heading h1")).to_have_text(stations[0]["name"])
     page.get_by_role("button", name="收藏站点", exact=True).click()
     expect(page.get_by_role("button", name="取消收藏站点", exact=True)).to_be_visible()
-    page.locator(".brand").click()
+    expect(page.locator(".brand, .city-button")).to_have_count(0)
+    page.get_by_role("navigation", name="主导航").get_by_role("button", name="附近", exact=True).click()
     searches = search_line(page, "91路")
     with page.expect_response(lambda response: "/api/line?" in response.url, timeout=60000) as response:
         page.locator(".result-row").filter(has=page.locator(".route-number", has_text=re.compile(r"^91路$"))).first.click()
@@ -212,7 +214,7 @@ def test_station_name_position_and_platforms(browser, width, height):
     page.on("pageerror", lambda error: failures.append(str(error)))
     page.goto(BASE, wait_until="networkidle")
     expect(page.locator(".location-panel strong")).to_contain_text("自动定位未完成", timeout=30000)
-    expect(page.locator(".search-guidance")).to_contain_text("无需定位也可以搜索线路")
+    expect(page.get_by_role("button", name="搜索线路、公交站名")).to_be_visible()
     page.get_by_role("button", name="切换城市", exact=True).click()
     expect(page.get_by_label("城市名称或拼音")).to_be_focused()
     for _ in range(4):
@@ -278,7 +280,7 @@ def test_station_name_position_and_platforms(browser, width, height):
     context.close()
 
 
-def test_search_return_and_tabs(browser):
+def test_combined_search_and_return(browser):
     context = browser.new_context(viewport={"width": 390, "height": 844})
     page = context.new_page()
     page.goto(BASE, wait_until="networkidle")
@@ -291,13 +293,88 @@ def test_search_return_and_tabs(browser):
     expect(page.locator(".loading")).to_have_count(0, timeout=60000)
     page.get_by_role("button", name="返回搜索结果", exact=True).click()
     expect(page.get_by_label("线路或站点名称")).to_have_value("91路")
-    expect(page.locator(".result-row")).to_have_count(len(searches))
+    expect(page.locator(".search-lines .result-row")).to_have_count(len(searches))
+    expect(page.locator(".search-stations")).to_be_visible()
+    page.get_by_label("线路或站点名称").fill("高崎")
     with page.expect_response(lambda response: "/api/search?" in response.url, timeout=60000) as response:
-        page.get_by_role("group", name="搜索类型").get_by_role("button", name="站点", exact=True).click()
+        page.get_by_role("button", name="搜索", exact=True).click()
     assert response.value.status == 200, response.value.text()
-    assert "kind=station" in response.value.url
-    expect(page.get_by_role("group", name="搜索类型").get_by_role("button", name="站点", exact=True)).to_have_attribute("aria-pressed", "true")
-    expect(page.get_by_label("线路或站点名称")).to_have_value("91路")
+    assert "kind=all" in response.value.url
+    results = response.value.json()["data"]
+    expect(page.locator(".search-lines .result-row")).to_have_count(len(results["lines"]))
+    expect(page.locator(".search-stations .result-row")).to_have_count(len(results["stations"]))
+    assert results["stations"]
+    expect(page.get_by_label("线路或站点名称")).to_have_value("高崎")
+    context.close()
+
+
+@pytest.mark.parametrize("city_name,line_name,width", [("厦门市", "91路", 320), ("广州市", "1路", 390)])
+def test_route_reload_and_vehicle_positions(browser, city_name, line_name, width):
+    context = browser.new_context(viewport={"width": width, "height": 844})
+    page = context.new_page()
+    failures = []
+    page.on("pageerror", lambda error: failures.append(str(error)))
+    page.goto(BASE, wait_until="networkidle")
+    page.get_by_role("button", name="切换城市", exact=True).click()
+    page.get_by_label("城市名称或拼音").fill(city_name)
+    page.locator(".city-list button").filter(has_text=city_name).first.click()
+    search_line(page, line_name)
+    with page.expect_response(lambda response: "/api/line?" in response.url, timeout=60000) as response:
+        page.locator(".search-lines .result-row").first.click()
+    route = response.value.json()["data"]
+    expect(page.locator(".loading")).to_have_count(0, timeout=60000)
+    with page.expect_response(lambda response: "/api/line?" in response.url, timeout=60000) as reverse:
+        page.get_by_role("button", name="切换方向", exact=True).click()
+    route = reverse.value.json()["data"]
+    expect(page.locator(".loading")).to_have_count(0, timeout=60000)
+    stop = route["stations"][-3]
+    with page.expect_response(lambda response: "/api/vehicles?" in response.url, timeout=60000) as live:
+        page.locator(".diagram-stop").nth(len(route["stations"]) - 3).click()
+    assert live.value.status == 200, live.value.text()
+    expect(page.get_by_role("button", name="刷新车辆", exact=True)).to_be_enabled(timeout=60000)
+    vehicles = live.value.json()["data"]["vehicles"]
+    for vehicle in vehicles:
+        if vehicle["positionState"] == "at-stop":
+            label = f"{vehicle['plate']}，已到 "
+            assert page.locator(".diagram-vehicles").evaluate_all("(nodes, label) => nodes.some(node => node.getAttribute('aria-label')?.includes(label))", label)
+        if vehicle["positionState"] == "between":
+            assert page.locator(".diagram-between").evaluate_all("(nodes, plate) => nodes.some(node => node.getAttribute('aria-label')?.includes(plate))", vehicle["plate"])
+    page.get_by_role("group", name="线路显示内容").get_by_role("button", name=re.compile("车辆列表")).click()
+    expect(page.locator(".vehicle-row")).to_have_count(len(vehicles))
+    for vehicle in vehicles:
+        row = page.locator(".vehicle-row").filter(has_text=vehicle["plate"])
+        if vehicle["positionState"] == "at-stop":
+            expect(row).to_contain_text("已到")
+        elif vehicle["positionState"] == "between":
+            expect(row).to_contain_text("途中" if vehicle["order"] > 1 else "正在驶向")
+    with page.expect_response(lambda response: "/api/vehicles?" in response.url, timeout=60000) as restored:
+        page.reload(wait_until="networkidle")
+    assert restored.value.status == 200, restored.value.text()
+    params = parse_qs(urlparse(restored.value.url).query)
+    assert params["direction"] == [route["direction"]] and params["station_order"] == [str(stop["order"])]
+    expect(page.locator(".boarding-heading h2")).to_have_text(stop["name"])
+    expect(page.locator(".route-destination h2")).to_have_text(route["to"])
+    expect(page.get_by_role("group", name="线路显示内容").get_by_role("button", name=re.compile("车辆列表"))).to_have_attribute("aria-pressed", "true")
+    assert parse_qs(urlparse(page.url).query)["panel"] == ["vehicles"]
+    assert not failures, failures
+    context.close()
+
+
+def test_actual_geolocation_completion(browser):
+    context = browser.new_context(permissions=["geolocation"], viewport={"width": 390, "height": 844})
+    page = context.new_page()
+    started = time.monotonic()
+    page.goto(BASE, wait_until="networkidle")
+    expect(page.get_by_role("button", name="重新定位", exact=True)).to_be_enabled(timeout=22000)
+    elapsed = time.monotonic() - started
+    assert elapsed < 25
+    if page.get_by_role("button", name="提高定位精度", exact=True).count():
+        page.get_by_role("button", name="切换城市", exact=True).click()
+        expect(page.locator(".located-city")).to_be_visible()
+    else:
+        expect(page.locator(".location-panel strong")).to_contain_text(re.compile("自动定位未完成|已取得位置"))
+        expect(page.locator(".error")).to_be_visible()
+    (RESULTS / "actual-geolocation.txt").write_text(f"耗时 {elapsed:.2f} 秒\n" + page.locator("body").inner_text(), encoding="utf-8")
     context.close()
 
 
@@ -311,16 +388,15 @@ def test_national_station_search_and_platforms(browser):
     page.get_by_label("城市名称或拼音").fill("guangzhou")
     page.locator(".city-list button").filter(has_text="广州市").click()
     page.get_by_role("button", name="搜索线路、公交站名").click()
-    page.get_by_role("group", name="搜索类型").get_by_role("button", name="站点", exact=True).click()
     page.get_by_label("线路或站点名称").fill("公园前")
     with page.expect_response(lambda response: "/api/search?" in response.url, timeout=60000) as response:
         page.get_by_role("button", name="搜索", exact=True).click()
     assert response.value.status == 200, response.value.text()
-    results = response.value.json()["data"]
+    results = response.value.json()["data"]["stations"]
     assert results
-    expect(page.locator(".result-list button")).to_have_count(len(results))
+    expect(page.locator(".search-stations .result-row")).to_have_count(len(results))
     with page.expect_response(lambda response: "/api/station?" in response.url, timeout=60000) as station_response:
-        page.locator(".result-row").first.click()
+        page.locator(".search-stations .result-row").first.click()
     assert station_response.value.status == 200, station_response.value.text()
     station = station_response.value.json()["data"]
     expect(page.locator(".loading")).to_have_count(0, timeout=60000)
@@ -445,4 +521,86 @@ def test_nearby_live_preview_and_station_rows(browser):
             row = page.locator(".result-row").filter(has=page.locator(".route-number", has_text=re.compile(f"^{re.escape(bus['name'])}$"))).filter(has_text=bus["to"])
             expect(row.first).to_contain_text(f"{bus['remainingStations']} 站")
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+    context.close()
+
+
+@pytest.mark.parametrize("width", [320, 1280])
+def test_province_city_selection(browser, width):
+    context = browser.new_context(viewport={"width": width, "height": 720})
+    page = context.new_page()
+    page.goto(BASE, wait_until="networkidle")
+    response = page.request.get(BASE + "/api/cities")
+    assert response.status == 200
+    cities = response.json()
+    page.get_by_role("button", name="切换城市", exact=True).click()
+    expected = {item["province"] or "其他地区" for item in cities}
+    assert set(page.locator(".province-list button").all_text_contents()) == expected
+    expect(page.locator(".city-list")).to_have_count(0)
+    page.locator(".province-list").get_by_role("button", name="福建", exact=True).click()
+    expect(page.locator(".province-path strong")).to_have_text("福建")
+    assert set(page.locator(".city-list strong").all_text_contents()) == {item["name"] for item in cities if item["province"] == "福建"}
+    page.get_by_role("button", name="返回省份", exact=True).click()
+    expect(page.locator(".province-list")).to_be_visible()
+    page.locator(".province-list").get_by_role("button", name="其他地区", exact=True).click()
+    assert set(page.locator(".city-list strong").all_text_contents()) == {item["name"] for item in cities if not item["province"]}
+    page.get_by_label("城市名称或拼音").fill("guangzhou")
+    page.locator(".city-list button").filter(has_text="广州市").click()
+    expect(page.locator(".city-button")).to_contain_text("广州市")
+    page.get_by_role("button", name="切换城市", exact=True).click()
+    expect(page.get_by_label("城市名称或拼音")).to_have_value("")
+    expect(page.locator(".province-list")).to_be_visible()
+    page.get_by_role("button", name="城市资料说明", exact=True).click()
+    expect(page.locator("dialog[open] .info-content")).to_contain_text("省份资料来自掌上公交城市配置")
+    page.keyboard.press("Escape")
+    expect(page.locator("dialog[open]")).to_have_count(1)
+    expect(page.get_by_role("button", name="城市资料说明", exact=True)).to_be_focused()
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+    assert page.locator(".province-list button").evaluate_all("nodes => nodes.every(node => node.getBoundingClientRect().height >= 44)")
+    page.keyboard.press("Escape")
+    context.close()
+
+
+@pytest.mark.parametrize("city_name,line_name,width", [("厦门市", "91路", 320), ("广州市", "1路", 390)])
+def test_secondary_header_fare_and_information(browser, city_name, line_name, width):
+    context = browser.new_context(viewport={"width": width, "height": 844})
+    page = context.new_page()
+    failures = []
+    page.on("pageerror", lambda error: failures.append(str(error)))
+    page.goto(BASE, wait_until="networkidle")
+    page.get_by_role("button", name="切换城市", exact=True).click()
+    page.get_by_label("城市名称或拼音").fill(city_name)
+    page.locator(".city-list button").filter(has_text=city_name).first.click()
+    search_line(page, line_name)
+    expect(page.locator(".brand, .city-button")).to_have_count(0)
+    with page.expect_response(lambda response: "/api/line?" in response.url, timeout=60000) as response:
+        page.locator(".search-lines .result-row").first.click()
+    assert response.value.status == 200, response.value.text()
+    route = response.value.json()["data"]
+    expect(page.locator(".loading")).to_have_count(0, timeout=60000)
+    expect(page.locator(".brand, .city-button")).to_have_count(0)
+    expect(page.locator(".route-fare")).to_have_text(route["fareDescription"])
+    contrast = page.locator(".route-fare").evaluate(r"""element => {
+        const luminance = color => {
+            const [r, g, b] = color.match(/[\d.]+/g).slice(0, 3).map(Number).map(value => {
+                const channel = value / 255;
+                return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
+            });
+            return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+        };
+        const style = getComputedStyle(element);
+        const text = luminance(style.color), background = luminance(style.backgroundColor);
+        return (Math.max(text, background) + 0.05) / (Math.min(text, background) + 0.05);
+    }""")
+    assert contrast >= 4.5
+    assert "预计到站分钟由掌上公交提供" not in page.locator("body").inner_text()
+    info = page.get_by_role("button", name="车辆与到站说明", exact=True)
+    expect(info).to_have_text("ⓘ")
+    info.click()
+    expect(page.get_by_role("dialog")).to_contain_text("绿色车辆已到站，蓝色车辆位于两站之间")
+    expect(page.get_by_role("dialog")).to_contain_text("预计到站分钟由掌上公交提供")
+    page.keyboard.press("Escape")
+    expect(page.get_by_role("dialog")).to_have_count(0)
+    expect(info).to_be_focused()
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+    assert not failures, failures
     context.close()
