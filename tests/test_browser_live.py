@@ -368,7 +368,9 @@ def test_actual_geolocation_completion(browser):
     expect(page.get_by_role("button", name="重新定位", exact=True)).to_be_enabled(timeout=22000)
     elapsed = time.monotonic() - started
     assert elapsed < 25
-    if page.get_by_role("button", name="提高定位精度", exact=True).count():
+    expect(page.get_by_role("button", name="提高定位精度", exact=True)).to_have_count(0)
+    expect(page.get_by_role("button", name="尝试高精度定位", exact=True)).to_have_count(0)
+    if page.locator(".location-panel.located").count():
         page.get_by_role("button", name="切换城市", exact=True).click()
         expect(page.locator(".located-city")).to_be_visible()
     else:

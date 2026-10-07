@@ -48,7 +48,9 @@ def test_pwa_manifest_installability_and_offline_shell(browser, width):
     }""")
     assert all(icon["actual"] == icon["expected"] for icon in icons)
     assert not any("/api/" in url for url in cache_urls(page))
-    page.get_by_role("button", name="安装到桌面", exact=True).click()
+    expect(page.locator(".pwa-actions button")).to_have_count(1)
+    expect(page.locator(".pwa-actions .info-button")).to_have_count(0)
+    page.get_by_role("button", name="安装候车", exact=True).click()
     expect(page.get_by_role("dialog")).to_contain_text("Safari")
     page.keyboard.press("Escape")
     context.set_offline(True)
@@ -70,10 +72,12 @@ def test_offline_clears_live_vehicles_and_restores_route(browser):
     page.goto(BASE, wait_until="networkidle")
     ready(page)
     page.get_by_role("button", name="搜索线路、公交站名").click()
+    expect(page.locator(".pwa-actions")).to_have_count(0)
     page.get_by_label("线路或站点名称").fill("91路")
     page.get_by_role("button", name="搜索", exact=True).click()
     page.locator(".search-lines .result-row").first.click(timeout=60000)
     expect(page.locator(".loading")).to_have_count(0, timeout=60000)
+    expect(page.locator(".pwa-actions")).to_have_count(0)
     with page.expect_response(lambda response: "/api/vehicles?" in response.url, timeout=60000) as live:
         page.locator(".diagram-stop").nth(19).click()
     assert live.value.status == 200

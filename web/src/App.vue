@@ -257,7 +257,7 @@ async function refreshNearbyBuses() {
   if (current === nearbySequence && view.value === 'home' && !document.hidden) timer = setTimeout(() => void refreshNearbyBuses(), 20000)
 }
 
-async function locate(highAccuracy = false) {
+async function locate() {
   const current = ++locationSequence
   const currentEpoch = epoch
   locating.value = true
@@ -268,7 +268,7 @@ async function locate(highAccuracy = false) {
   try {
     if (!window.isSecureContext) throw new Error('定位需要 HTTPS 或 localhost，请使用安全地址访问。')
     if (!navigator.geolocation) throw new Error('当前浏览器没有提供定位功能。')
-    const result = await new Promise<GeolocationPosition>((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject, { enableHighAccuracy: highAccuracy, timeout: highAccuracy ? 15000 : 8000, maximumAge: highAccuracy ? 0 : 30000 }))
+    const result = await new Promise<GeolocationPosition>((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject, { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }))
     if (current !== locationSequence) return
     const [gpsLng, gpsLat] = transform.wgs84togcj02(result.coords.longitude, result.coords.latitude)
     pendingPosition.value = { lat: gpsLat, lng: gpsLng, source: 'gps', accuracy: result.coords.accuracy }
@@ -641,8 +641,8 @@ onUnmounted(() => { clearTimeout(timer); document.removeEventListener('visibilit
           <div><span class="location-pin"><LocateFixed :size="20" /></span><div><strong>{{ position ? (position.source === 'gps' ? '按当前位置查询' : '按所选位置查询') : locationStatus }}</strong></div></div>
           <div class="location-actions"><button class="text-button" :disabled="locating" @click="locate()"><LocateFixed :size="15" />{{ locating ? '正在定位' : '重新定位' }}</button><button class="text-button" @click="openPositionDialog"><Settings2 :size="15" />选择位置</button></div>
         </section>
-        <p v-if="position?.source === 'gps'" class="hint">定位精度约 {{ Math.round(position.accuracy!) }} 米 <button class="text-button" :disabled="locating" @click="locate(true)">提高定位精度</button></p>
-        <p v-if="locationError" class="error" role="alert">{{ locationError }} <button v-if="!locating && !locationError.includes('权限') && !position" class="text-button" @click="locate(true)">尝试高精度定位</button></p>
+        <p v-if="position?.source === 'gps'" class="hint">定位精度约 {{ Math.round(position.accuracy!) }} 米</p>
+        <p v-if="locationError" class="error" role="alert">{{ locationError }}</p>
         <button v-if="pendingPosition && !position && !locating" class="text-button" @click="useLocatedPosition">确认在 {{ city?.name }}，使用已取得的位置查询</button>
         <div class="section-heading"><h2>附近站点<span v-if="nearby.length">{{ nearby.length }}</span></h2><button v-if="position" class="text-button" :disabled="busy" @click="action(loadNearby)"><RefreshCw :size="15" />刷新</button></div>
         <div v-if="nearest" class="nearby-grid">
@@ -709,7 +709,7 @@ onUnmounted(() => { clearTimeout(timer); document.removeEventListener('visibilit
         <div v-if="!savedLines.length && !savedStations.length" class="empty-panel"><Heart :size="30" /><h3>暂无收藏</h3><button class="primary" @click="startSearch()">搜索线路</button><InfoTip label="收藏说明"><p>在线路或站点页面点击收藏。线路收藏会保留开往方向。</p></InfoTip></div>
       </template>
     </main>
-    <PwaControls />
+    <PwaControls :show-install="view === 'home'" />
     <nav class="bottom-nav" aria-label="主导航"><button :class="{ active: view === 'home' }" @click="navigate('home')"><MapPin :size="21" /><span>附近</span></button><button :class="{ active: ['search', 'route', 'station'].includes(view) }" @click="startSearch()"><BusFront :size="22" /><span>查询</span></button><button :class="{ active: view === 'saved' }" @click="navigate('saved')"><Heart :size="21" /><span>收藏</span></button></nav>
   </div>
 
