@@ -6,8 +6,16 @@
 
 支持 Debian 12 及以上版本、Ubuntu 22.04 及以上版本，需要 root 权限、systemd 和服务器能够访问 GitHub、PyPI 及公交数据服务。
 
+国际线路：
+
 ```bash
 bash <(curl -fsSL https://raw.githubusercontent.com/yll682/bus-query/main/deploy.sh)
+```
+
+国内线路（EdgeOne 加速）：
+
+```bash
+bash <(curl -fsSL https://edgeone.gh-proxy.org/https://raw.githubusercontent.com/yll682/bus-query/main/deploy.sh)
 ```
 
 菜单提供：
