@@ -146,6 +146,19 @@ def unpack(archive_path):
     return target
 
 
+def clean_releases(current):
+    for path in (APP / "releases").iterdir():
+        if path == current:
+            continue
+        if path.is_symlink() or path.resolve().parent != APP / "releases" or path.is_mount():
+            raise ValueError("版本目录路径无效，操作已终止")
+        if json.loads((path / "release.json").read_text())["application"] != MARKER:
+            raise ValueError("版本目录不属于本项目，操作已终止")
+        if any(child.is_mount() for child in path.rglob("*") if not child.is_symlink()):
+            raise ValueError("版本目录包含挂载点，操作已终止")
+        shutil.rmtree(path)
+
+
 def install(args):
     initial = not APP.exists()
     if initial:
@@ -184,8 +197,11 @@ def install(args):
     run("systemctl", "enable", "bus-query")
     run("systemctl", "restart", "bus-query")
     wait_ready(config["port"])
-    shutil.copyfile(Path(__file__), APP / "installer.py")
-    shutil.copyfile(args.unit, APP / "bus-query.service")
+    if Path(__file__).resolve() != APP / "installer.py":
+        shutil.copyfile(Path(__file__), APP / "installer.py")
+    if args.unit.resolve() != APP / "bus-query.service":
+        shutil.copyfile(args.unit, APP / "bus-query.service")
+    clean_releases(target)
     if args.archive is None:
         archive.unlink()
     print(f"安装 / 更新完成：http://127.0.0.1:{config['port']}\n配置文件：{APP / 'config.json'}\n日志：journalctl -u bus-query -f")
@@ -244,7 +260,7 @@ def main():
     args = parser.parse_args()
     if os.geteuid() != 0 or sys.version_info < (3, 10) or not Path("/run/systemd/system").is_dir():
         raise RuntimeError("需要 root 权限、Python 3.10 及以上版本和正在运行的 systemd")
-    with Path("/run/lock/bus-query-installer.lock").open("w") as lock:
+    with Path("/run/bus-query-installer.lock").open("w") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         validate_paths()
         if args.action == "install":

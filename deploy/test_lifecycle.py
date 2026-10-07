@@ -20,7 +20,7 @@ def command(*args):
 
 def get(path):
     with urlopen(f"http://127.0.0.1:{PORT}{path}", timeout=20) as response:
-        return response.read(), dict(response.headers)
+        return response.read(), response.headers
 
 
 def lifecycle(archive):
@@ -30,7 +30,10 @@ def lifecycle(archive):
     subprocess.run(["sudo", "mkdir", str(sentinel)], check=True)
     try:
         command("status")
-        command("install", "--archive", str(archive), "--port", str(PORT))
+        if archive is None:
+            subprocess.run(["sudo", "bash", str(ROOT / "deploy.sh")], input=f"1\n{PORT}\n", text=True, check=True)
+        else:
+            command("install", "--archive", str(archive), "--port", str(PORT))
         config = subprocess.check_output(["sudo", "cat", str(APP / "config.json")])
         current = (APP / "current").resolve()
         assert json.loads(config)["port"] == PORT
@@ -39,7 +42,10 @@ def lifecycle(archive):
         assert 'id="app"' in body.decode()
         assert headers["Permissions-Policy"] == "geolocation=(self)"
         assert len(json.loads(get("/api/cities")[0])) == 575
-        command("install", "--archive", str(archive))
+        if archive is None:
+            subprocess.run(["sudo", "bash", str(ROOT / "deploy.sh")], input="1\n", text=True, check=True)
+        else:
+            command("install", "--archive", str(archive))
         assert subprocess.check_output(["sudo", "cat", str(APP / "config.json")]) == config
         assert (APP / "current").resolve() != current
         subprocess.run(["sudo", "bash", str(ROOT / "deploy.sh")], input="2\n", text=True, check=True)
@@ -63,8 +69,10 @@ def lifecycle(archive):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--archive", type=Path, required=True)
+    source = parser.add_mutually_exclusive_group(required=True)
+    source.add_argument("--archive", type=Path)
+    source.add_argument("--public", action="store_true")
     args = parser.parse_args()
     if os.name != "posix":
         raise RuntimeError("生命周期测试需要 Linux 与 systemd")
-    lifecycle(args.archive.resolve())
+    lifecycle(args.archive.resolve() if args.archive else None)

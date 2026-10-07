@@ -49,3 +49,14 @@ jobs:
         run: |
           tag="build-${GITHUB_RUN_NUMBER}-${GITHUB_SHA:0:8}"
           gh release create "$tag" work/releases/bus-query.zip --target "$GITHUB_SHA" --title "候车 ${tag}" --notes "已构建网页并通过真实 systemd 安装、更新、配置保留、重启和卸载测试。"
+
+  public-install:
+    needs: release
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify public download and deployment menu
+        run: python3 deploy/test_lifecycle.py --public
