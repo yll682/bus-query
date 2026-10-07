@@ -41,6 +41,14 @@ def lifecycle(archive):
         body, headers = get("/")
         assert 'id="app"' in body.decode()
         assert headers["Permissions-Policy"] == "geolocation=(self)"
+        manifest, headers = get("/manifest.webmanifest")
+        pwa = json.loads(manifest)
+        assert pwa["display"] == "standalone" and headers["Cache-Control"] == "no-cache"
+        for icon in pwa["icons"]:
+            assert get(icon["src"])[0]
+        worker, headers = get("/sw.js")
+        assert worker and headers["Cache-Control"] == "no-cache"
+        assert "javascript" in headers["Content-Type"]
         assert len(json.loads(get("/api/cities")[0])) == 575
         if archive is None:
             subprocess.run(["sudo", "bash", str(ROOT / "deploy.sh")], input="1\n", text=True, check=True)

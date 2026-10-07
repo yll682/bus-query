@@ -221,6 +221,9 @@ body:has(dialog[open]) { overflow: hidden; }
 .province-path { display: flex; align-items: center; gap: 12px; font-size: 14px; }
 .coordinate-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .position-context { display: flex; align-items: center; gap: 4px; color: var(--muted); font-size: 12px; }
+.pwa-actions { display: flex; align-items: center; justify-content: flex-end; }
+.pwa-update { position: fixed; bottom: 96px; right: 12px; z-index: 900; display: flex; align-items: center; gap: 8px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 8px; background: white; box-shadow: 0 4px 18px #173f2920; font-size: 13px; }
+.offline-banner { position: fixed; bottom: 76px; left: 50%; transform: translateX(-50%); z-index: 900; width: max-content; max-width: calc(100% - 24px); padding: 8px 12px; color: var(--error); background: #fff0ee; border: 1px solid #f1ceca; border-radius: 6px; font-size: 12px; }
 .full-width { width: 100%; }
 .map-button { margin-top: 16px; }
 .stop-map { height: 340px; border-radius: 8px; margin-top: 12px; }

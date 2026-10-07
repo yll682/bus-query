@@ -25,6 +25,13 @@ def test_real_release_package():
         assert 'id="app"' in archive.read("web/dist/index.html").decode()
         assert "requests==2.31.0" in archive.read("requirements-runtime.txt").decode()
         assert any(name.startswith("web/dist/assets/") and name.endswith(".js") for name in archive.namelist())
+        assert "web/dist/sw.js" in archive.namelist()
+        assert any(name.startswith("web/dist/workbox-") for name in archive.namelist())
+        pwa = json.loads(archive.read("web/dist/manifest.webmanifest"))
+        assert pwa["display"] == "standalone"
+        for icon in pwa["icons"]:
+            assert archive.read("web/dist/" + icon["src"].lstrip("/"))
+        assert archive.read("web/dist/apple-touch-icon-180x180.png")
         assert len(json.loads(archive.read("掌上公交城市配置.json"))) == 500
         assert all(not name.endswith((".apk", ".db", ".log")) for name in archive.namelist())
         assert all(not name.startswith(("work/", "tools/", "另一个AI/", "web/node_modules/", "tests/")) for name in archive.namelist())

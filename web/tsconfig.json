@@ -7,7 +7,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "types": ["vite/client"],
+    "types": ["vite/client", "vite-plugin-pwa/vue"],
     "noEmit": true
   },
   "include": ["src/**/*.ts", "src/**/*.vue", "vite.config.ts"]

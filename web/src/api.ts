@@ -13,7 +13,7 @@ export interface Route {
 }
 export interface Vehicle { plate: string; order?: number; positionState: 'at-stop' | 'between' | 'unknown'; nextStation?: string; currentStation?: string; dataTime?: string; distanceText?: string }
 export interface SearchResults { lines: LineSummary[]; stations: { name: string }[] }
-export interface Arrival { remainingStations: number | null; distance: number | null; nextDeparture: string | null; to: string; statusText?: string; timeText?: string; distanceText?: string }
+export interface Arrival { remainingStations: number | null; distance: number | null; nextDeparture: string | null; to: string; waiting?: boolean; statusText?: string; timeText?: string; distanceText?: string }
 export interface StationBus extends Arrival { name: string; direction: string; plate?: string }
 export interface Result<T> { data: T; fetchedAt: string }
 export interface SavedLine extends LineSummary { city: City }
@@ -25,6 +25,7 @@ export interface Timetable {
 }
 
 export async function api<T>(path: string, params: Record<string, string | number | undefined> = {}, signal?: AbortSignal): Promise<T> {
+  if (!navigator.onLine) throw new Error('当前离线，请联网后查询公交。')
   const query = new URLSearchParams()
   for (const [key, value] of Object.entries(params)) if (value !== undefined) query.set(key, String(value))
   const response = await fetch(`/api/${path}?${query}`, { signal })

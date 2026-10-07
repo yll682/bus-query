@@ -40,6 +40,8 @@ async def request_context(request: Request, call_next):
                              "X-Frame-Options": "DENY"})
     if request.url.path.startswith("/api"):
         response.headers["Cache-Control"] = "no-store"
+    elif request.url.path in {"/sw.js", "/manifest.webmanifest"}:
+        response.headers["Cache-Control"] = "no-cache"
     LOG.info(json.dumps({"requestId": request.state.request_id, "path": request.url.path,
                          "status": response.status_code, "durationMs": round((time.monotonic() - started) * 1000)}))
     return response
@@ -141,3 +143,6 @@ app.mount("/assets", StaticFiles(directory=DIST / "assets"), name="assets")
 @app.get("/")
 def index():
     return FileResponse(DIST / "index.html", headers={"Cache-Control": "no-cache"})
+
+
+app.mount("/", StaticFiles(directory=DIST), name="public")

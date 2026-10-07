@@ -102,12 +102,42 @@ def public_station_bus(item):
 
 
 def public_arrivals(raw):
-    return [{"remainingStations": item["busToStationCount"] if item["busToStationCount"] >= 0 else None,
-             "distance": item["busToStationDistance"] if item["busNumber"] else None,
-             "nextDeparture": item["planTime"] if not item["busNumber"] else None,
+    records = [{"remainingStations": item["busToStationCount"] if item["busNumber"] and item["busToStationCount"] >= 0 else None,
+             "distance": item["busToStationDistance"] if item["busNumber"] and item["busToStationCount"] >= 0 else None,
+             "waiting": not item["busNumber"] or item["busToStationCount"] < 0,
+             "nextDeparture": item["planTime"] if not item["busNumber"] or item["busToStationCount"] < 0 else None,
              "to": item["toStationName"], "plate": item["busNumber"],
              "statusText": item["busToStationTips"], "timeText": item["busToStationTimeTips"],
-             "distanceText": item["busToStationDistanceTips"]} for item in raw["routeOnStationRTimeInfoList"]]
+             "distanceText": item["busToStationDistanceTips"] if item["busNumber"] and item["busToStationCount"] >= 0 else ""} for item in raw["routeOnStationRTimeInfoList"]]
+    return sorted(records, key=arrival_key)
+
+
+def arrival_key(item):
+    return (item["waiting"], item["distance"] is None,
+            item["distance"] if item["distance"] is not None else float("inf"),
+            item["remainingStations"] if item["remainingStations"] is not None else float("inf"))
+
+
+def native_station_bus(item, time_by_line):
+    next_departure = item.get("nextTime")
+    waiting = not item.get("carNo") or bool(next_departure and next_departure.strip())
+    return {"name": item["lineName"], "direction": str(item["upDown"]),
+            "to": item["endStationName"], "plate": item.get("carNo"), "waiting": waiting,
+            "remainingStations": None if waiting else item.get("remainNum"),
+            "distance": None if waiting else item.get("remainDist"),
+            "nextDeparture": next_departure.strip() if next_departure else None,
+            "timeText": time_by_line.get((item["lineName"], str(item["upDown"])), "")}
+
+
+def vehicle_key(item, station_order):
+    order = item["order"]
+    distance = item.get("segmentDistance")
+    distance = distance if distance is not None and distance >= 0 else float("inf")
+    if order is None or item["positionState"] == "unknown":
+        return (2, float("inf"), 0, distance)
+    if order > station_order:
+        return (1, order - station_order, item["positionState"] != "at-stop", distance)
+    return (0, station_order - order, item["positionState"] != "at-stop", distance)
 
 
 def station_public_lines(city_name, station):
@@ -192,11 +222,8 @@ def station_buses(city, name, number, lat, lng):
             with client_resource(ZsgjClient()) as public:
                 times = public.public_station_lines(city["name"], name, lat, lng)["data"]
             time_by_line = {(item["lineName"], str(item["upperOrDown"])): item["neardis"] for item in times}
-            return [{"name": item["lineName"], "direction": str(item["upDown"]),
-                     "to": item["endStationName"], "plate": item.get("carNo"),
-                     "remainingStations": item.get("remainNum"), "distance": item.get("remainDist"),
-                     "nextDeparture": item.get("nextTime"),
-                     "timeText": time_by_line.get((item["lineName"], str(item["upDown"])), "")} for item in raw]
+            records = [native_station_bus(item, time_by_line) for item in raw]
+            return sorted(records, key=arrival_key)
     return cached(("station-buses", city["key"], name, number, lat, lng), query)
 
 
@@ -240,21 +267,27 @@ def vehicles(city, name, direction, line_id, station_id, station_name, station_o
                 raw = client.query("busList", {"busLineId": line_id, "direction": direction,
                                    "stationSeq": station_order, "stationId": station_id,
                                    "stationName": station_name})["data"]
-                return {"vehicles": [{"plate": item["plateNo"], "order": item.get("stationOrder"),
+                # 站间车辆驶向原始站序的下一站。
+                records = [{"plate": item["plateNo"],
+                        "order": item["stationOrder"] + (str(item.get("inOrOut")) == "1") if item.get("stationOrder") is not None else None,
+                        "reportedOrder": item.get("stationOrder"),
                         "inOrOut": item.get("inOrOut"),
                         "positionState": "at-stop" if str(item.get("inOrOut")) == "0" else "between" if str(item.get("inOrOut")) == "1" else "unknown",
                         "nextStation": item.get("nextStationName"), "dataTime": item.get("dataTime"),
-                        "lat": item.get("lat"), "lng": item.get("lng")} for item in raw],
+                        "lat": item.get("lat"), "lng": item.get("lng")} for item in raw]
+                return {"vehicles": sorted(records, key=lambda item: vehicle_key(item, station_order)),
                         "notice": "车辆位置来自上游，站点序号依据厦门公交返回值。"}
             if not station_order:
                 raise QueryError("车辆查询需要选择乘车站", 422)
             raw = client.public_realtime(city["name"], name, direction, station_order)
-            return {"vehicles": [{"plate": item["busNumber"], "order": item["index"] + 1,
+            records = [{"plate": item["busNumber"], "order": item["index"] + 1,
                                   "positionState": "at-stop" if str(item["statusType"]) == "0" else "between" if str(item["statusType"]) == "2" else "unknown",
                                   "currentStation": item["stationName"], "lat": item["bus_lat"], "lng": item["bus_lng"],
                                   "statusType": item["statusType"],
+                                  "segmentDistance": item.get("busToStationNiheDistance"),
                                   "dataTime": datetime.fromtimestamp(item["_recTime"] / 1000, timezone.utc).isoformat()}
-                                 for item in raw.get("list", [])],
+                                 for item in raw.get("list", [])]
+            return {"vehicles": sorted(records, key=lambda item: vehicle_key(item, station_order)),
                     "arrivals": public_arrivals(raw), "hasReal": raw["hasReal"], "runState": raw["runState"],
                     "nextDeparture": raw.get("planTime"), "segments": raw.get("speedlist"),
                     "notice": "这条线路未开通实时数据查询。" if raw["hasReal"] == 0 else "这条线路已停运。" if raw["runState"] == 1 else "到站站数、时间及距离由掌上公交提供，请提前候车。"}

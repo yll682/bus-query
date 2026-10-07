@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, BusFront, ChevronDown, ChevronRight, Clock3, Hea
 import transform from 'coordtransform'
 import QueryDialog from './QueryDialog.vue'
 import InfoTip from './InfoTip.vue'
+import PwaControls from './PwaControls.vue'
 import RouteDiagram from './RouteDiagram.vue'
 import { api, type Arrival, type City, type LineSummary, type Position, type Result, type Route, type SavedLine, type SavedStation, type SearchResults, type Station, type StationBus, type Timetable, type Vehicle } from './api'
 import { vehiclePosition } from './vehiclePosition'
@@ -121,6 +122,7 @@ function message(value: unknown) { return value instanceof Error ? value.message
 function arrivalText(item: Arrival) {
   if (item.statusText) return item.statusText
   if (item.nextDeparture?.trim()) return `计划发车 ${item.nextDeparture.trim()}`
+  if (item.waiting) return '等待发车'
   if (item.remainingStations === null) return '到站信息未提供'
   return item.remainingStations === 0 ? '剩余 0 站，请留意进站车辆' : `还有 ${item.remainingStations} 站`
 }
@@ -536,6 +538,21 @@ function scheduleRefresh() {
   timer = setTimeout(() => { if (!busy.value && !refreshing.value) void refreshLive(); else scheduleRefresh() }, 20000)
 }
 
+function connectionChanged() {
+  if (!navigator.onLine) {
+    clearTimeout(timer)
+    liveSequence++
+    nearbySequence++
+    vehicles.value = []; arrivals.value = []; stationBuses.value = []; nearbyBuses.value = {}
+    liveTime.value = ''; nextDeparture.value = ''; refreshing.value = false
+    liveError.value = '当前离线，请联网后查询公交。'
+    return
+  }
+  if (!city.value || restoring) { void initialize(); return }
+  if (['route', 'station'].includes(view.value)) void refreshLive()
+  else if (view.value === 'home' && position.value) void action(loadNearby)
+}
+
 function visibilityChanged() {
   clearTimeout(timer)
   if (!document.hidden && !refreshing.value && !busy.value && !liveError.value && ['station', 'route'].includes(view.value)) void refreshLive()
@@ -571,14 +588,16 @@ async function loadTimetable() {
   })
 }
 
-onMounted(async () => {
+async function initialize() {
   const params = new URLSearchParams(window.location.search)
   await action(async () => {
     cities.value = await api<City[]>('cities')
     city.value = cities.value.find(item => item.key === (params.get('city') || localStorage.getItem('bus.city'))) || cities.value.find(item => item.code === '0592')!
   })
-  document.addEventListener('visibilitychange', visibilityChanged)
-  if (!city.value) return
+  if (!city.value) {
+    if (!navigator.onLine) locationStatus.value = '当前离线'
+    return
+  }
   if (params.get('view') === 'route' && params.get('line') && ['1', '2'].includes(params.get('direction') || '')) {
     await openLine({ name: params.get('line')!, direction: params.get('direction')!, from: '', to: '' }, params.get('stopName') || undefined, params.has('stop') ? Number(params.get('stop')) : undefined)
     routePanel.value = params.get('panel') === 'vehicles' ? 'vehicles' : 'diagram'
@@ -595,8 +614,14 @@ onMounted(async () => {
   restoring = false
   savePage()
   if (view.value === 'home') void locate()
+}
+onMounted(() => {
+  document.addEventListener('visibilitychange', visibilityChanged)
+  window.addEventListener('offline', connectionChanged)
+  window.addEventListener('online', connectionChanged)
+  void initialize()
 })
-onUnmounted(() => { clearTimeout(timer); document.removeEventListener('visibilitychange', visibilityChanged); locationSequence++; epoch++; liveSequence++; nearbySequence++ })
+onUnmounted(() => { clearTimeout(timer); document.removeEventListener('visibilitychange', visibilityChanged); window.removeEventListener('offline', connectionChanged); window.removeEventListener('online', connectionChanged); locationSequence++; epoch++; liveSequence++; nearbySequence++ })
 </script>
 
 <template>
@@ -668,8 +693,8 @@ onUnmounted(() => { clearTimeout(timer); document.removeEventListener('visibilit
             <div v-if="liveError" class="error" role="alert">{{ liveError }}</div>
             <div class="route-panel-bar"><div class="segmented" role="group" aria-label="线路显示内容"><button :class="{ active: routePanel === 'diagram' }" :aria-pressed="routePanel === 'diagram'" @click="routePanel = 'diagram'">站点图</button><button :class="{ active: routePanel === 'vehicles' }" :aria-pressed="routePanel === 'vehicles'" @click="routePanel = 'vehicles'">车辆列表 {{ vehicles.length }}</button></div><button class="text-button" :disabled="refreshing" @click="refreshLive" aria-label="刷新车辆"><RefreshCw :size="17" /><span>{{ refreshing ? '更新中' : '刷新' }}</span></button></div>
             <template v-if="routePanel === 'diagram'"><RouteDiagram v-if="route.stations.length" :stations="route.stations" :vehicles="vehicles" :selected="selectedOrder" :selectable="true" @select="selectOrder" /><p v-else class="hint">{{ stopsError || (busy ? '正在查询沿途站点…' : '当前方向没有站点资料') }}</p></template>
-            <template v-else><article v-for="(vehicle, index) in vehicles" :key="`${vehicle.plate}-${index}`" class="vehicle-row"><span class="vehicle-icon"><BusFront :size="19" /></span><div><strong>{{ vehicle.plate }}</strong><p>{{ vehiclePosition(vehicle, route.stations) }}</p><p v-if="vehicle.distanceText">上游距离 {{ vehicle.distanceText }}</p><p v-if="vehicle.dataTime" class="source-note">位置时间 {{ timeText(vehicle.dataTime) }}</p></div></article><p v-if="!vehicles.length && !refreshing && !liveError" class="hint">当前没有返回车辆资料。</p></template>
-            <div class="update-note"><span v-if="liveTime">更新 {{ timeText(liveTime) }}</span><InfoTip label="车辆与到站说明"><p>绿色车辆已到站，蓝色车辆位于两站之间。点击站名选择乘车站。图中的途中位置仅表示区间。</p><p>{{ vehicleNotice }}</p><p>预计到站分钟由掌上公交提供，受路况和调度影响。资料每 20 秒更新，车辆状态表示最后一次上报。{{ liveError ? '查询失败后自动更新暂停，点击刷新重新查询。' : '' }}</p></InfoTip></div>
+            <template v-else><article v-for="(vehicle, index) in vehicles" :key="`${vehicle.plate}-${index}`" class="vehicle-row"><span class="vehicle-icon"><BusFront :size="19" /></span><div><strong>{{ vehicle.plate }}</strong><p>{{ vehiclePosition(vehicle, route.stations) }}<span v-if="vehicle.order !== undefined && vehicle.order > selectedOrder!"> · 已驶过乘车站</span></p><p v-if="vehicle.distanceText">上游距离 {{ vehicle.distanceText }}</p><p v-if="vehicle.dataTime" class="source-note">位置时间 {{ timeText(vehicle.dataTime) }}</p></div></article><p v-if="!vehicles.length && !refreshing && !liveError" class="hint">当前没有返回车辆资料。</p></template>
+            <div class="update-note"><span v-if="liveTime">更新 {{ timeText(liveTime) }}</span><InfoTip label="车辆与到站说明"><p>绿色车辆已到站，蓝色车辆位于两站之间。点击站名选择乘车站。图中的途中位置仅表示区间。</p><p>到站车辆按距离从近到远排列。车辆列表根据乘车站和车辆站序排列，已驶过车辆放在后面；同一区间缺少距站资料时保留上游顺序。未发车车辆显示等待或计划时间。</p><p>{{ vehicleNotice }}</p><p>预计到站分钟由掌上公交提供，受路况和调度影响。资料每 20 秒更新，车辆状态表示最后一次上报。{{ liveError ? '查询失败后自动更新暂停，点击刷新重新查询。' : '' }}</p></InfoTip></div>
           </section>
           <section class="route-stops"><p v-if="stopsError" class="error" role="alert">{{ stopsError }}</p><details class="all-stops"><summary>全部 {{ route.stations.length }} 个沿途站点</summary><p v-if="!route.stations.length && !busy && !stopsError" class="hint">上游没有返回这个方向的站点列表。</p><ol class="stop-list"><li v-for="station in route.stations" :key="station.order" :class="{ current: station.order === selectedOrder }"><button class="stop-item" @click="selectOrder(station.order)"><span class="stop-order">{{ station.order }}</span><span>{{ station.name }}<small v-if="station.order === selectedOrder">当前查询</small></span><span class="stop-vehicles" v-if="vehicles.some(vehicle => vehicle.order === station.order && vehicle.positionState === 'at-stop')"><BusFront :size="15" />{{ vehicles.filter(vehicle => vehicle.order === station.order && vehicle.positionState === 'at-stop').length }}</span></button></li></ol></details></section>
         </div>
@@ -684,6 +709,7 @@ onUnmounted(() => { clearTimeout(timer); document.removeEventListener('visibilit
         <div v-if="!savedLines.length && !savedStations.length" class="empty-panel"><Heart :size="30" /><h3>暂无收藏</h3><button class="primary" @click="startSearch()">搜索线路</button><InfoTip label="收藏说明"><p>在线路或站点页面点击收藏。线路收藏会保留开往方向。</p></InfoTip></div>
       </template>
     </main>
+    <PwaControls />
     <nav class="bottom-nav" aria-label="主导航"><button :class="{ active: view === 'home' }" @click="navigate('home')"><MapPin :size="21" /><span>附近</span></button><button :class="{ active: ['search', 'route', 'station'].includes(view) }" @click="startSearch()"><BusFront :size="22" /><span>查询</span></button><button :class="{ active: view === 'saved' }" @click="navigate('saved')"><Heart :size="21" /><span>收藏</span></button></nav>
   </div>
 
