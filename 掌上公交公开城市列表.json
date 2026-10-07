@@ -1,0 +1,1701 @@
+{
+  "data": [
+    {
+      "cityname": "贵阳市"
+    },
+    {
+      "cityname": "长春市"
+    },
+    {
+      "cityname": "常德市"
+    },
+    {
+      "cityname": "义乌市"
+    },
+    {
+      "cityname": "咸宁市"
+    },
+    {
+      "cityname": "江门市"
+    },
+    {
+      "cityname": "定西市"
+    },
+    {
+      "cityname": "吴忠市"
+    },
+    {
+      "cityname": "长宁县"
+    },
+    {
+      "cityname": "黑河市"
+    },
+    {
+      "cityname": "桂平市"
+    },
+    {
+      "cityname": "临高县"
+    },
+    {
+      "cityname": "吉安市"
+    },
+    {
+      "cityname": "迪庆藏族自治州"
+    },
+    {
+      "cityname": "鸡西市"
+    },
+    {
+      "cityname": "义马市"
+    },
+    {
+      "cityname": "临沂市(公交)"
+    },
+    {
+      "cityname": "金华市"
+    },
+    {
+      "cityname": "陇南市"
+    },
+    {
+      "cityname": "武夷山市"
+    },
+    {
+      "cityname": "湘西土家族苗族自治州"
+    },
+    {
+      "cityname": "河池市"
+    },
+    {
+      "cityname": "伊春市"
+    },
+    {
+      "cityname": "福州长乐机场"
+    },
+    {
+      "cityname": "耒阳市"
+    },
+    {
+      "cityname": "安宁区"
+    },
+    {
+      "cityname": "衡阳市"
+    },
+    {
+      "cityname": "威远县"
+    },
+    {
+      "cityname": "新民市"
+    },
+    {
+      "cityname": "盐城市滨海县"
+    },
+    {
+      "cityname": "遂宁市"
+    },
+    {
+      "cityname": "三明市"
+    },
+    {
+      "cityname": "简阳市"
+    },
+    {
+      "cityname": "包头市"
+    },
+    {
+      "cityname": "开封市"
+    },
+    {
+      "cityname": "普洱市"
+    },
+    {
+      "cityname": "达拉特旗"
+    },
+    {
+      "cityname": "黄石市"
+    },
+    {
+      "cityname": "聊城市"
+    },
+    {
+      "cityname": "荆州市"
+    },
+    {
+      "cityname": "资阳市"
+    },
+    {
+      "cityname": "长治市"
+    },
+    {
+      "cityname": "库车市"
+    },
+    {
+      "cityname": "玉溪市"
+    },
+    {
+      "cityname": "延安市"
+    },
+    {
+      "cityname": "当涂县"
+    },
+    {
+      "cityname": "襄阳市"
+    },
+    {
+      "cityname": "永丰县"
+    },
+    {
+      "cityname": "福州市"
+    },
+    {
+      "cityname": "兰州市"
+    },
+    {
+      "cityname": "秦安县"
+    },
+    {
+      "cityname": "张家港市"
+    },
+    {
+      "cityname": "忻州市"
+    },
+    {
+      "cityname": "密云区"
+    },
+    {
+      "cityname": "永安市"
+    },
+    {
+      "cityname": "潜江市"
+    },
+    {
+      "cityname": "临沂沂水"
+    },
+    {
+      "cityname": "威海市"
+    },
+    {
+      "cityname": "德兴市"
+    },
+    {
+      "cityname": "东莞市"
+    },
+    {
+      "cityname": "兴义市"
+    },
+    {
+      "cityname": "朔州市"
+    },
+    {
+      "cityname": "长沙市"
+    },
+    {
+      "cityname": "东阳市"
+    },
+    {
+      "cityname": "宜春市"
+    },
+    {
+      "cityname": "焦作市"
+    },
+    {
+      "cityname": "固安县"
+    },
+    {
+      "cityname": "昌江黎族自治县"
+    },
+    {
+      "cityname": "辽阳市"
+    },
+    {
+      "cityname": "阿坝藏族羌族自治州"
+    },
+    {
+      "cityname": "晋江市"
+    },
+    {
+      "cityname": "烟台市"
+    },
+    {
+      "cityname": "贺州市"
+    },
+    {
+      "cityname": "定兴县"
+    },
+    {
+      "cityname": "晋中市"
+    },
+    {
+      "cityname": "灵宝市"
+    },
+    {
+      "cityname": "哈密市"
+    },
+    {
+      "cityname": "鹤壁市"
+    },
+    {
+      "cityname": "桂林市"
+    },
+    {
+      "cityname": "吐鲁番市"
+    },
+    {
+      "cityname": "乌兰察布市"
+    },
+    {
+      "cityname": "营口市"
+    },
+    {
+      "cityname": "德州市"
+    },
+    {
+      "cityname": "博尔塔拉蒙古自治州"
+    },
+    {
+      "cityname": "东营市"
+    },
+    {
+      "cityname": "永嘉县"
+    },
+    {
+      "cityname": "安陆市"
+    },
+    {
+      "cityname": "胡杨河市"
+    },
+    {
+      "cityname": "长兴县"
+    },
+    {
+      "cityname": "文昌市"
+    },
+    {
+      "cityname": "厦门市1"
+    },
+    {
+      "cityname": "湛江市"
+    },
+    {
+      "cityname": "曼谷"
+    },
+    {
+      "cityname": "阳江市"
+    },
+    {
+      "cityname": "玉环市"
+    },
+    {
+      "cityname": "河源市"
+    },
+    {
+      "cityname": "鹰潭市"
+    },
+    {
+      "cityname": "榆林市"
+    },
+    {
+      "cityname": "蛟河市"
+    },
+    {
+      "cityname": "保亭黎族苗族自治县"
+    },
+    {
+      "cityname": "醴陵市"
+    },
+    {
+      "cityname": "山南市"
+    },
+    {
+      "cityname": "平遥县"
+    },
+    {
+      "cityname": "秦皇岛市"
+    },
+    {
+      "cityname": "怀化市"
+    },
+    {
+      "cityname": "平原县"
+    },
+    {
+      "cityname": "遂昌县"
+    },
+    {
+      "cityname": "亳州市"
+    },
+    {
+      "cityname": "涞源县"
+    },
+    {
+      "cityname": "安庆市"
+    },
+    {
+      "cityname": "重庆市"
+    },
+    {
+      "cityname": "长武县"
+    },
+    {
+      "cityname": "平阳县"
+    },
+    {
+      "cityname": "浮梁县"
+    },
+    {
+      "cityname": "磐石市"
+    },
+    {
+      "cityname": "信阳市"
+    },
+    {
+      "cityname": "新野县"
+    },
+    {
+      "cityname": "随州市"
+    },
+    {
+      "cityname": "新乡市"
+    },
+    {
+      "cityname": "内江市"
+    },
+    {
+      "cityname": "六安市"
+    },
+    {
+      "cityname": "宜昌市远安县"
+    },
+    {
+      "cityname": "塔城地区"
+    },
+    {
+      "cityname": "银川市"
+    },
+    {
+      "cityname": "百色市"
+    },
+    {
+      "cityname": "酒泉市"
+    },
+    {
+      "cityname": "松滋市"
+    },
+    {
+      "cityname": "宁海县"
+    },
+    {
+      "cityname": "平潭综合实验区"
+    },
+    {
+      "cityname": "乐平市"
+    },
+    {
+      "cityname": "宁德市"
+    },
+    {
+      "cityname": "邛崃市"
+    },
+    {
+      "cityname": "湖州市"
+    },
+    {
+      "cityname": "常熟市"
+    },
+    {
+      "cityname": "肇庆粤运"
+    },
+    {
+      "cityname": "靖江市"
+    },
+    {
+      "cityname": "沈阳市"
+    },
+    {
+      "cityname": "武汉市"
+    },
+    {
+      "cityname": "湘潭市"
+    },
+    {
+      "cityname": "莆田市"
+    },
+    {
+      "cityname": "德清县"
+    },
+    {
+      "cityname": "新密市"
+    },
+    {
+      "cityname": "洛阳市"
+    },
+    {
+      "cityname": "廊坊市"
+    },
+    {
+      "cityname": "泰安市"
+    },
+    {
+      "cityname": "株洲市"
+    },
+    {
+      "cityname": "双河市"
+    },
+    {
+      "cityname": "钦州市"
+    },
+    {
+      "cityname": "临夏回族自治州"
+    },
+    {
+      "cityname": "宝鸡市"
+    },
+    {
+      "cityname": "张家口市"
+    },
+    {
+      "cityname": "许昌市"
+    },
+    {
+      "cityname": "金昌市"
+    },
+    {
+      "cityname": "天津市"
+    },
+    {
+      "cityname": "汕尾市"
+    },
+    {
+      "cityname": "张掖市"
+    },
+    {
+      "cityname": "吕梁市"
+    },
+    {
+      "cityname": "商洛市"
+    },
+    {
+      "cityname": "太仆寺旗"
+    },
+    {
+      "cityname": "锡林浩特市"
+    },
+    {
+      "cityname": "阜宁县"
+    },
+    {
+      "cityname": "句容市"
+    },
+    {
+      "cityname": "菏泽市"
+    },
+    {
+      "cityname": "林芝市"
+    },
+    {
+      "cityname": "崇左市"
+    },
+    {
+      "cityname": "合肥市"
+    },
+    {
+      "cityname": "铁岭市"
+    },
+    {
+      "cityname": "通辽市"
+    },
+    {
+      "cityname": "兴城市"
+    },
+    {
+      "cityname": "本溪市"
+    },
+    {
+      "cityname": "杨陵区"
+    },
+    {
+      "cityname": "德阳市"
+    },
+    {
+      "cityname": "彭州市"
+    },
+    {
+      "cityname": "滨州市"
+    },
+    {
+      "cityname": "黄冈市"
+    },
+    {
+      "cityname": "太仓市"
+    },
+    {
+      "cityname": "通化市"
+    },
+    {
+      "cityname": "天门市"
+    },
+    {
+      "cityname": "鄂托克旗"
+    },
+    {
+      "cityname": "抚顺市"
+    },
+    {
+      "cityname": "冷水江市"
+    },
+    {
+      "cityname": "赤峰市"
+    },
+    {
+      "cityname": "龙港市"
+    },
+    {
+      "cityname": "乌苏市"
+    },
+    {
+      "cityname": "沅江市"
+    },
+    {
+      "cityname": "恩平市"
+    },
+    {
+      "cityname": "都安瑶族自治县"
+    },
+    {
+      "cityname": "库尔勒市"
+    },
+    {
+      "cityname": "泰州市"
+    },
+    {
+      "cityname": "常州市"
+    },
+    {
+      "cityname": "红河哈尼族彝族自治州"
+    },
+    {
+      "cityname": "保定市(保运)"
+    },
+    {
+      "cityname": "阿克苏市"
+    },
+    {
+      "cityname": "盘州市"
+    },
+    {
+      "cityname": "萍乡市"
+    },
+    {
+      "cityname": "佛山市"
+    },
+    {
+      "cityname": "保山市"
+    },
+    {
+      "cityname": "南宁市"
+    },
+    {
+      "cityname": "平泉市"
+    },
+    {
+      "cityname": "孝感市"
+    },
+    {
+      "cityname": "昭通市"
+    },
+    {
+      "cityname": "北海市"
+    },
+    {
+      "cityname": "唐山市"
+    },
+    {
+      "cityname": "阳泉市"
+    },
+    {
+      "cityname": "凤凰县"
+    },
+    {
+      "cityname": "文山壮族苗族自治州"
+    },
+    {
+      "cityname": "榆树市"
+    },
+    {
+      "cityname": "郎溪县"
+    },
+    {
+      "cityname": "云浮市"
+    },
+    {
+      "cityname": "自贡市"
+    },
+    {
+      "cityname": "九江市"
+    },
+    {
+      "cityname": "孝义市"
+    },
+    {
+      "cityname": "定州市"
+    },
+    {
+      "cityname": "杭州市"
+    },
+    {
+      "cityname": "淮北市"
+    },
+    {
+      "cityname": "开平市"
+    },
+    {
+      "cityname": "周口市"
+    },
+    {
+      "cityname": "潜山市"
+    },
+    {
+      "cityname": "来宾市"
+    },
+    {
+      "cityname": "潍坊市"
+    },
+    {
+      "cityname": "荥阳市"
+    },
+    {
+      "cityname": "隆德县"
+    },
+    {
+      "cityname": "习酒通勤"
+    },
+    {
+      "cityname": "仁怀市"
+    },
+    {
+      "cityname": "眉山市"
+    },
+    {
+      "cityname": "蒙自市"
+    },
+    {
+      "cityname": "龙岩市"
+    },
+    {
+      "cityname": "锦州市"
+    },
+    {
+      "cityname": "麻城市"
+    },
+    {
+      "cityname": "丽江市"
+    },
+    {
+      "cityname": "惠州市"
+    },
+    {
+      "cityname": "溆浦县"
+    },
+    {
+      "cityname": "太原市"
+    },
+    {
+      "cityname": "咸阳市"
+    },
+    {
+      "cityname": "东山县"
+    },
+    {
+      "cityname": "当阳市"
+    },
+    {
+      "cityname": "鞍山市"
+    },
+    {
+      "cityname": "黄南藏族自治州"
+    },
+    {
+      "cityname": "阿图什市"
+    },
+    {
+      "cityname": "廊坊莱尼线束"
+    },
+    {
+      "cityname": "宁波市"
+    },
+    {
+      "cityname": "甘孜藏族自治州"
+    },
+    {
+      "cityname": "莫罗瓦利"
+    },
+    {
+      "cityname": "济宁市"
+    },
+    {
+      "cityname": "衢州市"
+    },
+    {
+      "cityname": "香港特别行政区"
+    },
+    {
+      "cityname": "漳平市"
+    },
+    {
+      "cityname": "安化县"
+    },
+    {
+      "cityname": "渭南市"
+    },
+    {
+      "cityname": "建湖县"
+    },
+    {
+      "cityname": "驻马店市"
+    },
+    {
+      "cityname": "威县"
+    },
+    {
+      "cityname": "舒兰市"
+    },
+    {
+      "cityname": "兴安盟"
+    },
+    {
+      "cityname": "青岛市"
+    },
+    {
+      "cityname": "都江堰市"
+    },
+    {
+      "cityname": "调兵山市"
+    },
+    {
+      "cityname": "运城市"
+    },
+    {
+      "cityname": "池州市"
+    },
+    {
+      "cityname": "张家界市"
+    },
+    {
+      "cityname": "盐城市射阳县"
+    },
+    {
+      "cityname": "太谷区"
+    },
+    {
+      "cityname": "江山市"
+    },
+    {
+      "cityname": "郴州市"
+    },
+    {
+      "cityname": "连云港市"
+    },
+    {
+      "cityname": "东港市"
+    },
+    {
+      "cityname": "邳州市"
+    },
+    {
+      "cityname": "七台河市"
+    },
+    {
+      "cityname": "达州市"
+    },
+    {
+      "cityname": "徐州市"
+    },
+    {
+      "cityname": "绵阳市"
+    },
+    {
+      "cityname": "厦门市"
+    },
+    {
+      "cityname": "安阳市"
+    },
+    {
+      "cityname": "浏阳市"
+    },
+    {
+      "cityname": "乌鲁木齐市"
+    },
+    {
+      "cityname": "任丘市"
+    },
+    {
+      "cityname": "安康市"
+    },
+    {
+      "cityname": "五家渠市"
+    },
+    {
+      "cityname": "邢台市"
+    },
+    {
+      "cityname": "伊宁市"
+    },
+    {
+      "cityname": "昌都市"
+    },
+    {
+      "cityname": "高安市"
+    },
+    {
+      "cityname": "遵义市"
+    },
+    {
+      "cityname": "兴宁市"
+    },
+    {
+      "cityname": "利辛县"
+    },
+    {
+      "cityname": "天长市"
+    },
+    {
+      "cityname": "扬州市"
+    },
+    {
+      "cityname": "云和县"
+    },
+    {
+      "cityname": "宣恩县"
+    },
+    {
+      "cityname": "富顺县"
+    },
+    {
+      "cityname": "庆阳市"
+    },
+    {
+      "cityname": "监利市"
+    },
+    {
+      "cityname": "开平车站"
+    },
+    {
+      "cityname": "南昌市"
+    },
+    {
+      "cityname": "铜陵市"
+    },
+    {
+      "cityname": "三河市"
+    },
+    {
+      "cityname": "牡丹江市"
+    },
+    {
+      "cityname": "鄂州市"
+    },
+    {
+      "cityname": "曲靖市"
+    },
+    {
+      "cityname": "沙县"
+    },
+    {
+      "cityname": "陵水黎族自治县"
+    },
+    {
+      "cityname": "娄底市"
+    },
+    {
+      "cityname": "顺义区"
+    },
+    {
+      "cityname": "汨罗市"
+    },
+    {
+      "cityname": "六盘水市"
+    },
+    {
+      "cityname": "武穴市"
+    },
+    {
+      "cityname": "大安市"
+    },
+    {
+      "cityname": "临沧市"
+    },
+    {
+      "cityname": "吉林市"
+    },
+    {
+      "cityname": "淮南市"
+    },
+    {
+      "cityname": "郑州市"
+    },
+    {
+      "cityname": "平凉市"
+    },
+    {
+      "cityname": "衡水市"
+    },
+    {
+      "cityname": "平顶山市"
+    },
+    {
+      "cityname": "宁乡市"
+    },
+    {
+      "cityname": "温州市"
+    },
+    {
+      "cityname": "马鞍山市"
+    },
+    {
+      "cityname": "临沂莒南"
+    },
+    {
+      "cityname": "德惠市"
+    },
+    {
+      "cityname": "天水市"
+    },
+    {
+      "cityname": "京山市"
+    },
+    {
+      "cityname": "西宁市"
+    },
+    {
+      "cityname": "丹东市"
+    },
+    {
+      "cityname": "丽水市"
+    },
+    {
+      "cityname": "潮州市"
+    },
+    {
+      "cityname": "松阳县"
+    },
+    {
+      "cityname": "抚州市"
+    },
+    {
+      "cityname": "屯昌县"
+    },
+    {
+      "cityname": "柳州市"
+    },
+    {
+      "cityname": "宿州市"
+    },
+    {
+      "cityname": "沛县"
+    },
+    {
+      "cityname": "固镇县"
+    },
+    {
+      "cityname": "珠海市"
+    },
+    {
+      "cityname": "睢宁县"
+    },
+    {
+      "cityname": "石家庄市"
+    },
+    {
+      "cityname": "南阳市"
+    },
+    {
+      "cityname": "蒲江县"
+    },
+    {
+      "cityname": "台州市"
+    },
+    {
+      "cityname": "峨眉山市"
+    },
+    {
+      "cityname": "哈尔滨市"
+    },
+    {
+      "cityname": "承德市"
+    },
+    {
+      "cityname": "灵璧县"
+    },
+    {
+      "cityname": "赣州市"
+    },
+    {
+      "cityname": "鄂尔多斯市"
+    },
+    {
+      "cityname": "慈溪市"
+    },
+    {
+      "cityname": "海西蒙古族藏族自治州"
+    },
+    {
+      "cityname": "洮南市"
+    },
+    {
+      "cityname": "集安市"
+    },
+    {
+      "cityname": "巢湖市"
+    },
+    {
+      "cityname": "龙海市"
+    },
+    {
+      "cityname": "建始县"
+    },
+    {
+      "cityname": "佳木斯市"
+    },
+    {
+      "cityname": "漯河市"
+    },
+    {
+      "cityname": "广元市"
+    },
+    {
+      "cityname": "绥化市"
+    },
+    {
+      "cityname": "扎鲁特旗"
+    },
+    {
+      "cityname": "海东市"
+    },
+    {
+      "cityname": "梅州市"
+    },
+    {
+      "cityname": "安义县"
+    },
+    {
+      "cityname": "南平市"
+    },
+    {
+      "cityname": "白银市"
+    },
+    {
+      "cityname": "诸城"
+    },
+    {
+      "cityname": "宜兴市"
+    },
+    {
+      "cityname": "邯郸市"
+    },
+    {
+      "cityname": "景德镇市"
+    },
+    {
+      "cityname": "巴音郭楞蒙古自治州"
+    },
+    {
+      "cityname": "平潭县"
+    },
+    {
+      "cityname": "文山州"
+    },
+    {
+      "cityname": "龙泉驿区"
+    },
+    {
+      "cityname": "汉中市"
+    },
+    {
+      "cityname": "民乐县"
+    },
+    {
+      "cityname": "拉萨市"
+    },
+    {
+      "cityname": "呼和浩特市"
+    },
+    {
+      "cityname": "平谷区"
+    },
+    {
+      "cityname": "镇安县"
+    },
+    {
+      "cityname": "梅河口市"
+    },
+    {
+      "cityname": "济源市"
+    },
+    {
+      "cityname": "祁阳市"
+    },
+    {
+      "cityname": "临湘市"
+    },
+    {
+      "cityname": "肇庆市"
+    },
+    {
+      "cityname": "利川市"
+    },
+    {
+      "cityname": "大兴区"
+    },
+    {
+      "cityname": "晋城市"
+    },
+    {
+      "cityname": "白城市"
+    },
+    {
+      "cityname": "涟源市"
+    },
+    {
+      "cityname": "大庆市"
+    },
+    {
+      "cityname": "辛集市"
+    },
+    {
+      "cityname": "新沂市"
+    },
+    {
+      "cityname": "济南市"
+    },
+    {
+      "cityname": "新余市"
+    },
+    {
+      "cityname": "文成县"
+    },
+    {
+      "cityname": "沙湾县"
+    },
+    {
+      "cityname": "巴中市"
+    },
+    {
+      "cityname": "东兴市"
+    },
+    {
+      "cityname": "苏州市"
+    },
+    {
+      "cityname": "铜仁市"
+    },
+    {
+      "cityname": "开化县"
+    },
+    {
+      "cityname": "楚雄市"
+    },
+    {
+      "cityname": "神农架林区"
+    },
+    {
+      "cityname": "宿迁市"
+    },
+    {
+      "cityname": "淄博市"
+    },
+    {
+      "cityname": "盐城市"
+    },
+    {
+      "cityname": "阜阳市"
+    },
+    {
+      "cityname": "黔南布依族苗族自治州"
+    },
+    {
+      "cityname": "昌吉回族自治州"
+    },
+    {
+      "cityname": "防城港市"
+    },
+    {
+      "cityname": "儋州市"
+    },
+    {
+      "cityname": "日喀则市"
+    },
+    {
+      "cityname": "花垣县"
+    },
+    {
+      "cityname": "兴化市"
+    },
+    {
+      "cityname": "甘南藏族自治州"
+    },
+    {
+      "cityname": "荆门市"
+    },
+    {
+      "cityname": "淳安县"
+    },
+    {
+      "cityname": "韶关市"
+    },
+    {
+      "cityname": "灵武市"
+    },
+    {
+      "cityname": "桦甸市"
+    },
+    {
+      "cityname": "双鸭山市"
+    },
+    {
+      "cityname": "白山市"
+    },
+    {
+      "cityname": "漳州港"
+    },
+    {
+      "cityname": "正阳县"
+    },
+    {
+      "cityname": "玉林市"
+    },
+    {
+      "cityname": "黄山市"
+    },
+    {
+      "cityname": "大冶市"
+    },
+    {
+      "cityname": "濮阳市"
+    },
+    {
+      "cityname": "容县"
+    },
+    {
+      "cityname": "阜新市"
+    },
+    {
+      "cityname": "南京市"
+    },
+    {
+      "cityname": "乐山市"
+    },
+    {
+      "cityname": "广安市"
+    },
+    {
+      "cityname": "三门峡市"
+    },
+    {
+      "cityname": "兰溪市"
+    },
+    {
+      "cityname": "成都市"
+    },
+    {
+      "cityname": "镇江市"
+    },
+    {
+      "cityname": "大悟县"
+    },
+    {
+      "cityname": "呼伦贝尔市"
+    },
+    {
+      "cityname": "江阴市"
+    },
+    {
+      "cityname": "深圳市"
+    },
+    {
+      "cityname": "旬阳县"
+    },
+    {
+      "cityname": "临汾市"
+    },
+    {
+      "cityname": "精河县"
+    },
+    {
+      "cityname": "岳阳市"
+    },
+    {
+      "cityname": "衡东县"
+    },
+    {
+      "cityname": "揭阳市"
+    },
+    {
+      "cityname": "阿勒泰市"
+    },
+    {
+      "cityname": "西安市"
+    },
+    {
+      "cityname": "大理白族自治州"
+    },
+    {
+      "cityname": "喀什地区"
+    },
+    {
+      "cityname": "四平市"
+    },
+    {
+      "cityname": "三亚市"
+    },
+    {
+      "cityname": "梧州市"
+    },
+    {
+      "cityname": "雅安市"
+    },
+    {
+      "cityname": "霸州市"
+    },
+    {
+      "cityname": "国防科技大学"
+    },
+    {
+      "cityname": "通山市"
+    },
+    {
+      "cityname": "灵寿县"
+    },
+    {
+      "cityname": "西平县"
+    },
+    {
+      "cityname": "锡林郭勒盟"
+    },
+    {
+      "cityname": "沧州市"
+    },
+    {
+      "cityname": "北京市"
+    },
+    {
+      "cityname": "巴彦淖尔市"
+    },
+    {
+      "cityname": "宁晋县"
+    },
+    {
+      "cityname": "无锡市"
+    },
+    {
+      "cityname": "枣庄市"
+    },
+    {
+      "cityname": "保定市"
+    },
+    {
+      "cityname": "长丰县"
+    },
+    {
+      "cityname": "丹江口市"
+    },
+    {
+      "cityname": "克拉玛依市"
+    },
+    {
+      "cityname": "宜昌市"
+    },
+    {
+      "cityname": "温岭市"
+    },
+    {
+      "cityname": "郧西县"
+    },
+    {
+      "cityname": "恩施市"
+    },
+    {
+      "cityname": "泸州市"
+    },
+    {
+      "cityname": "安顺市"
+    },
+    {
+      "cityname": "寿光市"
+    },
+    {
+      "cityname": "黔东南苗族侗族自治州"
+    },
+    {
+      "cityname": "安吉县"
+    },
+    {
+      "cityname": "北流市"
+    },
+    {
+      "cityname": "巴东县"
+    },
+    {
+      "cityname": "绍兴市"
+    },
+    {
+      "cityname": "厦门市测试"
+    },
+    {
+      "cityname": "齐齐哈尔市"
+    },
+    {
+      "cityname": "天津滨海"
+    },
+    {
+      "cityname": "大同市"
+    },
+    {
+      "cityname": "乌海市"
+    },
+    {
+      "cityname": "临江市"
+    },
+    {
+      "cityname": "海南藏族自治州"
+    },
+    {
+      "cityname": "葫芦岛市"
+    },
+    {
+      "cityname": "丰县"
+    },
+    {
+      "cityname": "黄骅市"
+    },
+    {
+      "cityname": "仙桃市"
+    },
+    {
+      "cityname": "永城市"
+    },
+    {
+      "cityname": "十堰市"
+    },
+    {
+      "cityname": "洋浦经济开发区"
+    },
+    {
+      "cityname": "海口市"
+    },
+    {
+      "cityname": "西双版纳傣族自治州"
+    },
+    {
+      "cityname": "象山县"
+    },
+    {
+      "cityname": "邵阳市"
+    },
+    {
+      "cityname": "敦煌市"
+    },
+    {
+      "cityname": "黔西南布依族苗族自治州"
+    },
+    {
+      "cityname": "朝阳市"
+    },
+    {
+      "cityname": "武威市"
+    },
+    {
+      "cityname": "嘉兴市"
+    },
+    {
+      "cityname": "天峨县"
+    },
+    {
+      "cityname": "射阳县"
+    },
+    {
+      "cityname": "清河县"
+    },
+    {
+      "cityname": "铜川市"
+    },
+    {
+      "cityname": "莱阳市"
+    },
+    {
+      "cityname": "金堂县"
+    },
+    {
+      "cityname": "盘锦市"
+    },
+    {
+      "cityname": "景德镇昌江区"
+    },
+    {
+      "cityname": "益阳市"
+    },
+    {
+      "cityname": "蚌埠市"
+    },
+    {
+      "cityname": "日照市"
+    },
+    {
+      "cityname": "中山市"
+    },
+    {
+      "cityname": "淮安市"
+    },
+    {
+      "cityname": "公主岭市"
+    },
+    {
+      "cityname": "昆明市"
+    },
+    {
+      "cityname": "宣城市"
+    },
+    {
+      "cityname": "贵阳市白云区"
+    },
+    {
+      "cityname": "贵港市"
+    },
+    {
+      "cityname": "福清市"
+    },
+    {
+      "cityname": "永州市"
+    },
+    {
+      "cityname": "吴川市"
+    },
+    {
+      "cityname": "白云区"
+    },
+    {
+      "cityname": "松溪县"
+    },
+    {
+      "cityname": "汕头市"
+    },
+    {
+      "cityname": "阳新县"
+    },
+    {
+      "cityname": "宜宾市"
+    },
+    {
+      "cityname": "扶余市"
+    },
+    {
+      "cityname": "清远市"
+    },
+    {
+      "cityname": "辽源市"
+    },
+    {
+      "cityname": "临沂市"
+    },
+    {
+      "cityname": "上海市"
+    },
+    {
+      "cityname": "嵊州市"
+    },
+    {
+      "cityname": "石嘴山市"
+    },
+    {
+      "cityname": "泉州市"
+    },
+    {
+      "cityname": "中卫市"
+    },
+    {
+      "cityname": "广州市"
+    },
+    {
+      "cityname": "延边州"
+    },
+    {
+      "cityname": "滁州市"
+    },
+    {
+      "cityname": "松原市"
+    },
+    {
+      "cityname": "万宁市"
+    },
+    {
+      "cityname": "赤壁市"
+    },
+    {
+      "cityname": "榆社县"
+    },
+    {
+      "cityname": "上饶市"
+    },
+    {
+      "cityname": "茂名市"
+    },
+    {
+      "cityname": "舟山市"
+    },
+    {
+      "cityname": "樟树市"
+    },
+    {
+      "cityname": "固原市"
+    },
+    {
+      "cityname": "顺平县"
+    },
+    {
+      "cityname": "芜湖市"
+    },
+    {
+      "cityname": "扶绥县"
+    },
+    {
+      "cityname": "毕节市"
+    },
+    {
+      "cityname": "行唐县"
+    },
+    {
+      "cityname": "满洲里市"
+    },
+    {
+      "cityname": "祁东县"
+    },
+    {
+      "cityname": "南通市"
+    },
+    {
+      "cityname": "磐安县"
+    },
+    {
+      "cityname": "商丘市"
+    },
+    {
+      "cityname": "漳州市"
+    },
+    {
+      "cityname": "围场满族蒙古族自治县"
+    },
+    {
+      "cityname": "淳安"
+    },
+    {
+      "cityname": "双辽市"
+    },
+    {
+      "cityname": "海宁市"
+    },
+    {
+      "cityname": "竹山县"
+    }
+  ],
+  "status": 1,
+  "msg": "success"
+}

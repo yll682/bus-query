@@ -1,0 +1,33 @@
+# Managed by yll682/bus-query
+[Unit]
+Description=Bus Query Website
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=bus-query
+Group=bus-query
+WorkingDirectory=/opt/bus-query/current
+EnvironmentFile=/opt/bus-query/.env
+Environment=PYTHONDONTWRITEBYTECODE=1
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/opt/bus-query/current/.venv/bin/python -m uvicorn website.app:app --host 127.0.0.1 --port ${BUS_PORT} --no-access-log --limit-concurrency 64 --timeout-graceful-shutdown 40
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=45
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+CapabilityBoundingSet=
+UMask=0077
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

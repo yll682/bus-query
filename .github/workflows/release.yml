@@ -1,0 +1,51 @@
+name: Build, Verify and Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bus-query-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build website
+        working-directory: web
+        run: |
+          npm ci
+          npm run build
+      - name: Verify release package
+        run: |
+          python -m pip install -r requirements.txt
+          python -m pytest tests/test_release_package.py -q
+          python deploy/build_release.py --output work/releases/bus-query.zip --version "build-${GITHUB_RUN_NUMBER}-${GITHUB_SHA:0:8}"
+      - name: Verify actual systemd lifecycle
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-venv
+          python deploy/test_lifecycle.py --archive work/releases/bus-query.zip
+      - name: Verify shell syntax
+        run: bash -n deploy.sh
+      - name: Publish verified release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="build-${GITHUB_RUN_NUMBER}-${GITHUB_SHA:0:8}"
+          gh release create "$tag" work/releases/bus-query.zip --target "$GITHUB_SHA" --title "候车 ${tag}" --notes "已构建网页并通过真实 systemd 安装、更新、配置保留、重启和卸载测试。"

@@ -1,0 +1,3299 @@
+[
+  {
+    "province": "北京",
+    "cityname": "北京市",
+    "citycode": "010",
+    "citynamepy": "beijing",
+    "serverhost": "010.mygolbs.com"
+  },
+  {
+    "province": "北京",
+    "cityname": "顺义区",
+    "citycode": "010_01",
+    "citynamepy": "beijing",
+    "serverhost": "01001.mygolbs.com",
+    "gongjiao_tel1": "010-69469878",
+    "center": "顺义区",
+    "metrocityname": "北京市"
+  },
+  {
+    "province": "北京",
+    "cityname": "密云区",
+    "citycode": "010_02",
+    "citynamepy": "beijing",
+    "serverhost": "01002.mygolbs.com",
+    "center": "密云区",
+    "metrocityname": "北京市"
+  },
+  {
+    "province": "北京",
+    "cityname": "大兴区",
+    "citycode": "010_03",
+    "citynamepy": "beijing",
+    "serverhost": "01003.mygolbs.com",
+    "center": "大兴区",
+    "metrocityname": "北京市"
+  },
+  {
+    "province": "北京",
+    "cityname": "平谷区",
+    "citycode": "010_04",
+    "citynamepy": "beijing",
+    "serverhost": "01004.mygolbs.com",
+    "center": "平谷区",
+    "metrocityname": "北京市"
+  },
+  {
+    "province": "上海",
+    "cityname": "上海市",
+    "citycode": "021",
+    "citynamepy": "shanghai",
+    "serverhost": "021.mygolbs.com",
+    "centerlat": "31.22410100",
+    "centerlng": "121.44396100"
+  },
+  {
+    "province": "天津",
+    "cityname": "天津市",
+    "citycode": "022",
+    "citynamepy": "tianjin",
+    "serverhost": "022.mygolbs.com",
+    "gongjiao_tel1": "天津公交:96196、滨海公交:968866"
+  },
+  {
+    "province": "重庆",
+    "cityname": "重庆市",
+    "citycode": "023",
+    "citynamepy": "chongqing",
+    "serverhost": "023.mygolbs.com",
+    "gongjiao_tel1": "公交集团:023-16866666、东城公交:023-67180087",
+    "prebusnumber": "渝",
+    "centerlat": "29.561838",
+    "centerlng": "106.55244"
+  },
+  {
+    "province": "福建",
+    "cityname": "福州市",
+    "citycode": "0591",
+    "citynamepy": "fuzhou",
+    "serverhost": "0591.mygolbs.com",
+    "gongjiao_tel1": "集团:968803、闽运:96306、康驰:88052018、马尾:87625615",
+    "prebusnumber": "闽A",
+    "prefix_qidianfache": "起点预计发车（仅供参考）："
+  },
+  {
+    "province": "福建",
+    "cityname": "福清市",
+    "citycode": "0591_01",
+    "serverhost": "059101.mygolbs.com",
+    "gongjiao_tel1": "85268441"
+  },
+  {
+    "province": "福建",
+    "cityname": "平潭县",
+    "citycode": "0591_02",
+    "serverhost": "059102.mygolbs.com",
+    "alias": "平潭综合实验区"
+  },
+  {
+    "province": "福建",
+    "cityname": "厦门市",
+    "citycode": "0592",
+    "citynamepy": "xiamen",
+    "serverdir": "XMMyGoWeb",
+    "serverhost": "0592.mygolbs.com",
+    "gongjiao_tel1": "968828",
+    "guanwang": "http://wap.mygolbs.com",
+    "prebusnumber": "闽D",
+    "fachetip": "本时刻表显示的发车时间为计划发车时间，受路堵、施工等道路通行情况影响，部分发车时间（首末班除外）可能临时调整，以下时间仅供参考"
+  },
+  {
+    "province": "福建",
+    "cityname": "泉州市",
+    "citycode": "0595",
+    "serverdir": "MyBusServerqz",
+    "serverhost": "0595.mygolbs.com",
+    "prebusnumber": "闽C",
+    "gongjiao_tel1": "泉州公交:968856、惠安公交:0595-68182318、南安武荣公交:0595-86360369",
+    "fachetip": "由历史计算得出，仅供参考，请根据实际情况提前候车"
+  },
+  {
+    "province": "福建",
+    "cityname": "漳州市",
+    "citycode": "0596",
+    "serverdir": "MyBusServerzz",
+    "serverhost": "0596.mygolbs.com"
+  },
+  {
+    "province": "福建",
+    "cityname": "宁德市",
+    "citycode": "0593",
+    "serverdir": "MyBusServernd",
+    "serverhost": "0593.mygolbs.com",
+    "gongjiao_tel1": "宁德公交:0593-2832555、福安公交:0593-6383811、福鼎公交:0593-7817522、霞浦城区公交:0593-8893383、屏南县闽运:0593-3339997、拓荣县顺通公交:0593-8366868"
+  },
+  {
+    "province": "福建",
+    "cityname": "龙岩市",
+    "citycode": "0597",
+    "serverdir": "MyBusServerly",
+    "serverhost": "0597.mygolbs.com",
+    "gongjiao_tel1": "0597-2232345",
+    "centerlat": "25.077091",
+    "centerlng": "117.017085"
+  },
+  {
+    "province": "福建",
+    "cityname": "莆田市",
+    "citycode": "0594",
+    "serverdir": "MyBusServerpt",
+    "serverhost": "0594.mygolbs.com",
+    "gongjiao_tel1": "0594-2296933"
+  },
+  {
+    "province": "福建",
+    "cityname": "三明市",
+    "citycode": "0598",
+    "serverdir": "MyBusServersm",
+    "serverhost": "0598.mygolbs.com",
+    "gongjiao_tel1": "市区:0598-8297336、快运:0598-8083897、沙县:0598-8862196、泰宁:0598-7860110、大田:0598-7226707、尤溪:0598-6323209、建宁:0598-3967519、宁化:0598-8719702、清流:0598-5322992、将乐:0598-2322112、明溪:0598-8756616"
+  },
+  {
+    "province": "福建",
+    "cityname": "永安市",
+    "citycode": "0598_02",
+    "serverhost": "059802.mygolbs.com",
+    "gongjiao_tel1": "0598-3834909"
+  },
+  {
+    "province": "福建",
+    "cityname": "南平市",
+    "citycode": "0599",
+    "serverdir": "MyBusServernp",
+    "serverhost": "0599.mygolbs.com",
+    "gongjiao_tel1": "8725038"
+  },
+  {
+    "province": "福建",
+    "cityname": "武夷山市",
+    "citycode": "0599_01",
+    "serverhost": "059901.mygolbs.com"
+  },
+  {
+    "province": "福建",
+    "cityname": "松溪县",
+    "citycode": "0599_02",
+    "serverhost": "059902.mygolbs.com"
+  },
+  {
+    "province": "江西",
+    "cityname": "南昌市",
+    "citycode": "0791",
+    "citynamepy": "nanchang",
+    "serverhost": "0791.mygolbs.com",
+    "gongjiao_tel1": "0791-82164546",
+    "prebusnumber": "赣A"
+  },
+  {
+    "province": "江西",
+    "cityname": "安义县",
+    "citycode": "0791_01",
+    "serverhost": "079101.mygolbs.com"
+  },
+  {
+    "province": "江西",
+    "cityname": "赣州市",
+    "citycode": "0797",
+    "serverhost": "0797.mygolbs.com",
+    "gongjiao_tel1": "0797-8182003、0797-8089688"
+  },
+  {
+    "province": "江西",
+    "cityname": "萍乡市",
+    "citycode": "0799",
+    "serverhost": "0799.mygolbs.com",
+    "gongjiao_tel1": "0799-6833310"
+  },
+  {
+    "province": "江西",
+    "cityname": "宜春市",
+    "citycode": "0795",
+    "serverhost": "0795.mygolbs.com",
+    "serverport": "10008",
+    "gongjiao_tel1": "0795-3231764"
+  },
+  {
+    "province": "江西",
+    "cityname": "樟树市",
+    "citycode": "0795_01",
+    "serverhost": "079501.mygolbs.com"
+  },
+  {
+    "province": "江西",
+    "cityname": "高安市",
+    "citycode": "0795_02",
+    "serverhost": "079502.mygolbs.com",
+    "centerlng": "115.37246100",
+    "centerlat": "28.42696100"
+  },
+  {
+    "province": "江西",
+    "cityname": "九江市",
+    "citycode": "0792",
+    "serverhost": "0792.mygolbs.com",
+    "gongjiao_tel1": "0792-8553416"
+  },
+  {
+    "province": "江西",
+    "cityname": "景德镇市",
+    "citycode": "0798",
+    "serverhost": "0798.mygolbs.com",
+    "gongjiao_tel1": "8280111"
+  },
+  {
+    "province": "江西",
+    "cityname": "乐平市",
+    "citycode": "0798_01",
+    "serverhost": "079801.mygolbs.com"
+  },
+  {
+    "province": "江西",
+    "cityname": "浮梁县",
+    "citycode": "0798_02",
+    "serverhost": "079802.mygolbs.com"
+  },
+  {
+    "province": "江西",
+    "cityname": "景德镇昌江区",
+    "citycode": "0798_03",
+    "serverhost": "079803.mygolbs.com",
+    "centerlng": "117.195023",
+    "centerlat": "29.288465"
+  },
+  {
+    "province": "湖北",
+    "cityname": "宜昌市",
+    "citycode": "0717",
+    "serverhost": "0717.mygolbs.com",
+    "gongjiao_tel1": "0717-6855118"
+  },
+  {
+    "province": "湖北",
+    "cityname": "武穴市",
+    "citycode": "0713_01",
+    "serverhost": "071301.mygolbs.com"
+  },
+  {
+    "province": "湖北",
+    "cityname": "麻城市",
+    "citycode": "0713_02",
+    "serverhost": "071302.mygolbs.com"
+  },
+  {
+    "province": "湖北",
+    "cityname": "当阳市",
+    "citycode": "0717_01",
+    "serverhost": "071701.mygolbs.com"
+  },
+  {
+    "province": "湖北",
+    "cityname": "恩施市",
+    "citycode": "0718",
+    "serverhost": "0718.mygolbs.com",
+    "gongjiao_tel1": "0718-8410379"
+  },
+  {
+    "province": "湖北",
+    "cityname": "宣恩县",
+    "citycode": "0718_01",
+    "serverhost": "071801.mygolbs.com"
+  },
+  {
+    "province": "湖北",
+    "cityname": "建始县",
+    "citycode": "0718_02",
+    "serverhost": "071802.mygolbs.com"
+  },
+  {
+    "province": "湖北",
+    "cityname": "利川市",
+    "citycode": "0718_03",
+    "serverhost": "071803.mygolbs.com"
+  },
+  {
+    "province": "湖北",
+    "cityname": "荆州市",
+    "citycode": "0716",
+    "serverhost": "0716.mygolbs.com"
+  },
+  {
+    "province": "湖北",
+    "cityname": "松滋市",
+    "citycode": "0716_01",
+    "serverhost": "071601.mygolbs.com"
+  },
+  {
+    "province": "湖北",
+    "cityname": "监利市",
+    "citycode": "0716_02",
+    "serverhost": "071602.mygolbs.com"
+  },
+  {
+    "province": "安徽",
+    "cityname": "蚌埠市",
+    "citycode": "0552",
+    "serverhost": "0552.mygolbs.com",
+    "gongjiao_tel1": "0552-4026111"
+  },
+  {
+    "province": "安徽",
+    "cityname": "固镇县",
+    "citycode": "0552_01",
+    "serverhost": "055201.mygolbs.com"
+  },
+  {
+    "province": "广西",
+    "cityname": "南宁市",
+    "citycode": "0771",
+    "citynamepy": "nanning",
+    "serverhost": "0771.mygolbs.com",
+    "gongjiao_tel1": "公交集团:0771-5300220、白马公交:0771-5307886",
+    "prebusnumber": "桂A"
+  },
+  {
+    "province": "广西",
+    "cityname": "柳州市",
+    "citycode": "0772",
+    "gongjiao_tel1": "恒达（市公交）:966366、泰禾公交:6669278",
+    "serverhost": "0772.mygolbs.com"
+  },
+  {
+    "province": "广西",
+    "cityname": "玉林市",
+    "citycode": "0775",
+    "serverhost": "0775.mygolbs.com",
+    "gongjiao_tel1": "0775-3825562"
+  },
+  {
+    "province": "广西",
+    "cityname": "桂平市",
+    "citycode": "0775_01",
+    "serverhost": "077501.mygolbs.com"
+  },
+  {
+    "province": "广西",
+    "cityname": "钦州市",
+    "citycode": "0777",
+    "serverhost": "0777.mygolbs.com",
+    "gongjiao_tel1": "0777-2835954"
+  },
+  {
+    "province": "广东",
+    "cityname": "广州市",
+    "citycode": "020",
+    "citynamepy": "guangzhou",
+    "serverhost": "020.mygolbs.com"
+  },
+  {
+    "province": "广东",
+    "cityname": "深圳市",
+    "citycode": "0755",
+    "citynamepy": "shenzhen",
+    "serverhost": "0755.mygolbs.com"
+  },
+  {
+    "province": "广东",
+    "cityname": "东莞市",
+    "citycode": "0769",
+    "citynamepy": "dongguan",
+    "serverhost": "0769.mygolbs.com"
+  },
+  {
+    "province": "广东",
+    "cityname": "佛山市",
+    "citycode": "0757",
+    "citynamepy": "foshan",
+    "serverhost": "0757.mygolbs.com"
+  },
+  {
+    "province": "广东",
+    "cityname": "汕头市",
+    "citycode": "0754",
+    "serverhost": "0754.mygolbs.com"
+  },
+  {
+    "province": "广东",
+    "cityname": "珠海市",
+    "citycode": "0756",
+    "serverhost": "0756.mygolbs.com"
+  },
+  {
+    "province": "广东",
+    "cityname": "惠州市",
+    "citycode": "0752",
+    "serverhost": "0752.mygolbs.com"
+  },
+  {
+    "province": "广东",
+    "cityname": "中山市",
+    "citycode": "0760",
+    "serverhost": "0760.mygolbs.com",
+    "gongjiao_tel1": "公交集团:0760-87330663、小榄公交:0760-22830687"
+  },
+  {
+    "province": "广东",
+    "cityname": "韶关市",
+    "citycode": "0751",
+    "serverhost": "0751.mygolbs.com"
+  },
+  {
+    "province": "广东",
+    "cityname": "河源市",
+    "citycode": "0762",
+    "serverhost": "0762.mygolbs.com"
+  },
+  {
+    "province": "广东",
+    "cityname": "梅州市",
+    "citycode": "0753",
+    "serverhost": "0753.mygolbs.com"
+  },
+  {
+    "province": "广东",
+    "cityname": "阳江市",
+    "citycode": "0662",
+    "serverhost": "0662.mygolbs.com"
+  },
+  {
+    "province": "广东",
+    "cityname": "湛江市",
+    "citycode": "0759",
+    "serverhost": "0759.mygolbs.com"
+  },
+  {
+    "province": "广东",
+    "cityname": "吴川市",
+    "citycode": "0759_01",
+    "serverhost": "075901.mygolbs.com"
+  },
+  {
+    "province": "广东",
+    "cityname": "茂名市",
+    "citycode": "0668",
+    "serverhost": "0668.mygolbs.com"
+  },
+  {
+    "province": "广东",
+    "cityname": "肇庆市",
+    "citycode": "0758",
+    "serverhost": "0758.mygolbs.com",
+    "gongjiao_tel1": "0758-2721353"
+  },
+  {
+    "province": "广东",
+    "cityname": "清远市",
+    "citycode": "0763",
+    "serverhost": "0763.mygolbs.com"
+  },
+  {
+    "province": "广东",
+    "cityname": "揭阳市",
+    "citycode": "0663",
+    "serverhost": "0663.mygolbs.com",
+    "gongjiao_tel1": "15113753670"
+  },
+  {
+    "province": "广东",
+    "cityname": "云浮市",
+    "citycode": "0766",
+    "serverhost": "0766.mygolbs.com"
+  },
+  {
+    "province": "广东",
+    "cityname": "潮州市",
+    "citycode": "0768",
+    "serverhost": "0768.mygolbs.com"
+  },
+  {
+    "province": "广东",
+    "cityname": "江门市",
+    "citycode": "0750",
+    "serverhost": "0750.mygolbs.com",
+    "gongjiao_tel1": "江门公汽:3365250、新会公汽:3365250、鹤山公汽:8878080、台山公汽:5566355、恩平恒顺:7079719"
+  },
+  {
+    "province": "广东",
+    "cityname": "开平市",
+    "citycode": "0750_01",
+    "serverhost": "075001.mygolbs.com",
+    "gongjiao_tel1": "0750-2290816"
+  },
+  {
+    "province": "广东",
+    "cityname": "恩平市",
+    "citycode": "0750_02",
+    "serverhost": "075002.mygolbs.com"
+  },
+  {
+    "province": "江苏",
+    "cityname": "张家港市",
+    "citycode": "0512_02",
+    "serverhost": "051202.mygolbs.com",
+    "gongjiao_tel1": "0512-962011"
+  },
+  {
+    "province": "江苏",
+    "cityname": "太仓市",
+    "citycode": "0512_03",
+    "serverhost": "051203.mygolbs.com"
+  },
+  {
+    "province": "河南",
+    "cityname": "安阳市",
+    "citycode": "0372",
+    "serverhost": "0372.mygolbs.com",
+    "gongjiao_tel1": "0372-3695315"
+  },
+  {
+    "province": "河南",
+    "cityname": "新乡市",
+    "citycode": "0373",
+    "serverhost": "0373.mygolbs.com",
+    "serverport": "10008",
+    "gongjiao_tel1": "0373-2028000"
+  },
+  {
+    "province": "河北",
+    "cityname": "石家庄市",
+    "citycode": "0311",
+    "citynamepy": "shijiazhuang",
+    "serverhost": "0311.mygolbs.com",
+    "gongjiao_tel1": "96599"
+  },
+  {
+    "province": "河北",
+    "cityname": "辛集市",
+    "citycode": "0311_01",
+    "serverhost": "031101.mygolbs.com"
+  },
+  {
+    "province": "河北",
+    "cityname": "唐山市",
+    "citycode": "0315",
+    "serverhost": "0315.mygolbs.com",
+    "gongjiao_tel1": "0315-5266000、定制公交咨询:0315-7656828",
+    "prefix_qidianfache": "起点预计发车(仅供参考)"
+  },
+  {
+    "province": "河北",
+    "cityname": "迁安市",
+    "citycode": "0315_01",
+    "serverhost": "031501.mygolbs.com"
+  },
+  {
+    "province": "河北",
+    "cityname": "廊坊市",
+    "citycode": "0316",
+    "serverhost": "0316.mygolbs.com",
+    "gongjiao_tel1": "96551"
+  },
+  {
+    "province": "河北",
+    "cityname": "保定市",
+    "citycode": "0312",
+    "alias": "保定市",
+    "region": "保定市",
+    "tips": "1路,2路,3路,4路等...",
+    "serverhost": "0312.mygolbs.com",
+    "gongjiao_tel1": "刷卡乘车咨询:4000888955",
+    "shoumobantip": "仅供参考"
+  },
+  {
+    "province": "河北",
+    "cityname": "定兴县",
+    "citycode": "031203",
+    "serverhost": "031203.mygolbs.com"
+  },
+  {
+    "province": "河北",
+    "cityname": "涞源县",
+    "citycode": "031204",
+    "serverhost": "031204.mygolbs.com"
+  },
+  {
+    "province": "浙江",
+    "cityname": "温州市",
+    "citycode": "0577",
+    "serverhost": "0577.mygolbs.com",
+    "serverport": "8787",
+    "gongzhonghao": "温州交运",
+    "gongjiao_tel1": "96035",
+    "centerlng": "120.70184100",
+    "centerlat": "27.99457700"
+  },
+  {
+    "province": "浙江",
+    "cityname": "文成县",
+    "citycode": "0577_01",
+    "serverhost": "057701.mygolbs.com"
+  },
+  {
+    "province": "浙江",
+    "cityname": "龙港市",
+    "citycode": "0577_02",
+    "serverhost": "057702.mygolbs.com"
+  },
+  {
+    "province": "浙江",
+    "cityname": "永嘉县",
+    "citycode": "0577_03",
+    "serverhost": "057703.mygolbs.com"
+  },
+  {
+    "province": "浙江",
+    "cityname": "平阳县",
+    "citycode": "0577_04",
+    "serverhost": "057704.mygolbs.com"
+  },
+  {
+    "province": "湖南",
+    "cityname": "株洲市",
+    "citycode": "0731_01",
+    "serverhost": "073101.mygolbs.com"
+  },
+  {
+    "province": "湖南",
+    "cityname": "浏阳市",
+    "citycode": "0731_02",
+    "serverhost": "073102.mygolbs.com"
+  },
+  {
+    "province": "湖南",
+    "cityname": "宁乡市",
+    "citycode": "0731_03",
+    "gongjiao_tel1": "宁乡公汽:0731-87824777",
+    "serverhost": "073103.mygolbs.com"
+  },
+  {
+    "province": "湖南",
+    "cityname": "湘潭市",
+    "citycode": "0731_04",
+    "serverhost": "073104.mygolbs.com",
+    "gongjiao_tel1": "市公交:0731-58221436、湘运公交:0731-55555113、湘潭县公交:0731-57839666、湘乡公交:0731-56558881、韶山湘运:0731-55666658"
+  },
+  {
+    "province": "湖南",
+    "cityname": "醴陵市",
+    "citycode": "0731_05",
+    "serverhost": "073105.mygolbs.com"
+  },
+  {
+    "province": "江苏",
+    "cityname": "常州市",
+    "citycode": "0519",
+    "serverhost": "0519.mygolbs.com"
+  },
+  {
+    "province": "海南",
+    "cityname": "海口市",
+    "citycode": "0898",
+    "serverhost": "0898.mygolbs.com"
+  },
+  {
+    "province": "浙江",
+    "cityname": "杭州市",
+    "citycode": "0571",
+    "citynamepy": "hangzhou",
+    "serverhost": "0571.mygolbs.com"
+  },
+  {
+    "province": "浙江",
+    "cityname": "淳安县",
+    "citycode": "0571_01",
+    "citynamepy": "chunan",
+    "serverhost": "057101.mygolbs.com"
+  },
+  {
+    "province": "江苏",
+    "cityname": "南京市",
+    "citycode": "025",
+    "citynamepy": "nanjing",
+    "serverhost": "025.mygolbs.com",
+    "gongjiao_tel1": "96155"
+  },
+  {
+    "province": "云南",
+    "cityname": "昆明市",
+    "citycode": "0871",
+    "citynamepy": "kunming",
+    "serverhost": "0871.mygolbs.com"
+  },
+  {
+    "province": "辽宁",
+    "cityname": "沈阳市",
+    "citycode": "024",
+    "citynamepy": "shenyang",
+    "serverhost": "024.mygolbs.com"
+  },
+  {
+    "province": "四川",
+    "cityname": "成都市",
+    "citycode": "028",
+    "citynamepy": "chengdu",
+    "serverhost": "028.mygolbs.com"
+  },
+  {
+    "province": "甘肃",
+    "cityname": "临夏回族自治州",
+    "citycode": "0930",
+    "serverhost": "0930.mygolbs.com"
+  },
+  {
+    "province": "甘肃",
+    "cityname": "兰州市",
+    "citycode": "0931",
+    "serverhost": "0931.mygolbs.com",
+    "gongjiao_tel1": "市公交:2619315"
+  },
+  {
+    "province": "黑龙江",
+    "cityname": "哈尔滨市",
+    "citycode": "0451",
+    "citynamepy": "haerbin",
+    "serverhost": "0451.mygolbs.com"
+  },
+  {
+    "province": "安徽",
+    "cityname": "合肥市",
+    "citycode": "0551",
+    "serverhost": "0551.mygolbs.com",
+    "gongjiao_tel1": "0551-96166"
+  },
+  {
+    "province": "吉林",
+    "cityname": "长春市",
+    "citycode": "0431",
+    "citynamepy": "changchun",
+    "serverhost": "0431.mygolbs.com",
+    "gongjiao_tel1": "公交集团:0431-96679、圆通:0431-85930001、亨通:0431-87634588、坤隆:13514466767、江洋:13009009323、创纪:0431-87628881、大地:0431-85955270、实天:17057931111、明阳:13500804724、公路客运:0431-84947546、国兴:96679、吉林双兴:13644473888、宏运:13843034063、双阳:0431-83835572、农安:15947886776"
+  },
+  {
+    "province": "吉林",
+    "cityname": "榆树市",
+    "citycode": "0431_01",
+    "serverhost": "043101.mygolbs.com"
+  },
+  {
+    "province": "吉林",
+    "cityname": "公主岭市",
+    "citycode": "0431_02",
+    "serverhost": "043102.mygolbs.com"
+  },
+  {
+    "province": "吉林",
+    "cityname": "德惠市",
+    "citycode": "0431_03",
+    "serverhost": "043103.mygolbs.com"
+  },
+  {
+    "province": "山东",
+    "cityname": "济南市",
+    "citycode": "0531",
+    "serverhost": "0531.mygolbs.com"
+  },
+  {
+    "province": "山东",
+    "cityname": "青岛市",
+    "citycode": "0532",
+    "citynamepy": "qingdao",
+    "serverhost": "0532.mygolbs.com",
+    "gongjiao_tel1": "85929111",
+    "centerlat": "36.068774",
+    "centerlng": "120.380921"
+  },
+  {
+    "province": "江苏",
+    "cityname": "苏州市",
+    "citycode": "0512",
+    "citynamepy": "suzhou",
+    "serverhost": "0512.mygolbs.com"
+  },
+  {
+    "province": "浙江",
+    "cityname": "诸暨市",
+    "citycode": "0575_01",
+    "serverhost": "057501.mygolbs.com"
+  },
+  {
+    "province": "湖北",
+    "cityname": "武汉市",
+    "citycode": "027",
+    "citynamepy": "wuhan",
+    "serverhost": "027.mygolbs.com"
+  },
+  {
+    "province": "湖南",
+    "cityname": "长沙市",
+    "citycode": "0731",
+    "citynamepy": "changsha",
+    "serverhost": "0731.mygolbs.com",
+    "gongjiao_tel1": "市区公交:0731-85671110、12328、望城服务热线:88239596、望城监督电话:88100323"
+  },
+  {
+    "province": "湖南",
+    "cityname": "湘西土家族苗族自治州",
+    "citycode": "0743",
+    "serverhost": "0743.mygolbs.com",
+    "alias": "湘西州",
+    "gongjiao_tel1": "吉首公交:0743-8713741、乾城气运:0743-8512200"
+  },
+  {
+    "province": "湖南",
+    "cityname": "花垣县",
+    "citycode": "0743_01",
+    "serverhost": "074301.mygolbs.com"
+  },
+  {
+    "province": "湖南",
+    "cityname": "张家界市",
+    "citycode": "0744",
+    "serverhost": "0744.mygolbs.com"
+  },
+  {
+    "province": "河南",
+    "cityname": "郑州市",
+    "citycode": "0371",
+    "citynamepy": "zhengzhou",
+    "serverhost": "0371.mygolbs.com",
+    "centerlat": "34.747422",
+    "centerlng": "113.623341"
+  },
+  {
+    "province": "山西",
+    "cityname": "太原市",
+    "citycode": "0351",
+    "serverhost": "0351.mygolbs.com",
+    "gongjiao_tel1": "刷卡乘车咨询:4000888955"
+  },
+  {
+    "province": "山西",
+    "cityname": "大同市",
+    "citycode": "0352",
+    "serverhost": "0352.mygolbs.com"
+  },
+  {
+    "province": "宁夏",
+    "cityname": "银川市",
+    "citycode": "0951",
+    "serverhost": "0951.mygolbs.com",
+    "gongjiao_tel1": "96196"
+  },
+  {
+    "province": "宁夏",
+    "cityname": "灵武市",
+    "citycode": "0951_01",
+    "serverhost": "095101.mygolbs.com",
+    "gongjiao_tel1": "8613592"
+  },
+  {
+    "province": "宁夏",
+    "cityname": "石嘴山市",
+    "citycode": "0952",
+    "serverhost": "0952.mygolbs.com"
+  },
+  {
+    "province": "青海",
+    "cityname": "西宁市",
+    "citycode": "0971",
+    "serverhost": "0971.mygolbs.com"
+  },
+  {
+    "province": "青海",
+    "cityname": "海东市",
+    "citycode": "0972",
+    "serverhost": "0972.mygolbs.com"
+  },
+  {
+    "province": "青海",
+    "cityname": "黄南藏族自治州",
+    "citycode": "0973",
+    "serverhost": "0973.mygolbs.com"
+  },
+  {
+    "province": "青海",
+    "cityname": "海南藏族自治州",
+    "citycode": "0974",
+    "serverhost": "0974.mygolbs.com",
+    "centerlat": "36.04059400",
+    "centerlng": "101.43437200"
+  },
+  {
+    "province": "青海",
+    "cityname": "海西蒙古族藏族自治州",
+    "alias": "海西州",
+    "citycode": "0979",
+    "serverhost": "0979.mygolbs.com"
+  },
+  {
+    "province": "贵州",
+    "cityname": "贵阳市",
+    "citycode": "0851",
+    "serverhost": "0851.mygolbs.com",
+    "gongjiao_tel1": "0851-85986000",
+    "fachetip": "首站发车时间，请提前到站候车"
+  },
+  {
+    "province": "西藏",
+    "cityname": "拉萨市",
+    "citycode": "0891",
+    "serverhost": "0891.mygolbs.com"
+  },
+  {
+    "province": "西藏",
+    "cityname": "日喀则市",
+    "citycode": "0892",
+    "serverhost": "0892.mygolbs.com",
+    "gongjiao_tel1": "友谊公交客运:0892-8350123"
+  },
+  {
+    "province": "西藏",
+    "cityname": "山南市",
+    "citycode": "0893",
+    "serverhost": "0893.mygolbs.com"
+  },
+  {
+    "province": "内蒙古",
+    "cityname": "呼伦贝尔市",
+    "citycode": "0470",
+    "serverhost": "0470.mygolbs.com"
+  },
+  {
+    "province": "内蒙古",
+    "cityname": "呼和浩特市",
+    "citycode": "0471",
+    "serverhost": "0471.mygolbs.com"
+  },
+  {
+    "province": "内蒙古",
+    "cityname": "包头市",
+    "citycode": "0472",
+    "serverhost": "0472.mygolbs.com"
+  },
+  {
+    "province": "内蒙古",
+    "cityname": "锡林浩特市",
+    "citycode": "0479",
+    "serverhost": "0479.mygolbs.com",
+    "gongjiao_tel1": "0479-8101803"
+  },
+  {
+    "province": "内蒙古",
+    "cityname": "太仆寺旗",
+    "citycode": "0479_02",
+    "serverhost": "047902.mygolbs.com"
+  },
+  {
+    "province": "内蒙古",
+    "cityname": "兴安盟",
+    "citycode": "0482",
+    "center": "乌兰浩特市",
+    "serverhost": "0482.mygolbs.com",
+    "gongjiao_tel1": "乌兰浩特公汽:0482-8210858"
+  },
+  {
+    "province": "内蒙古",
+    "cityname": "赤峰市",
+    "citycode": "0476",
+    "centerlat": "42.039663",
+    "centerlng": "119.283538",
+    "serverhost": "0476.mygolbs.com"
+  },
+  {
+    "province": "内蒙古",
+    "cityname": "乌海市",
+    "citycode": "0473",
+    "serverhost": "0473.mygolbs.com",
+    "gongjiao_tel1": "0473-2033203"
+  },
+  {
+    "province": "内蒙古",
+    "cityname": "乌兰察布市",
+    "citycode": "0474",
+    "serverhost": "0474.mygolbs.com"
+  },
+  {
+    "province": "内蒙古",
+    "cityname": "通辽市",
+    "citycode": "0475",
+    "serverhost": "0475.mygolbs.com"
+  },
+  {
+    "province": "内蒙古",
+    "cityname": "扎鲁特旗",
+    "citycode": "0475_01",
+    "serverhost": "047501.mygolbs.com"
+  },
+  {
+    "province": "内蒙古",
+    "cityname": "鄂尔多斯市",
+    "citycode": "0477",
+    "serverhost": "0477.mygolbs.com",
+    "gongjiao_tel1": "0477-8373825"
+  },
+  {
+    "province": "内蒙古",
+    "cityname": "达拉特旗",
+    "citycode": "0477_01",
+    "serverhost": "047701.mygolbs.com",
+    "gongjiao_tel1": "0477-3968519"
+  },
+  {
+    "province": "内蒙古",
+    "cityname": "鄂托克旗",
+    "citycode": "0477_02",
+    "serverhost": "047702.mygolbs.com"
+  },
+  {
+    "province": "内蒙古",
+    "cityname": "巴彦淖尔市",
+    "citycode": "0478",
+    "serverhost": "0478.mygolbs.com"
+  },
+  {
+    "province": "新疆",
+    "cityname": "阿克苏市",
+    "citycode": "0997",
+    "serverhost": "0997.mygolbs.com"
+  },
+  {
+    "province": "新疆",
+    "cityname": "伊宁市",
+    "citycode": "0999_01",
+    "center": "伊宁市",
+    "region": "伊犁哈萨克自治州",
+    "serverhost": "099901.mygolbs.com",
+    "gongjiao_tel1": "伊宁公交集团:0999-8222717、察县通惠公交:13109056978"
+  },
+  {
+    "province": "江苏",
+    "cityname": "连云港市",
+    "citycode": "0518",
+    "serverhost": "0518.mygolbs.com",
+    "center": "东海县"
+  },
+  {
+    "province": "江苏",
+    "cityname": "南通市",
+    "citycode": "0513",
+    "serverhost": "0513.mygolbs.com",
+    "gongjiao_tel1": "市公交:0513-85896196、海门飞鹤:0513-82199300、启东飞鹤:0513-80921182"
+  },
+  {
+    "province": "江苏",
+    "cityname": "徐州市",
+    "citycode": "0516",
+    "serverhost": "0516.mygolbs.com",
+    "gongjiao_tel1": "96889611"
+  },
+  {
+    "province": "江苏",
+    "cityname": "沛县",
+    "citycode": "0516_01",
+    "serverhost": "051601.mygolbs.com",
+    "gongjiao_tel1": "0516-89631022"
+  },
+  {
+    "province": "江苏",
+    "cityname": "邳州市",
+    "citycode": "0516_02",
+    "serverhost": "051602.mygolbs.com"
+  },
+  {
+    "province": "江苏",
+    "cityname": "丰县",
+    "citycode": "0516_03",
+    "centerlat": "34.70",
+    "centerlng": "116.66",
+    "serverhost": "051603.mygolbs.com"
+  },
+  {
+    "province": "江苏",
+    "cityname": "睢宁县",
+    "citycode": "0516_04",
+    "serverhost": "051604.mygolbs.com"
+  },
+  {
+    "province": "江苏",
+    "cityname": "新沂市",
+    "citycode": "0516_05",
+    "serverhost": "051605.mygolbs.com"
+  },
+  {
+    "province": "江苏",
+    "cityname": "泰州市",
+    "citycode": "0523",
+    "serverhost": "0523.mygolbs.com"
+  },
+  {
+    "province": "江苏",
+    "cityname": "兴化市",
+    "citycode": "0523_01",
+    "serverhost": "052301.mygolbs.com",
+    "gongjiao_tel1": "公交:0523-83321698、城乡:0523-83379103"
+  },
+  {
+    "province": "江苏",
+    "cityname": "靖江市",
+    "citycode": "0523_02",
+    "serverhost": "052302.mygolbs.com"
+  },
+  {
+    "province": "江苏",
+    "cityname": "扬州市",
+    "citycode": "0514",
+    "serverhost": "0514.mygolbs.com"
+  },
+  {
+    "province": "江苏",
+    "cityname": "无锡市",
+    "citycode": "0510",
+    "citynamepy": "wuxi",
+    "serverhost": "0510.mygolbs.com",
+    "gongjiao_tel1": "无锡新区公共交通有限公司:0510-85210091"
+  },
+  {
+    "province": "江苏",
+    "cityname": "江阴市",
+    "citycode": "0510_01",
+    "serverhost": "051001.mygolbs.com",
+    "gongjiao_tel1": "城镇公交:0510-86100222、城市公交:0510-86021995"
+  },
+  {
+    "province": "江苏",
+    "cityname": "宜兴市",
+    "citycode": "0510_02",
+    "serverhost": "051002.mygolbs.com"
+  },
+  {
+    "province": "江苏",
+    "cityname": "镇江市",
+    "citycode": "0511",
+    "serverhost": "0511.mygolbs.com"
+  },
+  {
+    "province": "江苏",
+    "cityname": "句容市",
+    "citycode": "0511_01",
+    "serverhost": "051101.mygolbs.com"
+  },
+  {
+    "province": "江苏",
+    "cityname": "淮安市",
+    "citycode": "0517",
+    "center": "盱眙县",
+    "serverhost": "0517.mygolbs.com",
+    "gongjiao_tel1": "盱眙0517-88210046"
+  },
+  {
+    "province": "江苏",
+    "cityname": "盐城市",
+    "citycode": "0515",
+    "serverhost": "0515.mygolbs.com",
+    "gongjiao_tel1": "盐城市公交:0515-69009900、滨海县城市公交:0515-68110018、滨海县城镇公交：0515-68110386、滨海县镇村公交:0515-68111245"
+  },
+  {
+    "province": "江苏",
+    "cityname": "建湖县",
+    "citycode": "0515_01",
+    "serverhost": "051501.mygolbs.com",
+    "gongjiao_tel1": "0515-86261110"
+  },
+  {
+    "province": "江苏",
+    "cityname": "阜宁县",
+    "citycode": "0515_02",
+    "serverhost": "051502.mygolbs.com"
+  },
+  {
+    "province": "江苏",
+    "cityname": "宿迁市",
+    "citycode": "0527",
+    "serverhost": "0527.mygolbs.com"
+  },
+  {
+    "province": "浙江",
+    "cityname": "嘉兴市",
+    "citycode": "0573",
+    "serverhost": "0573.mygolbs.com",
+    "center": "平湖市"
+  },
+  {
+    "province": "浙江",
+    "cityname": "海宁市",
+    "citycode": "0573_01",
+    "serverhost": "057301.mygolbs.com"
+  },
+  {
+    "province": "浙江",
+    "cityname": "宁波市",
+    "citycode": "0574",
+    "citynamepy": "ningbo",
+    "gongjiao_tel1": "北仑:0574-86860026、市公交:0574-967277",
+    "serverhost": "0574.mygolbs.com"
+  },
+  {
+    "province": "浙江",
+    "cityname": "慈溪市",
+    "citycode": "0574_01",
+    "serverhost": "057401.mygolbs.com",
+    "gongjiao_tel1": "0574-63196520"
+  },
+  {
+    "province": "浙江",
+    "cityname": "宁海县",
+    "citycode": "0574_02",
+    "serverhost": "057402.mygolbs.com"
+  },
+  {
+    "province": "浙江",
+    "cityname": "象山县",
+    "citycode": "0574_03",
+    "serverhost": "057403.mygolbs.com"
+  },
+  {
+    "province": "浙江",
+    "cityname": "绍兴市",
+    "citycode": "0575",
+    "serverhost": "0575.mygolbs.com"
+  },
+  {
+    "province": "浙江",
+    "cityname": "湖州市",
+    "citycode": "0572",
+    "serverhost": "0572.mygolbs.com",
+    "gongjiao_tel1": "0572-2060000"
+  },
+  {
+    "province": "浙江",
+    "cityname": "金华市",
+    "citycode": "0579",
+    "serverhost": "0579.mygolbs.com"
+  },
+  {
+    "province": "浙江",
+    "cityname": "义乌市",
+    "citycode": "0579_01",
+    "serverhost": "057901.mygolbs.com"
+  },
+  {
+    "province": "浙江",
+    "cityname": "东阳市",
+    "citycode": "0579_02",
+    "serverhost": "057902.mygolbs.com"
+  },
+  {
+    "province": "浙江",
+    "cityname": "磐安县",
+    "citycode": "0579_03",
+    "serverhost": "057903.mygolbs.com"
+  },
+  {
+    "province": "浙江",
+    "cityname": "兰溪市",
+    "citycode": "0579_04",
+    "serverhost": "057904.mygolbs.com"
+  },
+  {
+    "province": "浙江",
+    "cityname": "衢州市",
+    "citycode": "0570",
+    "serverhost": "0570.mygolbs.com"
+  },
+  {
+    "province": "浙江",
+    "cityname": "江山市",
+    "citycode": "0570_01",
+    "serverhost": "057001.mygolbs.com"
+  },
+  {
+    "province": "浙江",
+    "cityname": "开化县",
+    "citycode": "0570_02",
+    "serverhost": "057002.mygolbs.com"
+  },
+  {
+    "province": "浙江",
+    "cityname": "舟山市",
+    "citycode": "0580",
+    "serverhost": "0580.mygolbs.com"
+  },
+  {
+    "province": "浙江",
+    "cityname": "台州市",
+    "citycode": "0576",
+    "serverhost": "0576.mygolbs.com",
+    "gongjiao_tel1": "0576-81111016"
+  },
+  {
+    "province": "浙江",
+    "cityname": "温岭市",
+    "citycode": "0576_01",
+    "serverhost": "057601.mygolbs.com"
+  },
+  {
+    "province": "浙江",
+    "cityname": "玉环市",
+    "citycode": "0576_02",
+    "serverhost": "057602.mygolbs.com"
+  },
+  {
+    "province": "浙江",
+    "cityname": "丽水市",
+    "citycode": "0578",
+    "serverhost": "0578.mygolbs.com",
+    "gongjiao_tel1": "0578-2666662、0578-2178576"
+  },
+  {
+    "province": "浙江",
+    "cityname": "云和县",
+    "citycode": "0578_01",
+    "serverhost": "057801.mygolbs.com"
+  },
+  {
+    "province": "浙江",
+    "cityname": "遂昌县",
+    "citycode": "0578_02",
+    "serverhost": "057802.mygolbs.com"
+  },
+  {
+    "province": "浙江",
+    "cityname": "松阳县",
+    "citycode": "0578_03",
+    "serverhost": "057803.mygolbs.com"
+  },
+  {
+    "province": "浙江",
+    "cityname": "德清县",
+    "citycode": "0572_01",
+    "serverhost": "057201.mygolbs.com"
+  },
+  {
+    "province": "浙江",
+    "cityname": "安吉县",
+    "citycode": "0572_02",
+    "serverhost": "057202.mygolbs.com"
+  },
+  {
+    "province": "陕西",
+    "cityname": "西安市",
+    "citycode": "029",
+    "citynamepy": "xian",
+    "serverhost": "029.mygolbs.com"
+  },
+  {
+    "province": "辽宁",
+    "cityname": "大连市",
+    "citycode": "0411",
+    "citynamepy": "dalian",
+    "serverhost": "0411.mygolbs.com"
+  },
+  {
+    "province": "辽宁",
+    "cityname": "兴城市",
+    "citycode": "0429_01",
+    "serverhost": "042901.mygolbs.com",
+    "gongjiao_tel1": "0429-3535035"
+  },
+  {
+    "province": "山东",
+    "cityname": "烟台市",
+    "citycode": "0535",
+    "serverhost": "0535.mygolbs.com"
+  },
+  {
+    "province": "山东",
+    "cityname": "临沂市",
+    "citycode": "0539",
+    "serverhost": "0539.mygolbs.com",
+    "gongjiao_tel1": "临沂:0539-8313159、莒南:0539-7227199、沂水:18763779755"
+  },
+  {
+    "province": "山东",
+    "cityname": "德州市",
+    "citycode": "0534",
+    "serverhost": "0534.mygolbs.com"
+  },
+  {
+    "province": "山东",
+    "cityname": "平原县",
+    "citycode": "0534_01",
+    "serverhost": "053401.mygolbs.com"
+  },
+  {
+    "province": "山东",
+    "cityname": "潍坊市",
+    "citycode": "0536",
+    "serverhost": "0536.mygolbs.com",
+    "gongjiao_tel1": "临朐:0536-3162388、诸城交运:0536-6212518"
+  },
+  {
+    "province": "山东",
+    "cityname": "寿光市",
+    "citycode": "0536_01",
+    "serverhost": "053601.mygolbs.com"
+  },
+  {
+    "province": "山东",
+    "cityname": "菏泽市",
+    "citycode": "0530",
+    "serverhost": "0530.mygolbs.com",
+    "gongjiao_tel1": "0530-5700369"
+  },
+  {
+    "province": "山东",
+    "cityname": "济宁市",
+    "citycode": "0537",
+    "serverhost": "0537.mygolbs.com"
+  },
+  {
+    "province": "山东",
+    "cityname": "滨州市",
+    "citycode": "0543",
+    "serverhost": "0543.mygolbs.com"
+  },
+  {
+    "province": "山东",
+    "cityname": "聊城市",
+    "citycode": "0635",
+    "serverhost": "0635.mygolbs.com",
+    "gongjiao_tel1": "阳谷0635-6173799"
+  },
+  {
+    "province": "山东",
+    "cityname": "东营市",
+    "citycode": "0546",
+    "serverhost": "0546.mygolbs.com"
+  },
+  {
+    "province": "山东",
+    "cityname": "泰安市",
+    "citycode": "0538",
+    "serverhost": "0538.mygolbs.com"
+  },
+  {
+    "province": "山东",
+    "cityname": "淄博市",
+    "citycode": "0533",
+    "serverhost": "0533.mygolbs.com"
+  },
+  {
+    "province": "山东",
+    "cityname": "威海市",
+    "citycode": "0631",
+    "serverhost": "0631.mygolbs.com"
+  },
+  {
+    "province": "山东",
+    "cityname": "日照市",
+    "citycode": "0633",
+    "serverhost": "0633.mygolbs.com"
+  },
+  {
+    "province": "山东",
+    "cityname": "枣庄市",
+    "citycode": "0632",
+    "serverhost": "0632.mygolbs.com"
+  },
+  {
+    "province": "山东",
+    "cityname": "莱芜市",
+    "citycode": "0634",
+    "serverhost": "0634.mygolbs.com"
+  },
+  {
+    "province": "辽宁",
+    "cityname": "抚顺市",
+    "citycode": "024_01",
+    "serverhost": "02401.mygolbs.com"
+  },
+  {
+    "province": "辽宁",
+    "cityname": "铁岭市",
+    "citycode": "024_02",
+    "serverhost": "02402.mygolbs.com"
+  },
+  {
+    "province": "辽宁",
+    "cityname": "新民市",
+    "citycode": "024_04",
+    "serverhost": "02404.mygolbs.com"
+  },
+  {
+    "province": "辽宁",
+    "cityname": "调兵山市",
+    "citycode": "024_05",
+    "serverhost": "02405.mygolbs.com"
+  },
+  {
+    "province": "辽宁",
+    "cityname": "鞍山市",
+    "citycode": "0412",
+    "serverhost": "0412.mygolbs.com"
+  },
+  {
+    "province": "辽宁",
+    "cityname": "本溪市",
+    "citycode": "0414",
+    "serverhost": "0414.mygolbs.com"
+  },
+  {
+    "province": "辽宁",
+    "cityname": "丹东市",
+    "citycode": "0415",
+    "serverhost": "0415.mygolbs.com",
+    "gongjiao_tel1": "市公交:0415-3182345"
+  },
+  {
+    "province": "辽宁",
+    "cityname": "东港市",
+    "citycode": "0415_01",
+    "serverhost": "041501.mygolbs.com"
+  },
+  {
+    "province": "辽宁",
+    "cityname": "锦州市",
+    "citycode": "0416",
+    "serverhost": "0416.mygolbs.com"
+  },
+  {
+    "province": "辽宁",
+    "cityname": "营口市",
+    "citycode": "0417",
+    "serverhost": "0417.mygolbs.com"
+  },
+  {
+    "province": "辽宁",
+    "cityname": "阜新市",
+    "citycode": "0418",
+    "serverhost": "0418.mygolbs.com"
+  },
+  {
+    "province": "辽宁",
+    "cityname": "辽阳市",
+    "citycode": "0419",
+    "serverhost": "0419.mygolbs.com"
+  },
+  {
+    "province": "辽宁",
+    "cityname": "朝阳市",
+    "citycode": "0421",
+    "serverhost": "0421.mygolbs.com"
+  },
+  {
+    "province": "辽宁",
+    "cityname": "盘锦市",
+    "citycode": "0427",
+    "serverhost": "0427.mygolbs.com"
+  },
+  {
+    "province": "辽宁",
+    "cityname": "葫芦岛市",
+    "citycode": "0429",
+    "gongjiao_tel1": "0429-3535035",
+    "serverhost": "0429.mygolbs.com"
+  },
+  {
+    "province": "四川",
+    "cityname": "自贡市",
+    "citycode": "0813",
+    "serverhost": "0813.mygolbs.com",
+    "gongjiao_tel1": "0813-8101014"
+  },
+  {
+    "province": "四川",
+    "cityname": "攀枝花市",
+    "citycode": "0812",
+    "serverhost": "0812.mygolbs.com"
+  },
+  {
+    "province": "四川",
+    "cityname": "泸州市",
+    "citycode": "0830",
+    "serverhost": "0830.mygolbs.com",
+    "gongjiao_tel1": "市公交:0830-3173021、兴能公交:0830-2507360"
+  },
+  {
+    "province": "四川",
+    "cityname": "德阳市",
+    "citycode": "0838",
+    "serverhost": "0838.mygolbs.com"
+  },
+  {
+    "province": "四川",
+    "cityname": "绵阳市",
+    "citycode": "0816",
+    "serverhost": "0816.mygolbs.com",
+    "gongjiao_tel1": "0816-2123666"
+  },
+  {
+    "province": "四川",
+    "cityname": "南充市",
+    "citycode": "0817",
+    "serverhost": "0817.mygolbs.com"
+  },
+  {
+    "province": "四川",
+    "cityname": "广元市",
+    "citycode": "0839",
+    "serverhost": "0839.mygolbs.com",
+    "gongjiao_tel1": "0839-2800000"
+  },
+  {
+    "province": "四川",
+    "cityname": "遂宁市",
+    "citycode": "0825",
+    "serverhost": "0825.mygolbs.com"
+  },
+  {
+    "province": "四川",
+    "cityname": "内江市",
+    "citycode": "0832",
+    "serverhost": "0832.mygolbs.com",
+    "gongjiao_tel1": "0832-2221999"
+  },
+  {
+    "province": "四川",
+    "cityname": "乐山市",
+    "citycode": "0833",
+    "serverhost": "0833.mygolbs.com",
+    "gongjiao_tel1": "0833-2413814"
+  },
+  {
+    "province": "四川",
+    "cityname": "峨眉山市",
+    "citycode": "0833_01",
+    "serverhost": "083301.mygolbs.com"
+  },
+  {
+    "province": "四川",
+    "cityname": "宜宾市",
+    "citycode": "0831",
+    "serverhost": "0831.mygolbs.com"
+  },
+  {
+    "province": "四川",
+    "cityname": "长宁县",
+    "citycode": "0831_01",
+    "serverhost": "083101.mygolbs.com"
+  },
+  {
+    "province": "四川",
+    "cityname": "广安市",
+    "citycode": "0826",
+    "serverhost": "0826.mygolbs.com",
+    "gongjiao_tel1": "咨询电话:0826-2659666、投诉电话:0826-2659888"
+  },
+  {
+    "province": "四川",
+    "cityname": "雅安市",
+    "citycode": "0835",
+    "serverhost": "0835.mygolbs.com"
+  },
+  {
+    "province": "四川",
+    "cityname": "甘孜藏族自治州",
+    "citycode": "0836",
+    "serverhost": "0836.mygolbs.com",
+    "alias": "甘孜州"
+  },
+  {
+    "province": "四川",
+    "cityname": "阿坝藏族羌族自治州",
+    "alias": "阿坝州",
+    "center": "汶川县",
+    "citycode": "0837",
+    "serverhost": "0837.mygolbs.com"
+  },
+  {
+    "province": "四川",
+    "cityname": "巴中市",
+    "citycode": "0827",
+    "serverhost": "0827.mygolbs.com"
+  },
+  {
+    "province": "四川",
+    "cityname": "凉山市",
+    "citycode": "0834",
+    "serverhost": "0834.mygolbs.com"
+  },
+  {
+    "province": "四川",
+    "cityname": "资阳市",
+    "citycode": "028_03",
+    "serverhost": "02803.mygolbs.com"
+  },
+  {
+    "province": "四川",
+    "cityname": "简阳市",
+    "citycode": "028_05",
+    "serverhost": "02805.mygolbs.com"
+  },
+  {
+    "province": "四川",
+    "cityname": "眉山市",
+    "citycode": "028_06",
+    "serverhost": "02806.mygolbs.com",
+    "centerlng": "103.84756600",
+    "centerlat": "30.07525200"
+  },
+  {
+    "province": "四川",
+    "cityname": "邛崃市",
+    "citycode": "028_07",
+    "serverhost": "02807.mygolbs.com"
+  },
+  {
+    "province": "四川",
+    "cityname": "金堂县",
+    "citycode": "028_08",
+    "serverhost": "02808.mygolbs.com"
+  },
+  {
+    "province": "陕西",
+    "cityname": "商洛市",
+    "citycode": "0914",
+    "serverhost": "0914.mygolbs.com"
+  },
+  {
+    "province": "陕西",
+    "cityname": "镇安县",
+    "citycode": "0914_01",
+    "serverhost": "091401.mygolbs.com"
+  },
+  {
+    "province": "陕西",
+    "cityname": "安康市",
+    "citycode": "0915",
+    "center": "旬阳市",
+    "serverhost": "0915.mygolbs.com"
+  },
+  {
+    "province": "陕西",
+    "cityname": "宝鸡市",
+    "citycode": "0917",
+    "serverhost": "0917.mygolbs.com"
+  },
+  {
+    "province": "陕西",
+    "cityname": "延安市",
+    "citycode": "0911",
+    "serverhost": "0911.mygolbs.com"
+  },
+  {
+    "province": "陕西",
+    "cityname": "榆林市",
+    "citycode": "0912",
+    "serverhost": "0912.mygolbs.com"
+  },
+  {
+    "province": "陕西",
+    "cityname": "汉中市",
+    "citycode": "0916",
+    "serverhost": "0916.mygolbs.com"
+  },
+  {
+    "province": "陕西",
+    "cityname": "渭南市",
+    "citycode": "0913",
+    "center": "华阴市",
+    "serverhost": "0913.mygolbs.com"
+  },
+  {
+    "province": "陕西",
+    "cityname": "铜川市",
+    "citycode": "0919",
+    "serverhost": "0919.mygolbs.com"
+  },
+  {
+    "province": "湖北",
+    "cityname": "十堰市",
+    "citycode": "0719",
+    "serverhost": "0719.mygolbs.com",
+    "gongjiao_tel1": "0719-8111923、0719-8611315、0719-8676315"
+  },
+  {
+    "province": "湖北",
+    "cityname": "丹江口市",
+    "citycode": "0719_01",
+    "serverhost": "071901.mygolbs.com"
+  },
+  {
+    "province": "湖北",
+    "cityname": "神农架林区",
+    "citycode": "0719_02",
+    "serverhost": "071902.mygolbs.com"
+  },
+  {
+    "province": "湖北",
+    "cityname": "郧西县",
+    "citycode": "0719_03",
+    "serverhost": "071903.mygolbs.com"
+  },
+  {
+    "province": "湖北",
+    "cityname": "竹山县",
+    "citycode": "0719_04",
+    "serverhost": "071904.mygolbs.com"
+  },
+  {
+    "province": "湖北",
+    "cityname": "襄阳市",
+    "citycode": "0710",
+    "serverhost": "0710.mygolbs.com"
+  },
+  {
+    "province": "湖北",
+    "cityname": "随州市",
+    "citycode": "0722",
+    "serverhost": "0722.mygolbs.com"
+  },
+  {
+    "province": "湖北",
+    "cityname": "荆门市",
+    "citycode": "0724",
+    "serverhost": "0724.mygolbs.com"
+  },
+  {
+    "province": "湖北",
+    "cityname": "京山市",
+    "citycode": "0724_01",
+    "serverhost": "072401.mygolbs.com"
+  },
+  {
+    "province": "湖北",
+    "cityname": "孝感市",
+    "citycode": "0712",
+    "serverhost": "0712.mygolbs.com"
+  },
+  {
+    "province": "湖北",
+    "cityname": "安陆市",
+    "citycode": "0712_01",
+    "serverhost": "071201.mygolbs.com"
+  },
+  {
+    "province": "湖北",
+    "cityname": "黄冈市",
+    "citycode": "0713",
+    "serverhost": "0713.mygolbs.com",
+    "center": "红安县"
+  },
+  {
+    "province": "湖北",
+    "cityname": "鄂州市",
+    "citycode": "0711",
+    "serverhost": "0711.mygolbs.com",
+    "centerlng": "114.735348",
+    "centerlat": "30.534324"
+  },
+  {
+    "province": "湖北",
+    "cityname": "黄石市",
+    "citycode": "0714",
+    "serverhost": "0714.mygolbs.com",
+    "gongjiao_tel1": "0714-6221720"
+  },
+  {
+    "province": "湖北",
+    "cityname": "阳新县",
+    "citycode": "071401",
+    "serverhost": "071401.mygolbs.com"
+  },
+  {
+    "province": "湖北",
+    "cityname": "大冶市",
+    "citycode": "071402",
+    "serverhost": "071402.mygolbs.com"
+  },
+  {
+    "province": "湖北",
+    "cityname": "仙桃市",
+    "citycode": "0728",
+    "serverhost": "0728.mygolbs.com",
+    "gongjiao_tel1": "0728-3221156"
+  },
+  {
+    "province": "湖北",
+    "cityname": "天门市",
+    "citycode": "072801",
+    "serverhost": "072801.mygolbs.com"
+  },
+  {
+    "province": "湖北",
+    "cityname": "潜江市",
+    "citycode": "072802",
+    "serverhost": "072802.mygolbs.com"
+  },
+  {
+    "province": "湖北",
+    "cityname": "咸宁市",
+    "citycode": "0715",
+    "serverhost": "0715.mygolbs.com",
+    "gongjiao_tel1": "0715-8322576"
+  },
+  {
+    "province": "湖北",
+    "cityname": "通山市",
+    "citycode": "0715_01",
+    "serverhost": "071501.mygolbs.com",
+    "center": "通山",
+    "alias": "通山县"
+  },
+  {
+    "province": "湖北",
+    "cityname": "赤壁市",
+    "citycode": "0715_02",
+    "serverhost": "071502.mygolbs.com"
+  },
+  {
+    "province": "吉林",
+    "cityname": "吉林市",
+    "citycode": "0432",
+    "serverhost": "0432.mygolbs.com",
+    "gongjiao_tel1": "公交集团:0432-62798110、磐石隆顺公交:0432-65250185、双兴公交客运:18404324777"
+  },
+  {
+    "province": "吉林",
+    "cityname": "舒兰市",
+    "citycode": "0432_01",
+    "serverhost": "043201.mygolbs.com"
+  },
+  {
+    "province": "吉林",
+    "cityname": "桦甸市",
+    "citycode": "0432_02",
+    "serverhost": "043202.mygolbs.com"
+  },
+  {
+    "province": "吉林",
+    "cityname": "蛟河市",
+    "citycode": "0432_03",
+    "serverhost": "043203.mygolbs.com"
+  },
+  {
+    "province": "吉林",
+    "cityname": "磐石市",
+    "citycode": "0432_04",
+    "serverhost": "043204.mygolbs.com"
+  },
+  {
+    "province": "吉林",
+    "cityname": "四平市",
+    "citycode": "0434",
+    "serverhost": "0434.mygolbs.com"
+  },
+  {
+    "province": "吉林",
+    "cityname": "双辽市 ",
+    "citycode": "0434_01",
+    "serverhost": "043401.mygolbs.com"
+  },
+  {
+    "province": "吉林",
+    "cityname": "辽源市",
+    "citycode": "0437",
+    "serverhost": "0437.mygolbs.com"
+  },
+  {
+    "province": "吉林",
+    "cityname": "通化市",
+    "citycode": "0435",
+    "serverhost": "0435.mygolbs.com"
+  },
+  {
+    "province": "吉林",
+    "cityname": "集安市",
+    "citycode": "0435_01",
+    "serverhost": "043501.mygolbs.com"
+  },
+  {
+    "province": "吉林",
+    "cityname": "白山市",
+    "citycode": "0439",
+    "serverhost": "0439.mygolbs.com"
+  },
+  {
+    "province": "吉林",
+    "cityname": "临江市",
+    "citycode": "0439_01",
+    "serverhost": "043901.mygolbs.com"
+  },
+  {
+    "province": "吉林",
+    "cityname": "松原市",
+    "citycode": "0438",
+    "serverhost": "0438.mygolbs.com"
+  },
+  {
+    "province": "吉林",
+    "cityname": "扶余市",
+    "citycode": "0438_01",
+    "serverhost": "043801.mygolbs.com"
+  },
+  {
+    "province": "吉林",
+    "cityname": "白城市",
+    "citycode": "0436",
+    "serverhost": "0436.mygolbs.com"
+  },
+  {
+    "province": "吉林",
+    "cityname": "洮南市",
+    "citycode": "0436_01",
+    "serverhost": "043601.mygolbs.com"
+  },
+  {
+    "province": "吉林",
+    "cityname": "大安市",
+    "citycode": "0436_02",
+    "serverhost": "043602.mygolbs.com"
+  },
+  {
+    "province": "吉林",
+    "cityname": "延边州",
+    "citycode": "0433",
+    "center": "珲春市",
+    "serverhost": "0433.mygolbs.com"
+  },
+  {
+    "province": "黑龙江",
+    "cityname": "齐齐哈尔市",
+    "citycode": "0452",
+    "serverhost": "0452.mygolbs.com"
+  },
+  {
+    "province": "黑龙江",
+    "cityname": "牡丹江市",
+    "citycode": "0453",
+    "serverhost": "0453.mygolbs.com"
+  },
+  {
+    "province": "黑龙江",
+    "cityname": "佳木斯市",
+    "citycode": "0454",
+    "serverhost": "0454.mygolbs.com"
+  },
+  {
+    "province": "黑龙江",
+    "cityname": "大庆市",
+    "citycode": "0459",
+    "serverhost": "0459.mygolbs.com"
+  },
+  {
+    "province": "黑龙江",
+    "cityname": "七台河市",
+    "citycode": "0464",
+    "serverhost": "0464.mygolbs.com"
+  },
+  {
+    "province": "黑龙江",
+    "cityname": "鸡西市",
+    "citycode": "0467",
+    "serverhost": "0467.mygolbs.com"
+  },
+  {
+    "province": "黑龙江",
+    "cityname": "双鸭山市",
+    "citycode": "0469",
+    "serverhost": "0469.mygolbs.com"
+  },
+  {
+    "province": "黑龙江",
+    "cityname": "伊春市",
+    "citycode": "0458",
+    "serverhost": "0458.mygolbs.com"
+  },
+  {
+    "province": "黑龙江",
+    "cityname": "鹤岗市",
+    "citycode": "0468",
+    "serverhost": "0468.mygolbs.com"
+  },
+  {
+    "province": "黑龙江",
+    "cityname": "黑河市",
+    "citycode": "0456",
+    "serverhost": "0456.mygolbs.com"
+  },
+  {
+    "province": "黑龙江",
+    "cityname": "绥化市",
+    "citycode": "0455",
+    "serverhost": "0455.mygolbs.com"
+  },
+  {
+    "province": "甘肃",
+    "cityname": "金昌市",
+    "citycode": "0935",
+    "serverhost": "0935.mygolbs.com"
+  },
+  {
+    "province": "甘肃",
+    "cityname": "武威市",
+    "citycode": "0935_01",
+    "serverhost": "093501.mygolbs.com",
+    "centerlng": "103.135359",
+    "centerlat": "36.998336"
+  },
+  {
+    "province": "甘肃",
+    "cityname": "张掖市",
+    "citycode": "0936",
+    "serverhost": "0936.mygolbs.com"
+  },
+  {
+    "province": "甘肃",
+    "cityname": "民乐县",
+    "citycode": "0936_01",
+    "serverhost": "093601.mygolbs.com"
+  },
+  {
+    "province": "甘肃",
+    "cityname": "酒泉市",
+    "citycode": "0937",
+    "serverhost": "0937.mygolbs.com"
+  },
+  {
+    "province": "甘肃",
+    "cityname": "敦煌市",
+    "citycode": "0937_01",
+    "serverhost": "093701.mygolbs.com"
+  },
+  {
+    "province": "甘肃",
+    "cityname": "天水市",
+    "citycode": "0938",
+    "serverhost": "0938.mygolbs.com"
+  },
+  {
+    "province": "甘肃",
+    "cityname": "陇南市",
+    "citycode": "0939",
+    "serverhost": "0939.mygolbs.com"
+  },
+  {
+    "province": "甘肃",
+    "cityname": "甘南藏族自治州",
+    "citycode": "0941",
+    "serverhost": "0941.mygolbs.com"
+  },
+  {
+    "province": "甘肃",
+    "cityname": "白银市",
+    "citycode": "0943",
+    "serverhost": "0943.mygolbs.com"
+  },
+  {
+    "province": "甘肃",
+    "cityname": "平凉市",
+    "citycode": "0933",
+    "serverhost": "0933.mygolbs.com",
+    "center": "华亭市"
+  },
+  {
+    "province": "甘肃",
+    "cityname": "庆阳市",
+    "citycode": "0934",
+    "serverhost": "0934.mygolbs.com"
+  },
+  {
+    "province": "甘肃",
+    "cityname": "定西市",
+    "citycode": "0932",
+    "serverhost": "0932.mygolbs.com",
+    "gongjiao_tel1": "陇西县公交:0932-6688120、通渭县公交:0932-5552925、定西亨运公交:0932-5982089"
+  },
+  {
+    "province": "海南",
+    "cityname": "三亚市",
+    "citycode": "0898_01",
+    "serverhost": "089801.mygolbs.com"
+  },
+  {
+    "province": "海南",
+    "cityname": "儋州市",
+    "citycode": "0898_02",
+    "serverhost": "089802.mygolbs.com"
+  },
+  {
+    "province": "海南",
+    "cityname": "洋浦经济开发区",
+    "citycode": "0898_03",
+    "serverhost": "089803.mygolbs.com",
+    "centerlng": "109.2184096",
+    "centerlat": "19.75567771"
+  },
+  {
+    "province": "海南",
+    "cityname": "文昌市",
+    "citycode": "0898_04",
+    "serverhost": "089804.mygolbs.com"
+  },
+  {
+    "province": "海南",
+    "cityname": "昌江黎族自治县",
+    "citycode": "0898_05",
+    "serverhost": "089805.mygolbs.com"
+  },
+  {
+    "province": "海南",
+    "cityname": "屯昌县",
+    "citycode": "0898_06",
+    "serverhost": "089806.mygolbs.com"
+  },
+  {
+    "province": "海南",
+    "cityname": "万宁市",
+    "citycode": "0898_07",
+    "serverhost": "089807.mygolbs.com"
+  },
+  {
+    "province": "海南",
+    "cityname": "临高县",
+    "citycode": "0898_08",
+    "serverhost": "089808.mygolbs.com"
+  },
+  {
+    "province": "海南",
+    "cityname": "陵水黎族自治县",
+    "citycode": "0898_09",
+    "serverhost": "089809.mygolbs.com"
+  },
+  {
+    "province": "云南",
+    "cityname": "曲靖市",
+    "citycode": "0874",
+    "serverhost": "0874.mygolbs.com",
+    "gongjiao_tel1": "3123391"
+  },
+  {
+    "province": "云南",
+    "cityname": "玉溪市",
+    "citycode": "0877",
+    "serverhost": "0877.mygolbs.com",
+    "gongjiao_tel1": "0877-2026890"
+  },
+  {
+    "province": "云南",
+    "cityname": "保山市",
+    "citycode": "0875",
+    "serverhost": "0875.mygolbs.com",
+    "gongjiao_tel1": "0875-2222620"
+  },
+  {
+    "province": "云南",
+    "cityname": "文山壮族苗族自治州",
+    "citycode": "0876",
+    "serverhost": "0876.mygolbs.com"
+  },
+  {
+    "province": "云南",
+    "cityname": "昭通市",
+    "citycode": "0870",
+    "serverhost": "0870.mygolbs.com"
+  },
+  {
+    "province": "云南",
+    "cityname": "迪庆藏族自治州",
+    "citycode": "0887",
+    "serverhost": "0887.mygolbs.com"
+  },
+  {
+    "province": "云南",
+    "cityname": "丽江市",
+    "citycode": "0888",
+    "serverhost": "0888.mygolbs.com"
+  },
+  {
+    "province": "云南",
+    "cityname": "临沧市",
+    "citycode": "0883",
+    "serverhost": "0883.mygolbs.com"
+  },
+  {
+    "province": "云南",
+    "cityname": "楚雄市",
+    "citycode": "0878",
+    "serverhost": "0878.mygolbs.com"
+  },
+  {
+    "province": "云南",
+    "cityname": "大理白族自治州",
+    "citycode": "0872",
+    "serverhost": "0872.mygolbs.com",
+    "centerlat": "25.69134900",
+    "centerlng": "100.15744700"
+  },
+  {
+    "province": "安徽",
+    "cityname": "淮南市",
+    "citycode": "0554",
+    "serverhost": "0554.mygolbs.com"
+  },
+  {
+    "province": "安徽",
+    "cityname": "芜湖市",
+    "citycode": "0553",
+    "serverhost": "0553.mygolbs.com"
+  },
+  {
+    "province": "安徽",
+    "cityname": "马鞍山市",
+    "citycode": "0555",
+    "serverhost": "0555.mygolbs.com"
+  },
+  {
+    "province": "安徽",
+    "cityname": "当涂县",
+    "citycode": "0555_01",
+    "serverhost": "055501.mygolbs.com"
+  },
+  {
+    "province": "安徽",
+    "cityname": "淮北市",
+    "citycode": "0561",
+    "serverhost": "0561.mygolbs.com",
+    "gongjiao_tel1": "0561-5200601"
+  },
+  {
+    "province": "安徽",
+    "cityname": "铜陵市",
+    "citycode": "0562",
+    "serverhost": "0562.mygolbs.com"
+  },
+  {
+    "province": "安徽",
+    "cityname": "安庆市",
+    "citycode": "0556",
+    "serverhost": "0556.mygolbs.com"
+  },
+  {
+    "province": "安徽",
+    "cityname": "潜山市",
+    "citycode": "0556_01",
+    "serverhost": "055601.mygolbs.com"
+  },
+  {
+    "province": "安徽",
+    "cityname": "黄山市",
+    "citycode": "0559",
+    "serverhost": "0559.mygolbs.com"
+  },
+  {
+    "province": "安徽",
+    "cityname": "阜阳市",
+    "citycode": "0558",
+    "serverhost": "0558.mygolbs.com"
+  },
+  {
+    "province": "安徽",
+    "cityname": "宿州市",
+    "citycode": "0557",
+    "serverhost": "0557.mygolbs.com"
+  },
+  {
+    "province": "安徽",
+    "cityname": "灵璧县",
+    "citycode": "0557_01",
+    "serverhost": "055701.mygolbs.com"
+  },
+  {
+    "province": "安徽",
+    "cityname": "滁州市",
+    "citycode": "0550",
+    "serverhost": "0550.mygolbs.com",
+    "gongjiao_tel1": "0550-3017508、0550-3316677"
+  },
+  {
+    "province": "安徽",
+    "cityname": "天长市",
+    "citycode": "0550_01",
+    "serverhost": "055001.mygolbs.com"
+  },
+  {
+    "province": "安徽",
+    "cityname": "六安市",
+    "citycode": "0564",
+    "serverhost": "0564.mygolbs.com"
+  },
+  {
+    "province": "安徽",
+    "cityname": "宣城市",
+    "citycode": "0563",
+    "serverhost": "0563.mygolbs.com",
+    "centerlat": "30.9054089",
+    "centerlng": "119.4159622",
+    "gongjiao_tel1": "广德公交:0563-6977778"
+  },
+  {
+    "province": "安徽",
+    "cityname": "郎溪县",
+    "citycode": "0563_01",
+    "serverhost": "056301.mygolbs.com"
+  },
+  {
+    "province": "安徽",
+    "cityname": "池州市",
+    "citycode": "0566",
+    "serverhost": "0566.mygolbs.com",
+    "gongjiao_tel1": "2021238"
+  },
+  {
+    "province": "安徽",
+    "cityname": "亳州市",
+    "citycode": "0558_01",
+    "serverhost": "055801.mygolbs.com"
+  },
+  {
+    "province": "安徽",
+    "cityname": "利辛县",
+    "citycode": "0558_02",
+    "serverhost": "055802.mygolbs.com"
+  },
+  {
+    "province": "湖南",
+    "cityname": "衡阳市",
+    "citycode": "0734",
+    "serverhost": "0734.mygolbs.com",
+    "gongjiao_tel1": "0734-8223308"
+  },
+  {
+    "province": "湖南",
+    "cityname": "耒阳市",
+    "citycode": "0734_02",
+    "serverhost": "073402.mygolbs.com"
+  },
+  {
+    "province": "湖南",
+    "cityname": "郴州市",
+    "citycode": "0735",
+    "gongjiao_tel1": "郴州公汽:0735-2661110、林邑巴士（城乡线）:0735-8183337",
+    "serverhost": "0735.mygolbs.com"
+  },
+  {
+    "province": "湖南",
+    "cityname": "邵阳市",
+    "citycode": "0739",
+    "center": "邵东市",
+    "serverhost": "0739.mygolbs.com",
+    "gongjiao_tel1": "武冈城乡公交投诉:0739-4287668、武冈城乡公交调度:0739-4280571"
+  },
+  {
+    "province": "湖南",
+    "cityname": "岳阳市",
+    "citycode": "0730",
+    "serverhost": "0730.mygolbs.com",
+    "gongjiao_tel1": "0730-8282777"
+  },
+  {
+    "province": "湖南",
+    "cityname": "汨罗市",
+    "citycode": "0730_01",
+    "serverhost": "073001.mygolbs.com"
+  },
+  {
+    "province": "湖南",
+    "cityname": "临湘市",
+    "citycode": "0730_02",
+    "serverhost": "073002.mygolbs.com"
+  },
+  {
+    "province": "湖南",
+    "cityname": "常德市",
+    "citycode": "0736",
+    "serverhost": "0736.mygolbs.com",
+    "gongjiao_tel1": "市公交:0736-7285696、桃源县公交:0736-6628666"
+  },
+  {
+    "province": "湖南",
+    "cityname": "益阳市",
+    "citycode": "0737",
+    "gongjiao_tel1": "众旺公交:0737-4220788",
+    "serverhost": "0737.mygolbs.com"
+  },
+  {
+    "province": "湖南",
+    "cityname": "沅江市",
+    "citycode": "0737_01",
+    "serverhost": "073701.mygolbs.com"
+  },
+  {
+    "province": "湖南",
+    "cityname": "安化县",
+    "citycode": "0737_02",
+    "centerlat": "28.142262",
+    "centerlng": "111.65077",
+    "serverhost": "073702.mygolbs.com"
+  },
+  {
+    "province": "湖南",
+    "cityname": "冷水江市",
+    "citycode": "0738",
+    "serverhost": "0738.mygolbs.com"
+  },
+  {
+    "province": "湖南",
+    "cityname": "涟源市",
+    "citycode": "0738_01",
+    "serverhost": "073801.mygolbs.com"
+  },
+  {
+    "province": "湖南",
+    "cityname": "永州市",
+    "citycode": "0746",
+    "serverhost": "0746.mygolbs.com"
+  },
+  {
+    "province": "湖南",
+    "cityname": "祁阳市",
+    "citycode": "0746_01",
+    "serverhost": "074601.mygolbs.com",
+    "gongjiao_tel1": "市公交:0746-3255111"
+  },
+  {
+    "province": "湖南",
+    "cityname": "怀化市",
+    "citycode": "0745",
+    "serverhost": "0745.mygolbs.com",
+    "gongjiao_tel1": "0745-2250767"
+  },
+  {
+    "province": "湖南",
+    "cityname": "溆浦县",
+    "citycode": "0745_01",
+    "serverhost": "074501.mygolbs.com"
+  },
+  {
+    "province": "山西",
+    "cityname": "朔州市",
+    "citycode": "0349",
+    "serverhost": "0349.mygolbs.com"
+  },
+  {
+    "province": "山西",
+    "cityname": "忻州市",
+    "citycode": "0350",
+    "serverhost": "0350.mygolbs.com",
+    "centerlat": "38.730162",
+    "centerlng": "112.711301"
+  },
+  {
+    "province": "山西",
+    "cityname": "阳泉市",
+    "citycode": "0353",
+    "serverhost": "0353.mygolbs.com"
+  },
+  {
+    "province": "山西",
+    "cityname": "晋中市",
+    "citycode": "0354",
+    "serverhost": "0354.mygolbs.com"
+  },
+  {
+    "province": "山西",
+    "cityname": "太谷区",
+    "citycode": "0354_01",
+    "serverhost": "035401.mygolbs.com"
+  },
+  {
+    "province": "山西",
+    "cityname": "榆社县",
+    "citycode": "0354_02",
+    "serverhost": "035402.mygolbs.com"
+  },
+  {
+    "province": "山西",
+    "cityname": "平遥县",
+    "citycode": "0354_03",
+    "serverhost": "035403.mygolbs.com"
+  },
+  {
+    "province": "山西",
+    "cityname": "吕梁市",
+    "citycode": "0358",
+    "serverhost": "0358.mygolbs.com"
+  },
+  {
+    "province": "山西",
+    "cityname": "孝义市",
+    "citycode": "0358_01",
+    "serverhost": "035801.mygolbs.com"
+  },
+  {
+    "province": "山西",
+    "cityname": "临汾市",
+    "citycode": "0357",
+    "serverhost": "0357.mygolbs.com"
+  },
+  {
+    "province": "山西",
+    "cityname": "晋城市",
+    "citycode": "0356",
+    "serverhost": "0356.mygolbs.com"
+  },
+  {
+    "province": "山西",
+    "cityname": "运城市",
+    "citycode": "0359",
+    "serverhost": "0359.mygolbs.com"
+  },
+  {
+    "province": "山西",
+    "cityname": "长治市",
+    "citycode": "0355",
+    "serverhost": "0355.mygolbs.com"
+  },
+  {
+    "province": "河南",
+    "cityname": "洛阳市",
+    "citycode": "0379",
+    "serverhost": "0379.mygolbs.com",
+    "gongjiao_tel1": "公交集团:0379-63411661、交运集团:0379-63991666、洛宁联合公交:0379-65050300、尹川公交:0739-68370089"
+  },
+  {
+    "province": "河南",
+    "cityname": "焦作市",
+    "citycode": "0391",
+    "serverhost": "0391.mygolbs.com",
+    "gongjiao_tel1": "0391-3562110"
+  },
+  {
+    "province": "河南",
+    "cityname": "济源市",
+    "citycode": "0391_01",
+    "serverhost": "039101.mygolbs.com",
+    "gongjiao_tel1": "城市:0391-6633215、城乡:0391-6612275",
+    "prefix_qidianfache": "起点预计发车（仅供参考）："
+  },
+  {
+    "province": "河南",
+    "cityname": "许昌市",
+    "citycode": "0374",
+    "serverhost": "0374.mygolbs.com",
+    "gongjiao_tel1": "0374-2977701"
+  },
+  {
+    "province": "河南",
+    "cityname": "平顶山市",
+    "citycode": "0375",
+    "serverhost": "0375.mygolbs.com",
+    "gongjiao_tel1": "0375-3382111"
+  },
+  {
+    "province": "河南",
+    "cityname": "漯河市",
+    "citycode": "0395",
+    "serverhost": "0395.mygolbs.com"
+  },
+  {
+    "province": "河南",
+    "cityname": "开封市",
+    "citycode": "0371_01",
+    "serverhost": "037101.mygolbs.com",
+    "gongjiao_tel1": "12345"
+  },
+  {
+    "province": "河南",
+    "cityname": "荥阳市",
+    "citycode": "0371_02",
+    "serverhost": "037102.mygolbs.com"
+  },
+  {
+    "province": "河南",
+    "cityname": "濮阳市",
+    "citycode": "0393",
+    "serverhost": "0393.mygolbs.com",
+    "gongjiao_tel1": "0393-6661100"
+  },
+  {
+    "province": "河南",
+    "cityname": "鹤壁市",
+    "citycode": "0392",
+    "serverhost": "0392.mygolbs.com"
+  },
+  {
+    "province": "河南",
+    "cityname": "南阳市",
+    "citycode": "0377",
+    "serverhost": "0377.mygolbs.com",
+    "gongjiao_tel1": "0377-67777000"
+  },
+  {
+    "province": "河南",
+    "cityname": "三门峡市",
+    "citycode": "0398",
+    "serverhost": "0398.mygolbs.com",
+    "gongjiao_tel1": "三门峡市公交:0398-2881877、渑池:0398-4821209"
+  },
+  {
+    "province": "河南",
+    "cityname": "灵宝市",
+    "citycode": "0398_01",
+    "serverhost": "039801.mygolbs.com",
+    "gongjiao_tel1": "0398-2120399"
+  },
+  {
+    "province": "河南",
+    "cityname": "义马市",
+    "citycode": "0398_02",
+    "serverhost": "039802.mygolbs.com",
+    "gongjiao_tel1": "市公交:0395-5832569"
+  },
+  {
+    "province": "河南",
+    "cityname": "驻马店市",
+    "citycode": "0396",
+    "serverhost": "0396.mygolbs.com",
+    "gongjiao_tel1": "0396-2819111"
+  },
+  {
+    "province": "河南",
+    "cityname": "西平县",
+    "citycode": "0396_02",
+    "centerlat": "33.369546",
+    "centerlng": "113.99434",
+    "serverhost": "039602.mygolbs.com"
+  },
+  {
+    "province": "河南",
+    "cityname": "商丘市",
+    "citycode": "0370",
+    "serverhost": "0370.mygolbs.com",
+    "gongjiao_tel1": "市公交:0370-2707110"
+  },
+  {
+    "province": "河南",
+    "cityname": "永城市",
+    "citycode": "037001",
+    "serverhost": "037001.mygolbs.com"
+  },
+  {
+    "province": "河南",
+    "cityname": "信阳市",
+    "citycode": "0376",
+    "serverhost": "0376.mygolbs.com"
+  },
+  {
+    "province": "河南",
+    "cityname": "周口市",
+    "citycode": "0394",
+    "serverhost": "0394.mygolbs.com"
+  },
+  {
+    "province": "河北",
+    "cityname": "邯郸市",
+    "citycode": "0310",
+    "serverhost": "0310.mygolbs.com"
+  },
+  {
+    "province": "河北",
+    "cityname": "邢台市",
+    "citycode": "0319",
+    "serverhost": "0319.mygolbs.com",
+    "gongjiao_tel1": "0319-3677376"
+  },
+  {
+    "province": "河北",
+    "cityname": "清河县",
+    "citycode": "0319_01",
+    "serverhost": "031901.mygolbs.com"
+  },
+  {
+    "province": "河北",
+    "cityname": "宁晋县",
+    "citycode": "0319_02",
+    "serverhost": "031902.mygolbs.com"
+  },
+  {
+    "province": "河北",
+    "cityname": "威县",
+    "citycode": "0319_03",
+    "serverhost": "031903.mygolbs.com"
+  },
+  {
+    "province": "河北",
+    "cityname": "衡水市",
+    "citycode": "0318",
+    "serverhost": "0318.mygolbs.com",
+    "gongjiao_tel1": "市区公交:0318-2036168、衡运:0318-2160007,0318-2107766,0318-2159868、饶阳县城区公交:0318-7210112、武邑县城区公交:0318-5736313、故城县城区公交:0318-5362268、阜城县城乡公交:0318-4639998、深州:0318-3149999"
+  },
+  {
+    "province": "河北",
+    "cityname": "沧州市",
+    "citycode": "0317",
+    "serverhost": "0317.mygolbs.com",
+    "gongjiao_tel1": "0317-2091111、0317-2092222"
+  },
+  {
+    "province": "河北",
+    "cityname": "黄骅市",
+    "citycode": "031701",
+    "serverhost": "031701.mygolbs.com"
+  },
+  {
+    "province": "河北",
+    "cityname": "任丘市",
+    "citycode": "031702",
+    "serverhost": "031702.mygolbs.com"
+  },
+  {
+    "province": "河北",
+    "cityname": "张家口市",
+    "citycode": "0313",
+    "serverhost": "0313.mygolbs.com",
+    "gongjiao_tel1": "0313-2210047"
+  },
+  {
+    "province": "河北",
+    "cityname": "承德市",
+    "citycode": "0314",
+    "serverhost": "0314.mygolbs.com"
+  },
+  {
+    "province": "河北",
+    "cityname": "平泉市",
+    "citycode": "0314_01",
+    "serverhost": "031401.mygolbs.com"
+  },
+  {
+    "province": "河北",
+    "cityname": "围场满族蒙古族自治县",
+    "alias": "围场县",
+    "citycode": "0314_02",
+    "serverhost": "031402.mygolbs.com"
+  },
+  {
+    "province": "河北",
+    "cityname": "秦皇岛市",
+    "citycode": "0335",
+    "serverhost": "0335.mygolbs.com",
+    "centerlat": "39.94211900",
+    "centerlng": "119.59943100"
+  },
+  {
+    "province": "江西",
+    "cityname": "吉安市",
+    "citycode": "0796",
+    "serverhost": "0796.mygolbs.com",
+    "gongjiao_tel1": "0796-8222369"
+  },
+  {
+    "province": "江西",
+    "cityname": "鹰潭市",
+    "citycode": "0701",
+    "serverhost": "0701.mygolbs.com",
+    "gongjiao_tel1": "0701-6433555"
+  },
+  {
+    "province": "江西",
+    "cityname": "新余市",
+    "citycode": "0790",
+    "serverhost": "0790.mygolbs.com",
+    "gongjiao_tel1": "12580"
+  },
+  {
+    "province": "江西",
+    "cityname": "上饶市",
+    "citycode": "0793",
+    "serverhost": "0793.mygolbs.com",
+    "gongjiao_tel1": "0793-8062011"
+  },
+  {
+    "province": "江西",
+    "cityname": "抚州市",
+    "citycode": "0794",
+    "serverhost": "0794.mygolbs.com",
+    "gongjiao_tel1": "0794-8282316"
+  },
+  {
+    "province": "宁夏",
+    "cityname": "吴忠市",
+    "citycode": "0953",
+    "serverhost": "0953.mygolbs.com"
+  },
+  {
+    "province": "广西",
+    "cityname": "桂林市",
+    "citycode": "0773",
+    "serverhost": "0773.mygolbs.com"
+  },
+  {
+    "province": "广西",
+    "cityname": "北海市",
+    "citycode": "0779",
+    "serverhost": "0779.mygolbs.com"
+  },
+  {
+    "province": "广西",
+    "cityname": "百色市",
+    "citycode": "0776",
+    "serverhost": "0776.mygolbs.com"
+  },
+  {
+    "province": "广西",
+    "cityname": "梧州市",
+    "citycode": "0774",
+    "serverhost": "0774.mygolbs.com"
+  },
+  {
+    "province": "广西",
+    "cityname": "贺州市",
+    "citycode": "0774_01",
+    "serverhost": "077401.mygolbs.com"
+  },
+  {
+    "province": "广西",
+    "cityname": "崇左市",
+    "citycode": "0771_01",
+    "serverhost": "077101.mygolbs.com",
+    "centerlat": "22.357131",
+    "centerlng": "107.39482"
+  },
+  {
+    "province": "广西",
+    "cityname": "扶绥县",
+    "citycode": "0771_02",
+    "serverhost": "077102.mygolbs.com"
+  },
+  {
+    "province": "广西",
+    "cityname": "防城港市",
+    "citycode": "0770",
+    "serverhost": "0770.mygolbs.com"
+  },
+  {
+    "province": "广西",
+    "cityname": "东兴市",
+    "citycode": "0770_01",
+    "serverhost": "077001.mygolbs.com"
+  },
+  {
+    "province": "广西",
+    "cityname": "来宾市",
+    "citycode": "0772_01",
+    "serverhost": "077201.mygolbs.com"
+  },
+  {
+    "province": "青海",
+    "cityname": "格尔木市",
+    "citycode": "0979",
+    "serverhost": "0979.mygolbs.com"
+  },
+  {
+    "province": "贵州",
+    "cityname": "遵义市",
+    "citycode": "085101",
+    "serverhost": "085101.mygolbs.com",
+    "gongjiao_tel1": "市公交:0851-28827682"
+  },
+  {
+    "province": "贵州",
+    "cityname": "安顺市",
+    "citycode": "0851_03",
+    "serverhost": "085103.mygolbs.com",
+    "gongjiao_tel1": "公交总公司:0851-33227638"
+  },
+  {
+    "province": "贵州",
+    "cityname": "仁怀市",
+    "citycode": "0851_05",
+    "serverhost": "085105.mygolbs.com"
+  },
+  {
+    "province": "贵州",
+    "cityname": "黔南布依族苗族自治州",
+    "citycode": "0854",
+    "serverhost": "0854.mygolbs.com",
+    "alias": "黔南"
+  },
+  {
+    "province": "贵州",
+    "cityname": "黔东南苗族侗族自治州",
+    "citycode": "0855",
+    "serverhost": "0855.mygolbs.com",
+    "alias": "黔东南"
+  },
+  {
+    "province": "贵州",
+    "cityname": "铜仁市",
+    "citycode": "0856",
+    "serverhost": "0856.mygolbs.com"
+  },
+  {
+    "province": "贵州",
+    "cityname": "毕节市",
+    "citycode": "0857",
+    "serverhost": "0857.mygolbs.com",
+    "gongjiao_tel1": "毕节公交客运:0857-8235418"
+  },
+  {
+    "province": "贵州",
+    "cityname": "黔西南布依族苗族自治州",
+    "citycode": "0859_01",
+    "serverhost": "085901.mygolbs.com",
+    "alias": "黔西南",
+    "center": "兴仁市"
+  },
+  {
+    "province": "贵州",
+    "cityname": "兴义市",
+    "citycode": "0859",
+    "serverhost": "0859.mygolbs.com"
+  },
+  {
+    "province": "贵州",
+    "cityname": "六盘水市",
+    "citycode": "0858",
+    "serverhost": "0858.mygolbs.com"
+  },
+  {
+    "province": "贵州",
+    "cityname": "盘州市",
+    "citycode": "0858_01",
+    "serverhost": "085801.mygolbs.com",
+    "gongjiao_tel1": "0858-3120000"
+  },
+  {
+    "province": "江西",
+    "cityname": "德兴市",
+    "citycode": "0793_01",
+    "serverhost": "079301.mygolbs.com",
+    "centerlat": "28.908324",
+    "centerlng": "117.643069"
+  },
+  {
+    "province": "四川",
+    "cityname": "都江堰市",
+    "citycode": "028_01",
+    "serverhost": "02801.mygolbs.com",
+    "gongjiao_tel1": "都江堰公交:028-87203978、古堰公交:028-87298725"
+  },
+  {
+    "province": "四川",
+    "cityname": "彭州市",
+    "citycode": "028_02",
+    "serverhost": "02802.mygolbs.com",
+    "gongjiao_tel1": "028-83751773"
+  },
+  {
+    "province": "四川",
+    "cityname": "达州市",
+    "citycode": "0818",
+    "serverhost": "0818.mygolbs.com"
+  },
+  {
+    "province": "浙江",
+    "cityname": "嵊州市",
+    "citycode": "0575_01",
+    "serverhost": "057501.mygolbs.com"
+  },
+  {
+    "province": "西藏",
+    "cityname": "林芝市",
+    "citycode": "0894",
+    "serverhost": "0894.mygolbs.com"
+  },
+  {
+    "province": "西藏",
+    "cityname": "昌都市",
+    "citycode": "0895",
+    "serverhost": "0895.mygolbs.com"
+  },
+  {
+    "province": "云南",
+    "cityname": "蒙自市",
+    "citycode": "0873",
+    "serverhost": "0873.mygolbs.com",
+    "gongjiao_tel1": "0873-3056489"
+  },
+  {
+    "province": "四川",
+    "cityname": "富顺县",
+    "citycode": "0813_01",
+    "serverhost": "081301.mygolbs.com",
+    "gongjiao_tel1": "0813-7189225"
+  },
+  {
+    "province": "广东",
+    "cityname": "汕尾市",
+    "citycode": "0660",
+    "serverhost": "0660.mygolbs.com",
+    "gongjiao_tel1": "城区:0660-3368606、海丰:13360951818、陆河:0660-5513163、陆丰:18927971990"
+  },
+  {
+    "province": "新疆",
+    "cityname": "克拉玛依市",
+    "citycode": "0990",
+    "serverhost": "0990.mygolbs.com"
+  },
+  {
+    "province": "新疆",
+    "cityname": "乌鲁木齐市",
+    "citycode": "0991",
+    "gongjiao_tel1": "公交集团:0991-4690460、珍宝巴士:0991-3734315、屯坪巴士:0991-3129155",
+    "serverhost": "0991.mygolbs.com",
+    "useInWatch": "0"
+  },
+  {
+    "province": "新疆",
+    "cityname": "沙湾县",
+    "citycode": "0993_01",
+    "serverhost": "099301.mygolbs.com"
+  },
+  {
+    "province": "新疆",
+    "cityname": "昌吉回族自治州",
+    "citycode": "0994",
+    "center": "昌吉市",
+    "serverhost": "0994.mygolbs.com"
+  },
+  {
+    "province": "新疆",
+    "cityname": "吐鲁番市",
+    "citycode": "0995",
+    "serverhost": "0995.mygolbs.com",
+    "centerlat": "42.792672",
+    "centerlng": "88.653968"
+  },
+  {
+    "province": "新疆",
+    "cityname": "库尔勒市",
+    "citycode": "0996",
+    "serverhost": "0996.mygolbs.com"
+  },
+  {
+    "province": "新疆",
+    "cityname": "哈密市",
+    "citycode": "0902",
+    "gongjiao_tel1": "市公交:2250767",
+    "serverhost": "0902.mygolbs.com"
+  },
+  {
+    "province": "新疆",
+    "cityname": "阿图什市",
+    "citycode": "0908",
+    "serverhost": "0908.mygolbs.com"
+  },
+  {
+    "province": "新疆",
+    "cityname": "阿勒泰市",
+    "citycode": "0906",
+    "serverhost": "0906.mygolbs.com"
+  },
+  {
+    "province": "新疆",
+    "cityname": "双河市",
+    "citycode": "0909",
+    "serverhost": "0909.mygolbs.com"
+  },
+  {
+    "province": "新疆",
+    "cityname": "精河县",
+    "citycode": "0909_01",
+    "serverhost": "090901.mygolbs.com"
+  },
+  {
+    "province": "新疆",
+    "cityname": "博尔塔拉蒙古自治州",
+    "citycode": "0909_02",
+    "serverhost": "090902.mygolbs.com"
+  },
+  {
+    "province": "新疆",
+    "cityname": "塔城地区",
+    "citycode": "09001",
+    "serverhost": "0901.mygolbs.com"
+  },
+  {
+    "province": "广西",
+    "cityname": "河池市",
+    "citycode": "0778",
+    "serverhost": "0778.mygolbs.com",
+    "center": "金城江区"
+  },
+  {
+    "province": "安徽",
+    "cityname": "巢湖市",
+    "citycode": "0551_01",
+    "serverhost": "055101.mygolbs.com",
+    "gongjiao_tel1": "巢湖城乡客运:0551-82399080"
+  },
+  {
+    "province": "宁夏",
+    "cityname": "固原市",
+    "citycode": "0954",
+    "serverhost": "0954.mygolbs.com",
+    "centerlat": "36.016047",
+    "centerlng": "106.240276",
+    "gongjiao_tel1": "0954-7261600"
+  },
+  {
+    "province": "宁夏",
+    "cityname": "隆德县",
+    "citycode": "0954_01",
+    "serverhost": "095401.mygolbs.com"
+  },
+  {
+    "province": "宁夏",
+    "cityname": "中卫市",
+    "citycode": "0955",
+    "gongjiao_tel1": "市公交:7647119",
+    "serverhost": "0955.mygolbs.com"
+  },
+  {
+    "province": "河北",
+    "cityname": "霸州市",
+    "citycode": "0316_01",
+    "serverhost": "031601.mygolbs.com"
+  },
+  {
+    "province": "河北",
+    "cityname": "三河市",
+    "citycode": "0316_02",
+    "serverhost": "031602.mygolbs.com"
+  },
+  {
+    "province": "陕西",
+    "cityname": "咸阳市",
+    "citycode": "029_01",
+    "serverhost": "02901.mygolbs.com",
+    "gongjiao_tel1": "029-33221774、19916300200"
+  },
+  {
+    "province": "陕西",
+    "cityname": "长武县",
+    "citycode": "029_02",
+    "serverhost": "02902.mygolbs.com"
+  },
+  {
+    "province": "陕西",
+    "cityname": "杨陵区",
+    "alias": "杨凌示范区",
+    "citycode": "029_03",
+    "serverhost": "02903.mygolbs.com",
+    "centerlat": "34.271707",
+    "centerlng": "108.079779"
+  },
+  {
+    "province": "江苏",
+    "cityname": "常熟市",
+    "citycode": "0512_01",
+    "serverhost": "051201.mygolbs.com"
+  },
+  {
+    "province": "香港特别行政区",
+    "cityname": "香港特别行政区",
+    "citycode": "00852",
+    "serverhost": "00852.mygolbs.com"
+  }
+]
